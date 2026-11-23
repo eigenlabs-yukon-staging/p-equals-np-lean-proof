@@ -1,0 +1,6 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ c d : ℕ,
+    ∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF,
+        (φ.flatten.map Prod.fst).eraseDups.length ≤ c * Nat.log2 ((encodeCNF φ).length + 1) + d →
+        (encodeCNF φ ∈ L ↔ Satisfiable φ)
