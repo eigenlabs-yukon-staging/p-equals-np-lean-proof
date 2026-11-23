@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "p-equals-np-lean-proof-ladder",
+  "rules_path": "rules.md",
+  "review_standard": "lean-proof-ladder-v1",
+  "objectives": [
+    {
+      "name": "proof_ladder_points",
+      "direction": "+",
+      "unit": "highest verified rung, 0-100",
+      "semantics": "Award the highest single rung fully supported by reproducible Lean evidence under the pinned pequalnp-proofs definitions and checker discipline. Rungs are 0, 10, 20, 35, 50, 65, 80, 90, 100; do not add them together."
+    }
+  ],
+  "allow_unscored": false,
+  "policies": {
+    "scoring": {
+      "version": "lean-proof-ladder-v1"
+    },
+    "validity": {
+      "version": "exact-pnp-reference-v1"
+    }
+  },
+  "supported_policies": {
+    "scoring": [
+      {
+        "selector": {
+          "version": "lean-proof-ladder-v1"
+        },
+        "instructions": "Return one score, proof_ladder_points. Award the highest rung whose Lean evidence checks under the pinned brilliant-hq/pequalnp-proofs definitions: 0 no accepted Lean progress; 10 reproducible reference setup and target elaboration; 20 exact formal target alignment; 35 at least one nontrivial checked supporting lemma; 50 checked P \u2286 NP inclusion; 65 substantial collapse-relevant bridge lemma toward NP \u2286 P; 80 concrete checked NP-to-P route for a canonical NP-complete or universal verifier/search target; 90 checked NP \u2286 P inclusion; 100 exact checked theorem PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP. Do not add rungs together; use the previous fully verified rung for partial attempts."
+      }
+    ],
+    "validity": [
+      {
+        "selector": {
+          "version": "exact-pnp-reference-v1"
+        },
+        "instructions": "Validate only statements read against the pinned PEqualNP.Defs root from brilliant-hq/pequalnp-proofs. Reject or withhold rung credit for local substitutes for P, NP, languages, reductions, verifiers, encodings, machines, or polynomial-time bounds; for changed definitions/import discipline; for sorry/admit/native_decide/trusted-code shortcuts; or for axioms outside propext, Classical.choice, and Quot.sound. Prose, claimed terminal output, and static text matches are supporting context only, not enough for rung credit without checkable Lean evidence."
+      }
+    ]
+  },
+  "provider": {
+    "model": "gpt-4o",
+    "response_format": "json_schema"
+  },
+  "limits": {
+    "max_followups": 2
+  }
+}

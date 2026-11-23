@@ -1,0 +1,47 @@
+{
+  "initial_results": [
+    {
+      "proof_ladder_points": 0,
+      "detected_targets": [],
+      "candidate_lean_files": [],
+      "forbidden_tokens": [],
+      "reference_checker_results": [],
+      "note": "Starter submission contains no checked Lean progress, so it scores 0."
+    }
+  ],
+  "initial_decision": {
+    "kind": "judgment",
+    "judgment": {
+      "valid": true,
+      "scores": [
+        0
+      ],
+      "reason": "The starter submission explicitly makes no checked Lean progress claim, so the correct ladder score is 0.",
+      "evidence_refs": [
+        "source:proof.md",
+        "source:check.py",
+        "run:initial:0"
+      ],
+      "review_standard": "lean-proof-ladder-v1"
+    },
+    "requests": []
+  },
+  "followup_results": [],
+  "final_decision": {
+    "kind": "judgment",
+    "judgment": {
+      "valid": true,
+      "scores": [
+        0
+      ],
+      "reason": "No follow-up is needed for the starter: it has no checked target and therefore no ladder points.",
+      "evidence_refs": [
+        "source:proof.md",
+        "source:check.py",
+        "run:initial:0"
+      ],
+      "review_standard": "lean-proof-ladder-v1"
+    },
+    "requests": []
+  }
+}

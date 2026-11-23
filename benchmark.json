@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "name": "p-equals-np-lean-proof",
+  "tracks": [
+    {
+      "name": "main",
+      "description": "Draft Yukon llm-verifier challenge for incremental, machine-checkable Lean 4 progress toward P = NP. It follows brilliant-hq/pequalnp-proofs as the reference implementation and grades submissions by the highest verified Lean sub-target reached, rather than only a binary full-proof score.",
+      "category": "math",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "+",
+      "objectives": [
+        {
+          "name": "proof_ladder_points",
+          "direction": "+"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "lean-proof-ladder-v1"
+        },
+        "validity": {
+          "version": "exact-pnp-reference-v1"
+        }
+      },
+      "editablePaths": [
+        "submission"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--out",
+        ".yukon/work/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/work/intake.json",
+        "--initial",
+        ".yukon/work/initial.json",
+        "--initial-review",
+        ".yukon/work/review.json",
+        "--score",
+        ".yukon/score.json",
+        "--dossier",
+        ".yukon/dossier.json",
+        "--followup",
+        ".yukon/work/followup.json",
+        "--final-review",
+        ".yukon/work/final-review.json"
+      ],
+      "scorePath": ".yukon/score.json",
+      "maxSubmissionBytes": 16777216,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "benchmark.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 1
+      },
+      "submissionAdmission": {
+        "version": 1,
+        "submissionReferencesEnabled": false
+      }
+    }
+  ]
+}
