@@ -1,0 +1,9 @@
+open PEqualNP.Library in
+∀
+    (R : Set (List Bool × List Bool)) (p : Polynomial ℕ)
+    (hR : DecidableInPolyTime encodePair R),
+    ∃ reduce : List Bool × List Bool → List Bool,
+      ComputableInPolyTime encodePair (fun x : List Bool => x) reduce ∧
+      ∀ x pre : List Bool,
+        (∃ t : List Bool, (pre ++ t).length ≤ p.eval x.length ∧ (x, pre ++ t) ∈ R) ↔
+          reduce (x, pre) ∈ PEqualNP.Search.SAT

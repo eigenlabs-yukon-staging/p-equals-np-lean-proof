@@ -1,0 +1,9 @@
+open PEqualNP.Library in
+    PEqualNP.Search.SAT ∈ P ↔
+    ∀ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ),
+      DecidableInPolyTime encodePair R →
+        ∃ (decode : List Bool × List Bool → List Bool) (c d : ℕ),
+          ComputableInPolyTime encodePair (fun w : List Bool => w) decode ∧
+          ∀ x : List Bool, (∃ w : List Bool, w.length ≤ p.eval x.length ∧ (x, w) ∈ R) →
+            ∃ code : List Bool, (decode (x, code)).length ≤ p.eval x.length ∧
+              (x, decode (x, code)) ∈ R ∧ code.length ≤ c * Nat.log2 (x.length + 1) + d
