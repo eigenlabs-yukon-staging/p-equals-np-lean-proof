@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "P ⊆ NP and a conditional NP-hard collapse bridge, over the pinned pequalnp-proofs definitions",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "Rung attempted: 65 (collapse-relevant formal bridge), with rung 50 (P ⊆ NP) as the fallback. This submission does not claim P = NP, NP ⊆ P, or that any NP-complete language is in P; rungs 80, 90 and 100 are not attempted.",
+    "Lean 4 accepts theorem PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP (file lean/PEqualNP/Outside/P_subset_NP.lean), read against the definitions of brilliant-hq/pequalnp-proofs at commit a9ad395e8fab5537a9017734c14360773f375cd8, with no sorry and no axioms beyond propext, Classical.choice and Quot.sound.",
+    "Lean 4 accepts, under the same definitions and axiom discipline, the conditional bridge theorems PEqualNP.Outside.Collapse_of_NPHard_mem_P : ∀ L : Language Bool, PEqualNP.Library.NPHard L → L ∈ PEqualNP.Library.P → PEqualNP.Library.NP ⊆ PEqualNP.Library.P (file lean/PEqualNP/Outside/Collapse_of_NPHard_mem_P.lean) and PEqualNP.Outside.Equality_of_NPHard_mem_P : ∀ L : Language Bool, PEqualNP.Library.NPHard L → L ∈ PEqualNP.Library.P → PEqualNP.Library.P = PEqualNP.Library.NP (file lean/PEqualNP/Outside/Equality_of_NPHard_mem_P.lean). The hypothesis that an NP-hard language is in P is not discharged.",
+    "The proofs rest on reference library lemmas PEqualNP.Library.L007, L010 and L016 and the machine modules under lean/PEqualNP/Library/Machines, which are submitted as unchanged copies of the reference files (Apache License 2.0). They are the reference project's work; the three files under lean/PEqualNP/Outside are the only new Lean source.",
+    "The hosted experiment sandbox cannot run Lean. check.py there reports static checks only and proof_ladder_points 0 for that run; the Lean verdicts were obtained locally with the reference checker tools/check-lean.mjs and are recorded in local-check.md as supporting context."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Static checks on the submitted Lean files: reference copies match their git blob ids at the pinned commit, each Outside file declares exactly one theorem with the exact statement, no forbidden token, every project import resolves. Runs the reference checker tools/check-lean.mjs only when PEQUALNP_REFERENCE_ROOT names a prepared reference clone, which the hosted sandbox does not have.",
       "input_schema": {
         "type": "object",
         "properties": {
