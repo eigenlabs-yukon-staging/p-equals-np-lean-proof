@@ -1,0 +1,11 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ p : Polynomial ℕ,
+    ∃ L : Language Bool, L ∈ P ∧
+      ∀ (φ : CNF) (a : List ℕ),
+        let x := List.replicate (encodeCNF φ).length true ++
+          false :: (encodeCNF φ ++ a.flatMap
+            (fun i => i.bits.flatMap (fun b => [true, b]) ++ [false, true]))
+        (x ∈ L → Satisfiable φ) ∧
+        ((∀ c ∈ φ, (c.filter (fun l => decide (l.1 ∉ a))).length ≤ 2) →
+          2 ^ a.length ≤ p.eval x.length →
+          Satisfiable φ → x ∈ L)
