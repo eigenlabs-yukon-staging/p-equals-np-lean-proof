@@ -15,7 +15,8 @@
         "type": "object",
         "properties": {
           "reference_commit": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 40
           },
           "timeout_seconds": {
             "type": "integer",
