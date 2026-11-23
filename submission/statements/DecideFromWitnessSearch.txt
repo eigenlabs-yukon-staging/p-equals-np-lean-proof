@@ -1,0 +1,9 @@
+open PEqualNP.Library in
+∀
+    (L : Language Bool) (R : Set (List Bool × List Bool))
+    (p : Polynomial ℕ) (s : List Bool → List Bool)
+    (hR : DecidableInPolyTime encodePair R)
+    (hs : ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) s)
+    (hL : ∀ x, x ∈ L ↔ ∃ w : List Bool, w.length ≤ p.eval x.length ∧ (x, w) ∈ R)
+    (hfind : ∀ x ∈ L, (s x).length ≤ p.eval x.length ∧ (x, s x) ∈ R),
+    L ∈ P
