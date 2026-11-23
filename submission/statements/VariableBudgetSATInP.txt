@@ -1,0 +1,4 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ p : Polynomial ℕ,
+    ({x : List Bool | ∃ φ : CNF, encodeCNF φ = x ∧ Satisfiable φ ∧
+      2 ^ (φ.flatten.map Prod.fst).toFinset.card ≤ p.eval x.length} : Language Bool) ∈ P
