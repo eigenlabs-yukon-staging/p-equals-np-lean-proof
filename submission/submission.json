@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Deterministic search with polynomial verifier coverage",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "An arbitrary pinned polynomial-time verifier can be searched through a polynomial-size prefix of the reference Boolean-word enumeration. If the prefix contains a witness for every yes-input, the corresponding language belongs to P.",
+    "Languages with a polynomial-time verifier and a logarithmic-length certificate for each yes-input belong to P.",
+    "The exact P subset NP inclusion follows from pinned reference L010.",
+    "Every pinned polynomial-time verifier gives a P language when existential search is restricted to a fixed finite witness list.",
+    "In particular, a verifier with a fixed constant witness bound defines a language in P."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {

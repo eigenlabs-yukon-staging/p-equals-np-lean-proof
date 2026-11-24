@@ -1,0 +1,7 @@
+∀ (L : Language Bool) (R : Set (List Bool × List Bool)),
+    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R →
+    ∀ (k : Nat),
+    (∀ x : List Bool, x ∈ L ↔ ∃ w : List Bool, (x, w) ∈ R) →
+    (∀ x : List Bool, x ∈ L →
+      ∃ w : List Bool, (x, w) ∈ R ∧ w.length ≤ k * (x.length + 1).log2) →
+    L ∈ PEqualNP.Library.P
