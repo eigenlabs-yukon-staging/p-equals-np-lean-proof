@@ -1,16 +1,31 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Conjunctive sparse reductions from NP and coNP hardness",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "A pinned polynomial-time conjunctive reduction from an NP-hard language to a sparse target implies P = NP without a fixed query count.",
+    "Equal-length witnesses, lexicographic prefix querying, and measured boundary retention are verified independently.",
+    "A pinned polynomial-time conjunctive reduction from a coNP-hard language to a sparse target suffices for P = NP, without a fixed query count.",
+    "A measured query-history frontier machine preserves existential correctness or certifies a positive result using cumulative sparsity.",
+    "A fixed-width conjunctive reduction of a pinned NP-hard or coNP-hard language to a cumulatively sparse target implies P = NP.",
+    "Sparse coNP-hardness implies P = NP using a measured dual frontier pruning machine.",
+    "An exact-length polynomially sparse coNP-hard target exists exactly when P = NP.",
+    "A polynomial-time selector for a pinned NP-hard target suffices for P = NP and its existence is equivalent to the pinned equality.",
+    "A cumulatively polynomially sparse NP-hard target implies P = NP under the pinned definitions.",
+    "The existence of an exact-length polynomially sparse NP-hard target is equivalent to P = NP.",
+    "The pinned machine model supports polynomial-time lookup of any specified reduction image in an encoded candidate list.",
+    "Sparse pruning of encoded candidate frontiers is realized by a pinned polynomial-time machine with the cap supplied in unary.",
+    "A polynomial-time encoded child generator lifts to a polynomial-time flat map on encoded candidate frontiers.",
+    "For any pinned NP source and NP-hard target, a pinned polynomial-time map sends pairs into the target exactly when either component is in the source.",
+    "The finite list algorithm preserves existential membership while bounding the frontier under cumulative sparsity.",
+    "If NP is contained in P, any pinned normal-form verifier admits a polynomial-time witness producer with explicit failure.",
+    "The existence of polynomial-time witness producers for all pinned normal-form verifiers is equivalent to P = NP.",
+    "The exact P subset NP inclusion follows from pinned reference L010."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {
