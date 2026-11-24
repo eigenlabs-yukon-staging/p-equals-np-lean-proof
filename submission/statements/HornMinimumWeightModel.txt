@@ -1,0 +1,11 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ f : List Bool → List Bool,
+      ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) f ∧
+      ∀ φ : CNF, (∀ c ∈ φ, (c.filter Prod.snd).length ≤ 1) → Satisfiable φ →
+        ∃ v : List ℕ,
+          f (encodeCNF φ) = v.flatMap (fun i => (encodeLiteral (i, true)).drop 2) ∧
+          CNF.eval (fun i => decide (i ∈ v)) φ = true ∧
+          ∀ σ : Assignment, CNF.eval σ φ = true →
+            (∀ i ∈ v, σ i = true) ∧
+            let s := (φ.flatMap fun c => c.map Prod.fst).toFinset
+            (s.filter (fun i => i ∈ v)).card ≤ (s.filter (fun i => σ i = true)).card
