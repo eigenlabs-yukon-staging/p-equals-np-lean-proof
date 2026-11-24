@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Uniform measured truth-table and query-vector operations",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "Binary-indexed Boolean lookup and splitting have pinned polynomial-time machines for arbitrary table and index lengths.",
+    "A unary coordinate exponent selects one Boolean restriction uniformly from an arbitrary encoded truth table.",
+    "Unary-indexed query reads and deletions have exact measured operations on the reference encoded vector.",
+    "The directed list pruner has a quasipolynomial width bound at logarithmic arity under a polynomial sparse count.",
+    "The measured fixed-arity conditional collapse and its exact witness route remain checked."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {

@@ -1,16 +1,24 @@
-# Starter submission notes
+# Uniform truth-table operations and logarithmic frontier width
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+`MeasuredTruthTableLookup.lean` reads or splits a finite table at an index
+represented by a most-significant-first Boolean word. It clips the index to
+the table length during accumulation, preserving all prefix and suffix
+semantics even for binary indices much larger than the input table.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+`MeasuredTruthTableRestriction.lean` retains the rows whose indexed bit
+matches the requested answer. The bit position is supplied as a unary
+word. A measured block loop clips its block size to the table length and
+alternates the retained blocks.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`MeasuredQueryVectorCoordinate.lean` reads and deletes a unary-indexed
+record in the pinned nested pair encoding. Its exact specification
+includes out-of-range behavior.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+`CompressedTruthTableLogarithmicWidth.lean` proves a quasipolynomial upper
+bound on the sublist size when arity is logarithmic and the sparse count is
+polynomial. This is a combinatorial width guarantee. The fixed-arity
+conditional collapse proof uses the measured directed boundary compiler.
+
+`check.py --reference /path/to/pinned/checkout` replays the compact record's
+exact statements against the pinned reference. Hosted archive identity
+checking reports zero kernel checks when the reference is absent.
