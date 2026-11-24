@@ -1,0 +1,4 @@
+    ∀ (n : ℕ) (S : Finset (Fin n → Bool)),
+      ∃ q : ℕ, Nat.Prime q ∧ S.card * S.card * n < q ∧ q ≤ 2 * (S.card * S.card * n + 1) ∧
+        ∃ a : ZMod q, Set.InjOn (fun u =>
+          ∑ i : Fin n, (if u i then (1 : ZMod q) else 0) * a ^ i.val) (S : Set (Fin n → Bool))
