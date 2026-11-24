@@ -1,0 +1,8 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∃ G : CNF,
+      (∀ c ∈ G, c.length = 3 ∧ (c.map Prod.fst).Nodup ∧ ∀ l ∈ c, l.1 < 4) ∧
+      (∀ i < 4, (G.flatMap (List.map Prod.fst)).count i = if i = 0 then 3 else 4) ∧
+      CNF.eval (fun _ => false) G = true ∧
+      (∀ a : Assignment, CNF.eval a G = true → a 0 = false) ∧
+      ((Finset.univ : Finset (Fin 4 → Bool)).filter
+        (fun a => CNF.eval (fun i => if h : i < 4 then a ⟨i,h⟩ else false) G = true)).card = 6
