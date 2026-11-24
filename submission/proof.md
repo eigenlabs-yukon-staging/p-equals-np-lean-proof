@@ -1,16 +1,49 @@
-# Starter submission notes
+# Recognizing Horn renamability in the pinned P class
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+`RenamableHornReducesToTwoSAT` proves that the exact language of
+CNFs admitting a global polarity flip to Horn is Karp reducible
+to reference 2-SAT and belongs to reference P. For each pair of
+literal positions in a clause, the compiler emits a two-literal
+clause requiring at least one position to turn negative after the
+chosen renaming. This permits duplicated literals and empty clauses
+and uses the ordinary pinned list and bit encodings.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The compiler scans two suffixes within the current clause. It
+emits each ordered-position pair once and never crosses a
+clause delimiter. A measured polynomial-time loop implements the
+scan, and a proof that the required step count fits a quadratic
+clock connects the machine to the pair-formula specification.
+A well-formedness guard sends malformed words to a fixed unsatisfiable
+2-CNF.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+This recognition reduction provides a reusable bridge toward
+renamable-Horn SAT. It recognizes whether a renaming exists.
+It does not decide satisfiability of the original formula or
+solve a general NP-complete target. The pinned checker accepted
+the reduction theorem and independent `P_subset_NP` inclusion.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+## Reproduce
+
+Prepare a checkout of brilliant-hq/pequalnp-proofs at
+`a9ad395e8fab5537a9017734c14360773f375cd8` with Elan, Node.js and the
+Mathlib cache from `lake exe cache get` in its `lean` directory.
+Install the submitted proof sources into that checkout with
+
+```sh
+python3 submission/check.py --overlay /path/to/pinned/reference
+```
+
+The command installs only submitted Outside modules and refuses to
+overwrite different source. The split XZ archive also contains the
+unchanged upstream proof dependencies. The checker compares the
+decoded bytes with the pinned checkout before running. With
+`PEQUALNP_REFERENCE_ROOT` set to the absolute reference checkout, run
+
+```sh
+python3 submission/check.py <<'JSON'
+{"reference_commit":"a9ad395e8fab5537a9017734c14360773f375cd8","timeout_seconds":1200}
+JSON
+```
+
+The exact statements and recorded checker manifests are supplied.
+Hosted Python can check source hashes but does not run Lean.

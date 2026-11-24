@@ -1,0 +1,5 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ L : Language Bool,
+      (∀ x, x ∈ L ↔ ∃ φ : CNF, encodeCNF φ = x ∧
+        ∃ ρ : Assignment, ∀ c ∈ φ, (c.filter fun l => xor l.2 (ρ l.1)).length ≤ 1) ∧
+      PolyTimeReducible L (KSAT 2) ∧ L ∈ P
