@@ -1,16 +1,32 @@
-# Starter submission notes
+# Minimum-weight CNF model recognition is coNP-complete
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+Starting with arbitrary source CNF, reserve selector zero and
+rename source variable i to 2i+1. Insert a selector tautology and
+add the positive selector to each renamed clause. For every
+occurring original name i, append a clause requiring a penalty name
+4i+2 to be true when the selector is true. It is safe to emit this
+clause repeatedly for repeated original occurrences. The objective
+charges distinct names, so repeats add no weight.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The fallback sets only the selector and the penalty names true.
+Its weight is one plus the number of distinct original names.
+This is proved by exact cardinalities and odd/even separation.
+Every satisfying assignment with the selector true must also set
+every penalty name true, so it cannot be lighter. If the source
+formula is satisfiable, lift a source assignment using the odd
+names, leaving the selector and all penalty names false. It has
+weight at most the number of original names and is strictly
+lighter. If the source is unsatisfiable, every satisfying target
+assignment has the selector true, so the fallback is minimum.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+A polynomial raw-word reduction computes the renamed gated CNF
+and the penalty suffix from the actual bit encoding. The companion
+witness scan emits the selector and penalty names and its length is
+bounded by the encoded target formula. The compiler proof covers
+an arbitrary raw input and maps malformed words to the image of
+an unsatisfiable single-empty-clause formula. The coNP upper bound
+and the pinned SAT completeness theorem complete the classification.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+Exact theorem statement and complete proof source are supplied.
+The reproduction harness and mixed archive preserve source bytes
+and distinguish actual verifier execution from hash comparison.
