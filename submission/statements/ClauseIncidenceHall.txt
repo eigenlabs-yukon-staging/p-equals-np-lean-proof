@@ -1,0 +1,7 @@
+open PEqualNP.Library PEqualNP.Search PEqualNP.CircuitLowerBounds in
+    ∀ (F : CNF) (d : ℕ), 0 < d →
+      (∀ i : Fin F.length, d ≤ ((F.get i).map Prod.fst).toFinset.card) →
+      (∀ v : ℕ,
+        ((Finset.univ : Finset (Fin F.length)).filter
+          (fun i => v ∈ ((F.get i).map Prod.fst).toFinset)).card ≤ d) →
+      Satisfiable F
