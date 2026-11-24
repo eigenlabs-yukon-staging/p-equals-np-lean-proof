@@ -1,0 +1,14 @@
+open PEqualNP.Library in
+∀ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ), DecidableInPolyTime encodePair R →
+      ∃ (D : List Bool × List Bool → Bool) (K : Language Bool) (W : List Bool → Finset (List Bool))
+        (encodePattern : (b c : ℕ) → (Fin c → Option (Fin (2*b+1) × Bool)) → List Bool),
+        K ∈ NP ∧ ComputableInPolyTime encodePair Computability.encodeBool D ∧
+        (∀ z, z ∈ K ↔ ∃ w, D (z,w) = true) ∧
+        (∀ x w, w ∈ W x ↔ w.length ≤ p.eval x.length ∧ (x,w) ∈ R) ∧
+        (∀ (x s w : List Bool),
+          D (List.replicate x.length true ++ false :: (x ++ s),w) = true → w ∈ W x) ∧
+        ∀ (x : List Bool) (c : ℕ), (W x).card ≤ c + 1 →
+          ∀ w ∈ W x, ∃ f : Fin c → Option (Fin (2 * p.eval x.length + 1) × Bool),
+            ∀ v : List Bool,
+              D (List.replicate x.length true ++ false :: (x ++ encodePattern (p.eval x.length) c f),v) = true
+                ↔ v = w
