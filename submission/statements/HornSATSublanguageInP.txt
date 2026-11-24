@@ -1,0 +1,4 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF, (∀ c ∈ φ, (c.filter Prod.snd).length ≤ 1) →
+        (encodeCNF φ ∈ L ↔ Satisfiable φ)
