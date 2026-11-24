@@ -1,0 +1,6 @@
+open PEqualNP.Search in
+    ∃ G : CNF,
+      (∀ c ∈ G, c.length = 3 ∧ (c.map Prod.fst).Nodup ∧ ∀ l ∈ c, l.1 < 7) ∧
+      (∀ i < 7, (G.flatMap (List.map Prod.fst)).count i = if i = 0 ∨ i = 2 then 4 else 5) ∧
+      CNF.eval (fun _ => false) G = true ∧
+      (∀ a : Assignment, CNF.eval a G = true → ∀ i < 7, a i = false)

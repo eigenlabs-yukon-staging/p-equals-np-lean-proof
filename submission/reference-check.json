@@ -1,0 +1,79 @@
+{
+  "targets": {
+    "UniqueTernaryFalseGadget": {
+      "checker_exit": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.UniqueTernaryFalseGadget; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 732 constants",
+      "transcript_sha256": "ab771e89e880351574e2077eaf5ef184d9b8b3e2c2f1ff98432e95db8ff654ee",
+      "statement_sha256": "01a44c9cd6c01c2be80571ac71fc533b0557a7c2aabfc7e547c50879150ebb8d",
+      "modules": [
+        "PEqualNP.Outside.UniqueTernaryFalseGadget"
+      ]
+    },
+    "P_subset_NP": {
+      "checker_exit": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "transcript_sha256": "c2b3cb60059b481629f8c31b7b269503bc9c059da6de61d4b8f54cc23eb5bca9",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154",
+      "modules": [
+        "PEqualNP.Library.L007",
+        "PEqualNP.Library.L010",
+        "PEqualNP.Library.Machines.Compose",
+        "PEqualNP.Library.Machines.ComposeRun",
+        "PEqualNP.Library.Machines.FilterMap",
+        "PEqualNP.Library.Machines.Run",
+        "PEqualNP.Outside.P_subset_NP"
+      ]
+    }
+  },
+  "module_sha256": {
+    "PEqualNP.Outside.UniqueTernaryFalseGadget": "e8228b89fe0fe3d8210ba031004ae194c4c48d3f23a34c7559a4f2e5b0b53283",
+    "PEqualNP.Library.L007": "b952af8bfa64931fd29987f6028c2ab0e3192a2f7901b88970d45253e41c1bce",
+    "PEqualNP.Library.L010": "991d393baad64e2bea3c0eb51841732de91ee2433ac5599c2a91181102fcb2ef",
+    "PEqualNP.Library.Machines.Compose": "2f067d1d810b5cbc6801c82b21d1c30e36623765b58cf43b0fd7d877b6fea75b",
+    "PEqualNP.Library.Machines.ComposeRun": "2e10639b5cffd643545771bc897b558ceecdd7c4acd1350dab14f7e9c6bcac9c",
+    "PEqualNP.Library.Machines.FilterMap": "e8ed570a27b5df3fa9fce2ad38100c53b3978bd07c34a4f52f81859fcb045e83",
+    "PEqualNP.Library.Machines.Run": "ef463e800f7c0694f09da9e7a8ed607dbe99591e30a35c6aa34fd73e5d75f3f6",
+    "PEqualNP.Outside.P_subset_NP": "791f887ba1311d2b7cce52db99f697c4c3145cce6b91141dbe1706722ddb884e"
+  },
+  "definitions_sha256": {
+    "PEqualNP.Defs": "eea587914083e0631df0ba2ad86ddbb662c173eec5b60538295e41c4e78a59c1",
+    "PEqualNP.Defs.Algebraic": "3a63e982154f8681af693149da8dbef279f62a4943e0b955c11920d9318a0456",
+    "PEqualNP.Defs.Base": "6b010a3577605e43ecd3f9121c1c2d0cfa82d8cfeb204c89a2c23154bc166e04",
+    "PEqualNP.Defs.BinaryCircuit": "a0a4f237ff5e7167ebb59fa94cfbfad38f5f8ded3fb3feab83847c174dfb443b",
+    "PEqualNP.Defs.CircuitLowerBounds": "695e454d3e424e2cae4fa4677741681eac11de0462d0d9bc087a0e6a6ba03f69",
+    "PEqualNP.Defs.Classes": "220a8ab751e1511cb25d116667b37f5d9b462158bbd29816239ffc8376942baf",
+    "PEqualNP.Defs.CoverPromise": "4552f288f2ec1eb23c4fded9b5d553e5699b8bdea84a91868dc12aac33759772",
+    "PEqualNP.Defs.DeMorganFormula": "b90d4e2b0289f04d29dc060aae514a81fb84933e88727b24ee0b8a45ddd0b100",
+    "PEqualNP.Defs.Expanders": "345e1da8e8d1fda03b0a0220736f528b6567d83461309614c2793da3a2ac44e4",
+    "PEqualNP.Defs.Gct": "d22dbd99d0ac0f2cda45ce451f76c9b566bcea76a1cea4d4329f22e604d1259d",
+    "PEqualNP.Defs.MetaComplexity": "863a9682c4e45a88aa71112f51d40cd2e308d2790acbcbcc4cf388cc8e8ce303",
+    "PEqualNP.Defs.MetaComplexityLgp": "4c2cc3d969e23835b91ef4f0157c9cc04f4f7bb4bb845059e59193f4b8b65b89",
+    "PEqualNP.Defs.MetaComplexityLgpMono": "dfecf7726cea5a2adbf2976c6e4aac2a4fe5c968713ba6ec84b267753b55c969",
+    "PEqualNP.Defs.MetaComplexityLocal": "5b8c9738483588314f326a1493b6037f0651d8532c023e34074492daf8e59c9c",
+    "PEqualNP.Defs.MetaComplexityMinimal": "d2d1cce5cd4a6b25815147cdf37d09436c2b50e6a528bb4b4bb687b6f4ffaabc",
+    "PEqualNP.Defs.MetaComplexitySparse": "198cf3b6a21934e3f6a028a24465be3655917afe5d113d78e901d444cdd565b5",
+    "PEqualNP.Defs.MetaComplexityTypedRank": "647c4a5ab173710cfcfa214c93b97b536bafaefed6b763f5de38f1d80c07ceba",
+    "PEqualNP.Defs.Oracle": "d2076f5c6fc5c856873b02c221a89f8500cb57f786e345443fe6146c175c0bb9",
+    "PEqualNP.Defs.ProofComplexity": "c75fde5933550d478fe76a0e5d2153f886f1c919e2c2823b68a5426211797784",
+    "PEqualNP.Defs.ProofComplexityBit": "d2c3fc8944fef34cef7374ae28482b7ac4ab93b3c171066504b44824d043e62b",
+    "PEqualNP.Defs.ProofComplexityChain": "e1387200ea3cd269d1db5ed89780b894d9d3a863592586afef86d95a7d1b9c8c",
+    "PEqualNP.Defs.ProofComplexityGeneral": "ff642db2a37bc87554ac4ed2ae39e188402b994e2802f027a37402dcaf6e8529",
+    "PEqualNP.Defs.ProofComplexityLift": "1c034d015d0409802e3ce9caf384f6cfe7c19c624f86a879b410c51f3b4b44e4",
+    "PEqualNP.Defs.ProofComplexityLin": "604f32f049e7997416e12e74b59f69a5cefc4e75b17a8dc98592507e505dfaee",
+    "PEqualNP.Defs.ProofComplexityLinK": "9b6a214c2fa7265ed8d7762a3dc6b65223c404e5a992941006307d021277e856",
+    "PEqualNP.Defs.ProofComplexityMoment": "855f693d735c73d2c82b9615afe5807cea2c358eb05bdc094f231d6f0548e69d",
+    "PEqualNP.Defs.ProofComplexityPC": "f37a64e23b632d3d6ca475b2d3c93f7631094b8168d3c4c48a4722bc9b89ac16",
+    "PEqualNP.Defs.ProofComplexityResK": "d2bff56173acbbf1614de283852124d3d86c7f46bc4f818d2beac4a58dfd5145",
+    "PEqualNP.Defs.ProofComplexityRestrict": "715d5a762de5070e3f916a4a9f8ce56d00a1f4635ba53cceafdf2c2bf84d26fc",
+    "PEqualNP.Defs.RiffleRank": "a43edc0c5d5e2fb75251499571cff0738a44ebb4976d1e2c8d4a3e7ebe856d02",
+    "PEqualNP.Defs.Search": "2df0484c0554e95c92bcedd7af3c3db95aa944d894dfe7c59bf6589d7c1368e5",
+    "PEqualNP.Defs.SearchCP": "783773afbadd94bcb9f7c4bc82cd79d1defea4c2dfb13f381c5f9352674fe49f",
+    "PEqualNP.Defs.SearchQ": "27b64f54c1e91bffceb571025c33f7e2375d0085be47a8872b1d69596cc62d69",
+    "PEqualNP.Defs.SearchQSyn": "9959ea8d5b748655c601de262a62ec0bbbdc6821e74d3bbb79800e0199314105",
+    "PEqualNP.Defs.SearchQTree": "4c88e466ebe9e50a5e3ea445342ff3f50e449613f37049ea6f2b55e4fb8f1814",
+    "PEqualNP.Defs.SearchRUP": "c522125ff2f8bbd9da3b3c88fa6dc6fca64c5174a12761b3d418e0f15a4186b6",
+    "PEqualNP.Defs.SearchSoS": "f32e0efdba1c089bab61de243ad1a4a57450c2936765a3fbfcf490ceb126c796",
+    "PEqualNP.Defs.SingleLevel": "1ff7e0b70672dada573be86883d773db03ef9ba186e9ef8cafd2b26a71e35ee8",
+    "PEqualNP.Defs.TimeAlt": "5d2da1d12e0a7d44c1c4407732fa508d1f43d0b4579bb183829c9b02c336fbc6"
+  }
+}
