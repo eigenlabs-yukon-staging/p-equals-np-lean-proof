@@ -1,0 +1,21 @@
+open PEqualNP.Library in
+∀ L : Language Bool, L ∈ NP →
+      ∃ (p : Polynomial ℕ) (W : List Bool → Finset (List Bool))
+        (Q : (x : List Bool) → (Fin ((2 * p.eval x.length + 3) * (2 * p.eval x.length + 2)) → Bool) →
+          List (List Bool))
+        (generate : List Bool × List Bool → List Bool)
+        (D : List Bool × List Bool → Bool) (K : Language Bool),
+        K ∈ NP ∧ ComputableInPolyTime encodePair Computability.encodeBool D ∧
+        ComputableInPolyTime encodePair (fun w : List Bool => w) generate ∧
+        (∀ z, z ∈ K ↔ ∃ w, D (z,w) = true) ∧
+        (∀ x, x ∈ L ↔ (W x).Nonempty) ∧
+        (∀ x u, generate (x, List.ofFn u) =
+          (Q x u).foldr (fun y rest => List.replicate y.length true ++ false :: (y ++ rest)) []) ∧
+        (∀ x u z, z ∈ Q x u → ∀ w, D (z,w) = true → w ∈ W x) ∧
+        ∀ x ∈ L,
+          let b := p.eval x.length
+          let n := (2 * b + 3) * (2 * b + 2)
+          Fintype.card (Fin n → Bool) ≤ 8 *
+            ((Finset.univ : Finset (Fin n → Bool)).filter
+              (fun u => ∃ z ∈ (Q x u).toFinset, ∃ w ∈ W x, D (z,w) = true ∧
+                ∀ v ∈ W x, v ≠ w → D (z,v) = false)).card

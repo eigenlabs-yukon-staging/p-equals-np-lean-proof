@@ -1,16 +1,26 @@
-# Starter submission notes
+# Isolated NP query batches from a fixed uniform coin tape
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+For each pinned NP language the theorem builds a polynomial-time
+query generator and a polynomial-time query verifier. The
+generator receives the input and an explicit tape of
+(2b + 3)(2b + 2) Boolean variables, with b the reference
+polynomial bound on source witness length. It outputs the
+encoded list of prefix queries. The existentially described
+query list is the exact output of the real measured word machine.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The affine matrix encoding is a bijection onto all tapes of that
+length. An exact finite-cardinality transfer therefore moves the
+successful event from full affine matrices to the entire Boolean
+tape space, with no missing or duplicated tapes. For every yes
+input, at least an eighth of the tapes generate a query with one
+accepted witness. Every accepted witness of a generated query
+is also a bounded original witness, which proves the same
+uniqueness over all raw witness words. All queries on a source
+no-input reject every potential witness.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
-
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+This is a finite formulation of a randomized reduction to
+isolated witness queries. The two functions are ordinary
+reference polynomial-time deterministic machines taking the
+random tape as data. The result does not assume a solver for
+the isolated-witness promise, claim that the full query language
+has unique witnesses, or assert a deterministic P = NP result.
