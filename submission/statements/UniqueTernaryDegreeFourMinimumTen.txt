@@ -1,0 +1,8 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∀ (n : ℕ) (F : CNF) (terminal : ℕ), terminal < n →
+      (∀ c ∈ F, c.length = 3 ∧ (c.map Prod.fst).Nodup ∧ ∀ l ∈ c, l.1 < n) →
+      (∀ i, (F.flatMap (List.map Prod.fst)).count i ≤ 4) →
+      (F.flatMap (List.map Prod.fst)).count terminal ≤ 3 →
+      (∃! a : Fin n → Bool,
+        CNF.eval (fun i => if h : i < n then a ⟨i,h⟩ else false) F = true) →
+      10 ≤ n
