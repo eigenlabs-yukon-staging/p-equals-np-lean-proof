@@ -1,0 +1,18 @@
+open PEqualNP.Library in
+∀ (G A : Language Bool) (r : Polynomial ℕ),
+      (∀ n : ℕ, ∃ S : Finset (List Bool), S.card ≤ r.eval n ∧
+        ∀ y, y ∈ S ↔ y ∈ A ∧ y.length ≤ n) →
+      (∃ f : List Bool × List Bool → List Bool,
+        ComputableInPolyTime encodePair (fun w => w) f ∧
+        ∀ x y, f (x,y) ∈ A ↔ x ∈ G ∨ y ∈ G) →
+      ∀ (B : List Bool → List (List Bool)) (depth : Polynomial ℕ) (d : ℕ),
+        (∀ x, x ∈ G ↔ ∃ y ∈ B x, y ∈ G) →
+        (∀ x y, y ∈ B x → y.length ≤ x.length + d) →
+        (∃ E : List (List Bool) → List Bool,
+          E [] = [] ∧ (∀ a as, E (a :: as) = List.replicate a.length true ++ false :: (a ++ E as)) ∧
+          ComputableInPolyTime (fun w => w) (fun w => w) (fun x => E (B x))) →
+        (∃ test : List Bool → Bool,
+          ComputableInPolyTime (fun w => w) Computability.encodeBool test ∧
+          ∀ x y, y ∈ (fun l : List (List Bool) => l.flatMap B)^[depth.eval x.length] [x] →
+            (test y = true ↔ y ∈ G)) →
+        G ∈ P
