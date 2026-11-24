@@ -1,16 +1,22 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Measured variable truth-table pruning with a smaller frontier bound",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "A reference polynomial-time variable-table pruner uses two query restrictions per fiber and separates only on the all-false table entry at trim time.",
+    "The compressed recurrence is bounded by 2 * 4^k times the fixed-table bound, and by the full-table grouping bound for k at least 3.",
+    "A pinned polynomial-time fixed-round adaptive reduction from an NP-hard or coNP-hard language to a cumulatively sparse target implies P = NP.",
+    "For each fixed answer assignment, the transcript compiler measures the leaf computation and proves the correct adaptive transcript using exact query indices.",
+    "For fixed arity, an encoded polynomial-time truth-table reduction from an NP-hard language to a cumulatively polynomially sparse target implies P = NP.",
+    "The measured pruning machine handles a different Boolean truth table at each candidate and preserves every valid last-true boundary of the same frontier.",
+    "The fixed-table pruner has a verified polynomial width bound and only uses the encoded candidates and unary sparse count.",
+    "The ordered frontier solver uses reference polynomial-time machines for fixed-depth binary witness expansion, certified pruning and terminal verification.",
+    "The pinned P subset NP theorem checks independently."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {
