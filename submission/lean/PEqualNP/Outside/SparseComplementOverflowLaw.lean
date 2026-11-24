@@ -1,0 +1,22 @@
+import PEqualNP.Outside.SparseComplementOverflow
+
+open PEqualNP.Outside.SparseComplementOverflow (reduce reduce_correct)
+
+theorem PEqualNP.Outside.SparseComplementOverflowLaw :
+    ∀ (α β : Type) [DecidableEq β],
+      ∃ reduce : ℕ → List (α × β) → Option (List α),
+        ∀ (G : α → Prop) (S : Finset β) (cap : ℕ) (as : List (α × β)),
+          S.card ≤ cap → (∀ q ∈ as, q.2 ∈ S ↔ ¬ G q.1) →
+          (reduce cap as = none → ∃ q ∈ as, G q.1) ∧
+          ∀ bs, reduce cap as = some bs →
+            bs.Sublist (as.map Prod.fst) ∧ bs.length ≤ max cap (as.length-1) ∧
+              ((∃ y ∈ bs, G y) ↔ ∃ q ∈ as, G q.1) := by
+  intro α β inst
+  refine ⟨reduce,?_⟩
+  intro G S cap as hs hrel
+  have hh := reduce_correct G S cap as hs hrel
+  constructor
+  · intro h
+    rwa [h] at hh
+  · intro bs h
+    rwa [h] at hh
