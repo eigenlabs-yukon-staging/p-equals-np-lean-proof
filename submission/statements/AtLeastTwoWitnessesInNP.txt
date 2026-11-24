@@ -1,0 +1,6 @@
+open PEqualNP.Library in
+∀ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ), DecidableInPolyTime encodePair R →
+      ∃ L : Language Bool, L ∈ NP ∧
+        ∀ x, x ∈ L ↔ ∃ u v : List Bool,
+          (u.length ≤ p.eval x.length ∧ (x,u) ∈ R) ∧
+          (v.length ≤ p.eval x.length ∧ (x,v) ∈ R) ∧ u ≠ v
