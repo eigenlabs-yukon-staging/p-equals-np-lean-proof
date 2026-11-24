@@ -1,0 +1,6 @@
+open PEqualNP.Library in
+∀ (A : Language Bool) (r : Polynomial ℕ),
+      (∀ n : ℕ, ∃ S : Finset (List Bool), S.card ≤ r.eval n ∧
+        ∀ y, y ∈ S ↔ y ∈ A ∧ y.length ≤ n) →
+      (∀ L : Language Bool, L ∈ NP → PolyTimeReducible L A) →
+      P = NP
