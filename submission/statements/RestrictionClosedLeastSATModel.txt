@@ -1,0 +1,17 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (F : Set CNF) (L : Language Bool) (hP : L ∈ P)
+    (hclosed : ∀ (ρ : ℕ → Option Bool) (φ : CNF), φ ∈ F →
+      (φ.filterMap fun c =>
+        if c.any (fun l => ρ l.1 == some l.2) then none
+        else some (c.filter fun l => (ρ l.1).isNone)) ∈ F)
+    (hcorrect : ∀ φ ∈ F, encodeCNF φ ∈ L ↔ Satisfiable φ),
+    ∃ find : List Bool → List Bool,
+      ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) find ∧
+      ∀ φ ∈ F, Satisfiable φ →
+        ∃ v : List ℕ,
+          find (encodeCNF φ) = encodeCNF (v.map (fun i => [(i, true)])) ∧
+          CNF.eval (fun i => decide (i ∈ v)) φ = true ∧
+          ∀ σ : Assignment, CNF.eval σ φ = true →
+            let bits := (φ.flatMap id).map (fun l => decide (l.1 ∈ v))
+            let other := (φ.flatMap id).map (fun l => σ l.1)
+            bits = other ∨ List.Lex (fun a b => a = false ∧ b = true) bits other

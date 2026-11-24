@@ -1,0 +1,13 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ find : List Bool → List Bool,
+      ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) find ∧
+      ∀ φ : CNF, (∃ ρ : Assignment, ∀ c ∈ φ,
+        (c.filter fun l => xor l.2 (ρ l.1)).length ≤ 1) →
+        Satisfiable φ →
+        ∃ v : List ℕ,
+          find (encodeCNF φ) = encodeCNF (v.map (fun i => [(i, true)])) ∧
+          CNF.eval (fun i => decide (i ∈ v)) φ = true ∧
+          ∀ σ : Assignment, CNF.eval σ φ = true →
+            let bits := (φ.flatMap id).map (fun l => decide (l.1 ∈ v))
+            let other := (φ.flatMap id).map (fun l => σ l.1)
+            bits = other ∨ List.Lex (fun a b => a = false ∧ b = true) bits other

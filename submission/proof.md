@@ -1,16 +1,50 @@
-# Starter submission notes
+# Lexicographically least models on restriction-closed SAT fragments
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+`RestrictionClosedLeastSATModel` checks a polynomial-time model
+extractor for any restriction-closed CNF fragment with a polynomial
+SAT decider. The same greedy machine also returns the
+lexicographically least satisfying assignment when compared in
+the input's literal-occurrence order, with false before true.
+The output is a reference-encoded list of positive unit clauses
+naming the true variables. The theorem is conditional on the
+fragment's polynomial-time decision hypothesis.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The new invariant preserves previously selected values and compares
+the answer against every satisfying completion that agrees with the
+prefix. At a fresh variable a competing model using false witnesses
+satisfiability of the false trial. Consequently any first differing
+model bit from the computed answer is larger. Repeated variables
+preserve the earlier comparison and clause delimiters contribute
+no assignment bits.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`RenamableHornLeastSATModel` instantiates the result using the
+verified renamable-Horn solver. It is a restricted SAT theorem and
+does not establish a general NP-complete target or unconditional
+universal search problem in P. Both declarations and `P_subset_NP`
+passed the pinned checker.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+## Reproduce
+
+Prepare a checkout of brilliant-hq/pequalnp-proofs at
+`a9ad395e8fab5537a9017734c14360773f375cd8` with Elan, Node.js and the
+Mathlib cache from `lake exe cache get` in its `lean` directory.
+Install the submitted proof sources into that checkout with
+
+```sh
+python3 submission/check.py --overlay /path/to/pinned/reference
+```
+
+The command installs only submitted Outside modules and refuses to
+overwrite different source. The split XZ archive also contains the
+unchanged upstream proof dependencies. The checker compares the
+decoded bytes with the pinned checkout before running. With
+`PEQUALNP_REFERENCE_ROOT` set to the absolute reference checkout, run
+
+```sh
+python3 submission/check.py <<'JSON'
+{"reference_commit":"a9ad395e8fab5537a9017734c14360773f375cd8","timeout_seconds":1200}
+JSON
+```
+
+The exact statements and recorded checker manifests are supplied.
+Hosted Python can check source hashes but does not run Lean.
