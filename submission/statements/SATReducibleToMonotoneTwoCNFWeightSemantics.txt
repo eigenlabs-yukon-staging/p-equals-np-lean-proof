@@ -1,0 +1,7 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ φ : CNF,
+      ∃ ψ : CNF, ∃ k : ℕ,
+        k = (φ.map List.length).sum + 1 ∧
+        (∀ c ∈ ψ, c.length ≤ 2 ∧ c.all Prod.snd = true) ∧
+        (Satisfiable φ ↔ ∃ σ : Assignment, CNF.eval σ ψ = true ∧
+          ((ψ.flatMap fun c => c.map Prod.fst).toFinset.filter (fun i => σ i = true)).card ≤ k)

@@ -1,16 +1,33 @@
-# Starter submission notes
+# A formula-level reduction to a positive binary CNF weight bound
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+The checked theorem constructs a monotone CNF with at most two
+literals per clause and a cardinality budget. It proves that an
+arbitrary source CNF is satisfiable exactly when the constructed
+formula has a satisfying assignment whose number of distinct true
+occurring variables is within the budget. This is the semantic
+component of a reduction. The statement does not yet establish a
+polynomial-time implementation of the map on the reference
+encoding.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+There is one vertex for every literal occurrence, kept distinct
+even when a literal repeats. Two distinct vertices conflict when
+they belong to the same clause or give opposite values to the same
+original variable. An independent set of size at least the number
+of original clauses has exactly one selected occurrence per clause
+and induces a consistent assignment satisfying the source. A
+satisfying source assignment yields such an independent set by
+choosing one true occurrence in each clause.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+The target formula makes each conflicting pair a positive binary
+clause. Target variables set false are the selected independent
+vertices. A global anchor and one marker per original clause are
+forced true. The global anchor also ensures each vertex is present
+in the target name set, even if it has no incident conflict. If
+there are T occurrences and M clauses, the count of true names
+plus selected vertices is T + M + 1. Setting the budget to T + 1
+therefore forces at least M selected vertices. Empty clauses,
+empty formulas and repeated literal occurrences are covered.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The exact source and statement hashes are supplied with the pinned
+checker record. The actual kernel check is reproducible from the
+submitted source and prepared reference checkout.
