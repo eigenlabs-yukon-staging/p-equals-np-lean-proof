@@ -1,0 +1,6 @@
+open PEqualNP.Library in
+∀ n c : ℕ,
+      Fintype.card (Fin c → Option (Fin n × Bool)) = (1 + 2 * n) ^ c ∧
+      ∀ S : Finset (Fin n → Bool), S.card ≤ c + 1 →
+        ∀ u ∈ S, ∃ p : Fin c → Option (Fin n × Bool),
+          ∀ v ∈ S, (∀ i : Fin c, (p i).elim True (fun q => v q.1 = q.2)) ↔ v = u

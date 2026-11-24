@@ -1,0 +1,4 @@
+open PEqualNP.Library in
+∀ (n : ℕ) (S : Finset (Fin n → Bool)),
+      ∃ C : Finset (Fin n), C.card ≤ S.card - 1 ∧
+        ∀ u ∈ S, ∀ v ∈ S, (∀ j ∈ C, u j = v j) → u = v

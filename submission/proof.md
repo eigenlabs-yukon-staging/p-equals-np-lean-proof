@@ -1,16 +1,26 @@
-# Starter submission notes
+# Deterministic coordinate isolation for small finite families
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+Any finite set of Boolean vectors admits a separating set
+of at most one fewer coordinates than its cardinality.
+Insert vectors one at a time. The previously chosen
+coordinates leave at most one old vector indistinguishable
+from the new vector. If that old vector exists, choose a
+coordinate where it differs from the new vector and add it.
+Old vectors remain separated, and the new coordinate
+separates the only unresolved pair. The empty and singleton
+cases both need zero coordinates.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+For a set of cardinality at most c + 1, a pattern with c
+optional coordinate tests can isolate each member. Copy its
+values on the selected separating coordinates and leave the
+remaining slots blank. There are exactly (1 + 2n)^c such
+patterns on n Boolean coordinates. With c fixed, this is a
+polynomial-size family, giving a finite combinatorial
+ingredient for deterministic isolation of bounded
+multiplicity witness sets.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
-
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The statement verifies the separating coordinates, singleton
+test property, and family cardinality. It does not yet
+implement the uniform machine that enumerates or checks the
+patterns on words, or assert that arbitrary NP verifier
+witness sets have bounded multiplicity.
