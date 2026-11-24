@@ -1,0 +1,10 @@
+PEqualNP.Library.NP ⊆ PEqualNP.Library.P →
+  ∀ (R : Set (List Bool × List Bool)),
+    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R →
+    ∀ (p : Polynomial Nat),
+    (∀ x w : List Bool, (x, w) ∈ R → w.length ≤ p.eval x.length) →
+    ∃ f : List Bool → List Bool,
+      PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) f ∧
+      ∀ x : List Bool,
+        (f x = [] ∧ ∀ w : List Bool, (x, w) ∉ R) ∨
+          ∃ w : List Bool, f x = true :: w ∧ (x, w) ∈ R

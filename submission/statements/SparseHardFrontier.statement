@@ -1,0 +1,8 @@
+∀ (A B : Language Bool), A ∈ PEqualNP.Library.NP → PEqualNP.Library.NPHard B →
+  ∀ (q : Polynomial Nat),
+    (∀ (n : Nat) (ys : Finset (List Bool)),
+      (∀ y ∈ ys, y ∈ B ∧ y.length ≤ n) → ys.card ≤ q.eval n) →
+    ∃ (p : Polynomial Nat) (prune : Nat → List (List Bool) → List (List Bool)),
+      ∀ (n : Nat) (xs : List (List Bool)), (∀ x ∈ xs, x.length ≤ n) →
+        (prune n xs).Sublist xs ∧ (prune n xs).length ≤ p.eval n ∧
+          ((∃ y ∈ prune n xs, y ∈ A) ↔ ∃ x ∈ xs, x ∈ A)

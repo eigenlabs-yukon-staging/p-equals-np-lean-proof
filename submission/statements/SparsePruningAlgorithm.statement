@@ -1,0 +1,9 @@
+∀ (f : List Bool → List Bool → List Bool),
+    ∃ run : Nat → List (List Bool) → List (List Bool),
+      ∀ (A B : Language Bool),
+      (∀ x y, f x y ∈ B ↔ x ∈ A ∨ y ∈ A) →
+      ∀ (b : Nat) (xs : List (List Bool)),
+        (∀ a ∈ xs, ∀ z : Finset (List Bool),
+          (∀ y ∈ z, y ∈ B ∧ ∃ w ∈ xs, f a w = y) → z.card ≤ b) →
+        (run b xs).Sublist xs ∧ (run b xs).length ≤ b + 1 ∧
+          ((∃ x ∈ run b xs, x ∈ A) ↔ ∃ x ∈ xs, x ∈ A)

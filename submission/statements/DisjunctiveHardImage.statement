@@ -1,0 +1,4 @@
+∀ (A B : Language Bool), A ∈ PEqualNP.Library.NP → PEqualNP.Library.NPHard B →
+  ∃ f : List Bool × List Bool → List Bool,
+    PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) f ∧
+    ∀ x y : List Bool, f (x, y) ∈ B ↔ x ∈ A ∨ y ∈ A
