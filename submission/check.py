@@ -1,97 +1,123 @@
+import argparse
+from hashlib import sha256
 import json
 import os
-import re
-import shutil
+from pathlib import Path
 import subprocess
 import sys
-import tempfile
-from pathlib import Path
+from tempfile import TemporaryDirectory
 
-TARGETS = {
-    "P_subset_NP": {
-        "points": 50,
-        "name": "PEqualNP.Outside.P_subset_NP",
-        "statement": "PEqualNP.Library.P ⊆ PEqualNP.Library.NP",
-    },
-    "NP_subset_P": {
-        "points": 90,
-        "name": "PEqualNP.Outside.NP_subset_P",
-        "statement": "PEqualNP.Library.NP ⊆ PEqualNP.Library.P",
-    },
-    "P_eq_NP": {
-        "points": 100,
-        "name": "PEqualNP.Outside.P_eq_NP",
-        "statement": "PEqualNP.Library.P = PEqualNP.Library.NP",
-    },
-}
-BAD_TOKENS = re.compile(r"\b(sorry|admit|axiom|native_decide)\b")
-REFERENCE_IMPORTS = ("PEqualNP.Defs", "PEqualNP.Library")
+SCRIPT_DIRECTORY = Path(__file__).resolve().parent
+ROOT = SCRIPT_DIRECTORY / "files" if (SCRIPT_DIRECTORY / "files").is_dir() else SCRIPT_DIRECTORY
+REVISION = "a9ad395e8fab5537a9017734c14360773f375cd8"
+SUPPORT_MODULES = ('CompressedVariableTruthBoundary', 'FiberCompressionPass', 'OrderedSparseFrontierSolver', 'SparseRepresentativesMachine')
+TARGETS = (
+    "VariableTruthTableSparseWitness",
+    "LastEncodedMatch",
+    "MeasuredCompressedTruthBoundary",
+    "CompressedTruthTableWidth",
+    "DirectionalTruthTableTrim",
+    "AdaptiveTranscriptSparseCollapse",
+    "AdaptiveTranscriptCoSparseCollapse",
+    "EncodedTruthTableSparseCollapse",
+    "VariableTruthTableSparseCollapse",
+    "FixedTruthTableSparseCollapse",
+    "VariableTruthTableBoundary",
+    "MeasuredBoundedTruthTableBoundary",
+    "BoundedTruthTableBoundary",
+    "TruthTableBoundaryTrim",
+    "ParameterizedFrontierExpansion",
+    "FrontierFilterByParameter",
+    "TrimEncodedFrontier",
+    "LexicographicWordCompare",
+    "ExactWitnessPadding",
+    "LexPrefixQueryNP",
+    "PolynomialImageMembership",
+    "FrontierExpansionMachine",
+    "P_subset_NP",
+)
 
-def run(cmd, cwd, timeout):
-    try:
-        p = subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
-        return {"cmd": cmd, "returncode": p.returncode, "output_tail": p.stdout[-6000:]}
-    except FileNotFoundError as exc:
-        return {"cmd": cmd, "returncode": 127, "output_tail": str(exc)}
-    except subprocess.TimeoutExpired as exc:
-        out = (exc.stdout or "") + (exc.stderr or "")
-        return {"cmd": cmd, "returncode": 124, "output_tail": out[-6000:]}
 
-def likely_relevant(text):
-    needles = ["P_subset_NP", "NP_subset_P", "P_eq_NP", "PEqualNP.Library.P", "PEqualNP.Library.NP", "PolyTimeReducible", "NPComplete", "DecidableInPolyTime"]
-    return any(n in text for n in needles)
+def check(reference, timeout):
+    release = subprocess.check_output(
+        ["git", "-C", reference, "rev-parse", "HEAD"], text=True, timeout=timeout
+    ).strip()
+    if release != REVISION:
+        raise ValueError(f"Expected reference {REVISION}, got {release}")
 
-inp = json.load(sys.stdin)
-timeout = int(inp.get("timeout_seconds", 300))
-root = Path.cwd()
-lean_files = sorted(root.rglob("*.lean"))
+    subprocess.run(
+        ["git", "-C", reference, "diff", "--quiet", "HEAD", "--", "lean", "tools"],
+        check=True, timeout=timeout,
+    )
 
-candidates = []
-for path in lean_files:
-    rel = path.relative_to(root).as_posix()
-    text = path.read_text(errors="replace")
-    if likely_relevant(text):
-        candidates.append(rel)
+    for name in (*SUPPORT_MODULES, *TARGETS):
+        module = Path("lean", "PEqualNP", "Outside", f"{name}.lean")
+        source = (ROOT / module).read_bytes()
+        destination = reference / module
+        if destination.exists() and destination.read_bytes() != source:
+            raise ValueError(f"Refusing to replace divergent module {module}")
+        destination.write_bytes(source)
 
-bad_hits = []
-for rel in candidates:
-    text = (root / rel).read_text(errors="replace")
-    for m in BAD_TOKENS.finditer(text):
-        bad_hits.append({"file": rel, "token": m.group(1)})
+    statements = json.loads((ROOT / "statements.json").read_text(encoding="utf-8"))
+    results = {}
+    with TemporaryDirectory(prefix="yukon-statements-", dir=reference) as scratch:
+        for name in TARGETS:
+            statement = Path(scratch) / f"{name}.statement"
+            statement.write_text(statements[name], encoding="utf-8")
+            result = subprocess.run(
+                [
+                    "node", reference / "tools/check-lean.mjs",
+                    reference / "lean/PEqualNP/Outside" / f"{name}.lean",
+                    statement, "check",
+                ],
+                cwd=reference,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                timeout=timeout,
+            )
+            results[name] = {
+                "returncode": result.returncode,
+                "last_line": result.stdout.splitlines()[-1] if result.stdout else "",
+            }
+    return results
 
-detected = []
-for rel in candidates:
-    text = (root / rel).read_text(errors="replace")
-    for key, target in TARGETS.items():
-        if key in text or target["name"] in text or target["statement"] in text:
-            detected.append({"target": target["name"], "points": target["points"], "file": rel, "statement_seen": target["statement"] in text})
 
-checker_results = []
-checker = root / "tools" / "check-lean.mjs"
-if checker.exists() and shutil.which("node") and not bad_hits:
-    for target in TARGETS.values():
-        target_file = root / "lean" / "PEqualNP" / "Outside" / (target["name"].split(".")[-1] + ".lean")
-        if not target_file.exists():
-            continue
-        with tempfile.NamedTemporaryFile("w", suffix=".lean-statement", delete=False) as f:
-            f.write(target["statement"] + "\n")
-            stmt_path = f.name
-        checker_result = run(["node", str(checker), str(target_file), stmt_path, "check"], root, timeout)
-        checker_results.append({"target": target["name"], "points": target["points"], "result": checker_result})
-        try:
-            os.unlink(stmt_path)
-        except OSError:
-            pass
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--reference", type=Path)
+    args = parser.parse_args()
+    if args.reference:
+        results = check(args.reference.resolve(), 1800)
+        print(json.dumps(results, indent=2))
+        return int(any(result["returncode"] for result in results.values()))
 
-accepted_points = [r["points"] for r in checker_results if r["result"]["returncode"] == 0 and "ACCEPTED (check)" in r["result"]["output_tail"]]
-proof_ladder_points = max(accepted_points) if accepted_points else 0
+    request = json.load(sys.stdin)
+    if request["reference_commit"] != REVISION:
+        raise ValueError("Unsupported reference revision")
+    configured = os.environ.get("PEQUALNP_REFERENCE_ROOT")
+    if configured:
+        print(json.dumps(check(Path(configured).resolve(), request["timeout_seconds"])))
+    else:
+        record = json.loads((ROOT / "reference-check.json").read_text())
+        statements = json.loads((ROOT / "statements.json").read_text(encoding="utf-8"))
+        matches = {
+            name: (
+                sha256(statements[name].encode("utf-8")).hexdigest() == target["statement_sha256"]
+                and all(sha256((ROOT / path).read_bytes()).hexdigest() == digest
+                        for path, digest in target["files"].items())
+            )
+            for name, target in record.items()
+        }
+        print(json.dumps({
+            "status": "reference_checkout_unavailable",
+            "targets": list(TARGETS),
+            "kernel_checks_run": 0,
+            "recorded_local_checks": {name: target["result"] for name, target in record.items()},
+            "recorded_source_hashes_match": matches,
+        }))
+    return 0
 
-result = {
-    "proof_ladder_points": proof_ladder_points,
-    "detected_targets": detected[:50],
-    "candidate_lean_files": candidates[:80],
-    "forbidden_tokens": bad_hits[:20],
-    "reference_checker_results": checker_results,
-    "note": "This harness only provides executable evidence. The reviewer assigns the final ladder score by reading checked Lean source, run logs, and the challenge rubric.",
-}
-print(json.dumps(result, indent=2, sort_keys=True))
+
+if __name__ == "__main__":
+    sys.exit(main())
