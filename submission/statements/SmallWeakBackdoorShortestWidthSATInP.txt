@@ -1,0 +1,18 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (p : Polynomial ℕ),
+    ∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF,
+        (∃ (a : Finset ℕ) (σ : Assignment) (w : ℕ),
+          CNF.eval σ φ = true ∧
+          (let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+           IsKCNF 2 (φ.filterMap fun c =>
+             if c.any (fun l => ρ l.1 == some l.2) then none
+             else some (c.filter fun l => (ρ l.1).isNone))) ∧
+          (∀ b ⊆ a,
+            let ρ := fun i : ℕ => if i ∈ b then some (σ i) else none
+            let residual : CNF := φ.filterMap fun d =>
+              if d.any (fun l => ρ l.1 == some l.2) then none
+              else some (d.filter fun l => (ρ l.1).isNone)
+            IsKCNF 2 residual ∨ ∃ c ∈ residual, 2 < List.length c ∧ List.length c ≤ w) ∧
+          2 ^ (((w - 1).size + 1) * a.card) ≤ p.eval (encodeCNF φ).length) →
+        encodeCNF φ ∈ L
