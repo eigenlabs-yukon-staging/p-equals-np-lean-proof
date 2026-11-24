@@ -1,0 +1,9 @@
+∀ cap : ℕ,
+      ∃ E : List Bool → (Fin (2 * cap + 1) → ZMod 2),
+        Set.InjOn E ({w : List Bool | w.length ≤ cap} : Set (List Bool)) ∧
+        ∀ S : Finset (List Bool), S.Nonempty → (∀ w ∈ S, w.length ≤ cap) →
+          ∃ k : ℕ, 1 ≤ k ∧ k ≤ 2 * cap + 3 ∧
+            Fintype.card (Fin k → ((Fin (2 * cap + 1) → ZMod 2) × ZMod 2)) ≤ 8 *
+              ((Finset.univ : Finset (Fin k → ((Fin (2 * cap + 1) → ZMod 2) × ZMod 2))).filter (fun f =>
+                ∃ w ∈ S, (∀ i, (∑ j : Fin (2 * cap + 1), (f i).1 j * E w j) + (f i).2 = 0) ∧
+                  ∀ v ∈ S, v ≠ w → ¬ (∀ i, (∑ j : Fin (2 * cap + 1), (f i).1 j * E v j) + (f i).2 = 0))).card

@@ -1,0 +1,6 @@
+∀ (n : ℕ) (hn : 0 < n) (S : Finset (Fin n → ZMod 2)) (hs : S.Nonempty),
+∃ k : ℕ, 1 ≤ k ∧ k ≤ n + 2 ∧
+      Fintype.card (Fin k → ((Fin n → ZMod 2) × ZMod 2)) ≤ 8 *
+        ((Finset.univ : Finset (Fin k → ((Fin n → ZMod 2) × ZMod 2))).filter (fun f =>
+          ∃ s ∈ S, (∀ i, (∑ j : Fin n, (f i).1 j * s j) + (f i).2 = 0) ∧
+            ∀ t ∈ S, t ≠ s → ¬ (∀ i, (∑ j : Fin n, (f i).1 j * t j) + (f i).2 = 0))).card

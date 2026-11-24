@@ -1,16 +1,35 @@
-# Starter submission notes
+# Finite affine witness isolation
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+For a nonempty finite set of vectors over the two-element field,
+some affine output width between one and the input dimension
+plus two has at least one eighth of its seeds mapping exactly
+one set element to the zero vector. The target counts an entire
+finite family uniformly. A seed consists of finitely many
+independent rows, each with coefficients and an offset bit.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+For one fixed vector, every choice of coefficients determines
+exactly one offset producing zero. For two distinct vectors,
+some coordinate of their difference is one. The simultaneous
+zero condition on one row is equivalent to a homogeneous
+constraint on the coefficients followed by the determined
+offset. A verified equivalence splits every coefficient vector
+into a member of that hyperplane and one independent field
+coordinate. Thus each row has exact single-hit and two-hit
+cardinalities, and coordinatewise product gives their powers
+for multiple rows.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+The isolation inequality subtracts collision counts per point
+using a finite union bound. The sets of seeds isolating
+different individual points are disjoint, so their
+cardinalities add. A dyadic output width with its bucket count
+between twice and four times the input set size gives the
+one-eighth bound. An explicit word encoding carries it to
+finite sets of Boolean words with a prescribed length cap.
+The encoding uses a unary length header and a zero-padded
+payload. The header and payload make the encoding injective
+on all words under the cap, including the empty word.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The exact theorems are finite counts. They supply a component
+for a witness-isolation reduction. They do not assert
+a polynomial-time sampling procedure, a randomized solver
+for SAT, or a deterministic class collapse.
