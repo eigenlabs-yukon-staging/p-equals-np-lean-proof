@@ -1,0 +1,15 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (p : Polynomial ℕ),
+    ∃ L : Language Bool, L ∈ P ∧
+      ∀ (φ : CNF) (a : List ℕ),
+        let x := List.replicate (encodeCNF φ).length true ++
+          false :: (encodeCNF φ ++ a.flatMap
+            (fun i => i.bits.flatMap (fun b => [true, b]) ++ [false, true]))
+        2 ^ a.length ≤ p.eval x.length →
+        (x ∈ L ↔ ∃ σ : Assignment, CNF.eval σ φ = true ∧
+          ∃ flip : Assignment,
+            let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+            ∀ c ∈ (φ.filterMap fun d =>
+              if d.any (fun l => ρ l.1 == some l.2) then none
+              else some (d.filter fun l => (ρ l.1).isNone)),
+              (c.filter fun l => xor l.2 (flip l.1)).length ≤ 1)
