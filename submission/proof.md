@@ -1,16 +1,29 @@
-# Starter submission notes
+# Affine seed queries with a polynomial-time witness verifier
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+For each pinned NP language the theorem constructs an NP query
+language and an actual polynomial-time verifier. The input to
+the query is an encoded pair of the original word and a seed
+word. The verifier checks the original relation, the original
+polynomial witness size cap and the affine zero-bucket condition
+under the supplied seed. For a canonical seed encoding, its
+acceptance relation exactly agrees with the finite bounded
+witness set and the affine equations.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The witness encoder uses a unary length header and the payload,
+padded to their fixed dimensions. Its raw-word transducer computes
+the padding with a finite-state fill and a measured drop. An item
+scanner computes XOR dot products by stepping through coefficient
+and witness bits together. A second bounded scan visits the paired
+rows and rejects if a bias-adjusted dot product is nonzero. The
+semantic proof connects Boolean parity to addition and multiplication
+in the two-element field. The reference polynomial clock supplies
+the dimension from the length of the original source input.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
-
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+For every source yes-input there is an output width at most the
+encoded witness dimension plus two with at least a one eighth
+fraction of seeds accepting exactly one bounded witness. A source
+no-input has no accepting witness for any raw seed word, including
+malformed seed words. The original witness test is retained in
+every branch. The theorem supplies the seeded verifier and its
+finite success guarantee, without assuming an algorithm for the
+original NP language or implementing a random seed sampler.

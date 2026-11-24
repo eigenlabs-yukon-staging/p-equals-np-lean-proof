@@ -1,0 +1,29 @@
+open PEqualNP.Library in
+∀ L : Language Bool, L ∈ NP →
+      ∃ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ)
+        (W : List Bool → Finset (List Bool))
+        (E : (b : ℕ) → List Bool → (Fin (2 * b + 1) → ZMod 2))
+        (encodeSeed : (b k : ℕ) → (Fin k → ((Fin (2 * b + 1) → ZMod 2) × ZMod 2)) → List Bool)
+        (D : List Bool × List Bool → Bool) (K : Language Bool),
+        DecidableInPolyTime encodePair R ∧ K ∈ NP ∧
+        ComputableInPolyTime encodePair Computability.encodeBool D ∧
+        (∀ x w, w ∈ W x ↔ w.length ≤ p.eval x.length ∧ (x,w) ∈ R) ∧
+        (∀ x, x ∈ L ↔ (W x).Nonempty) ∧
+        (∀ b, Set.InjOn (E b) ({w : List Bool | w.length ≤ b} : Set (List Bool))) ∧
+        (∀ z, z ∈ K ↔ ∃ w, D (z,w) = true) ∧
+        (∀ x ∉ L, ∀ s : List Bool,
+          (List.replicate x.length true ++ false :: (x ++ s)) ∉ K) ∧
+        (∀ (x : List Bool) (k : ℕ),
+          let b := p.eval x.length
+          ∀ (f : Fin k → ((Fin (2 * b + 1) → ZMod 2) × ZMod 2)) (w : List Bool),
+            let z := List.replicate x.length true ++ false :: (x ++ encodeSeed b k f)
+            D (z,w) = true ↔ w ∈ W x ∧
+              ∀ i, (∑ j : Fin (2 * b + 1), (f i).1 j * E b w j) + (f i).2 = 0) ∧
+        ∀ x ∈ L,
+          let b := p.eval x.length
+          let n := 2 * b + 1
+          ∃ k : ℕ, 1 ≤ k ∧ k ≤ n + 2 ∧
+            Fintype.card (Fin k → ((Fin n → ZMod 2) × ZMod 2)) ≤ 8 *
+              ((Finset.univ : Finset (Fin k → ((Fin n → ZMod 2) × ZMod 2))).filter (fun f =>
+                let z := List.replicate x.length true ++ false :: (x ++ encodeSeed b k f)
+                ∃ w ∈ W x, D (z,w) = true ∧ ∀ v ∈ W x, v ≠ w → D (z,v) = false)).card
