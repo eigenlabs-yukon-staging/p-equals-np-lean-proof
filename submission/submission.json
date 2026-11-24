@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Finite affine isolation of pinned NP verifier witnesses",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "BoundedNPWitnessIsolation applies the fixed finite affine hashing count to all NP verifier witness sets using the pinned polynomial length bound and CPT relation.",
+    "Each yes-input has a good width with at least one eighth isolating seeds, while outside the language the bounded witness set is empty.",
+    "The theorem does not implement affine seed sampling or decide arbitrary NP inputs in polynomial time.",
+    "P_subset_NP is independently checked using pinned definitions."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned reference checker where available. Otherwise compare source hashes with the submitted checker transcript, without awarding experimental Lean points.",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -33,7 +34,7 @@
       "initial_inputs": [
         {
           "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
-          "timeout_seconds": 300
+          "timeout_seconds": 1200
         }
       ]
     }

@@ -1,0 +1,17 @@
+open PEqualNP.Library in
+∀ L : Language Bool, L ∈ NP →
+      ∃ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ)
+        (E : (b : ℕ) → List Bool → (Fin (2 * b + 1) → ZMod 2))
+        (W : List Bool → Finset (List Bool)),
+        DecidableInPolyTime encodePair R ∧
+        (∀ x w, w ∈ W x ↔ w.length ≤ p.eval x.length ∧ (x,w) ∈ R) ∧
+        (∀ x, x ∈ L ↔ (W x).Nonempty) ∧
+        (∀ b, Set.InjOn (E b) ({w : List Bool | w.length ≤ b} : Set (List Bool))) ∧
+        ∀ x ∈ L,
+          let b := p.eval x.length
+          let n := 2 * b + 1
+          ∃ k : ℕ, 1 ≤ k ∧ k ≤ n + 2 ∧
+            Fintype.card (Fin k → ((Fin n → ZMod 2) × ZMod 2)) ≤ 8 *
+              ((Finset.univ : Finset (Fin k → ((Fin n → ZMod 2) × ZMod 2))).filter (fun f =>
+                ∃ w ∈ W x, (∀ i, (∑ j : Fin n, (f i).1 j * E b w j) + (f i).2 = 0) ∧
+                  ∀ v ∈ W x, v ≠ w → ¬ (∀ i, (∑ j : Fin n, (f i).1 j * E b v j) + (f i).2 = 0))).card
