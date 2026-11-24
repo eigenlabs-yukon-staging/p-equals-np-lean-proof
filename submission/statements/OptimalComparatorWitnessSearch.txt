@@ -1,0 +1,14 @@
+open PEqualNP.Library PEqualNP.Search in
+P = NP ↔
+    ∀ (R C : Set (List Bool × List Bool)) (p : Polynomial ℕ),
+      DecidableInPolyTime encodePair R →
+      DecidableInPolyTime encodePair C →
+      let beats := fun (x u v : List Bool) =>
+        (x, List.replicate u.length true ++ false :: (u ++ v)) ∈ C
+      (∀ x, (∀ u, ¬ beats x u u) ∧
+        (∀ {u v t}, beats x u v → beats x v t → beats x u t)) →
+      ∃ select : List Bool → List Bool,
+        ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) select ∧
+        ∀ x : List Bool, (∃ w : List Bool, w.length ≤ p.eval x.length ∧ (x, w) ∈ R) →
+          (select x).length ≤ p.eval x.length ∧ (x, select x) ∈ R ∧
+          ∀ v : List Bool, v.length ≤ p.eval x.length → (x, v) ∈ R → ¬ beats x v (select x)
