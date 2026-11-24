@@ -1,0 +1,162 @@
+{
+  "PolynomialWitnessSearch": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.PolynomialWitnessSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3234 constants",
+    "files": {
+      "lean/PEqualNP/Outside/PolynomialWitnessSearch.lean": "1d1d2e0eeb6ca03c12ae57d684a12fbe43bb9302d74b68aa69bbf200cb285a6a"
+    },
+    "statement_sha256": "f6a9a51a08c46d75e6a7ea644ccef442b159cceecc1da2de6ef0c99190c85e4b"
+  },
+  "LogWitnessCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.LogWitnessCollapse; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 3236 constants",
+    "files": {
+      "lean/PEqualNP/Outside/LogWitnessCollapse.lean": "777bef69dc5d2974a31ad0a42c771f0f84338f07bd03f1685b0e8a67ae94ecee"
+    },
+    "statement_sha256": "2809e2c348dc5b07f5e1f2f8cbe0917320490d666d2532db5703f7e503ee5ded"
+  },
+  "P_subset_NP": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+    "files": {
+      "lean/PEqualNP/Outside/P_subset_NP.lean": "39c9c126cb8d7c5b44ccb3bd72ea130d978fc8c103a6081af1f1523407a747a8"
+    },
+    "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+  },
+  "FiniteWitnessSearch": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.FiniteWitnessSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 1263 constants",
+    "files": {
+      "lean/PEqualNP/Outside/FiniteWitnessSearch.lean": "030890e0652dac4a5fe497cde73dac002d80a78026bc0fe7f7fe86df6ff5493f"
+    },
+    "statement_sha256": "3e474cddae56f13862244d4f556d8b8d7ec1b967b72b2a9ba21d4371de03eaaf"
+  },
+  "ConstantWitnessBound": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.ConstantWitnessBound; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 1274 constants",
+    "files": {
+      "lean/PEqualNP/Outside/ConstantWitnessBound.lean": "85ce1067cc6ed2ea880ae14336af0b3b73a005dd9a4f3658e77fd894bda0a41d"
+    },
+    "statement_sha256": "98c6e4ee1034d53f955a004e72c49cd77fb5eb4c9d0eba6b67bedb4ad61f4e42"
+  },
+  "WitnessSearchOfCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.WitnessSearchOfCollapse; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 3239 constants",
+    "statement_sha256": "4a6a32d74a77754e88b98cca02390a7b37496afa3071ef0d444f5775e44410d8",
+    "files": {
+      "lean/PEqualNP/Outside/WitnessSearchOfCollapse.lean": "c84176bfa4baf40fa0ea4d8da7a479984b6e3416a04ef4e6e2fa2942249e7498"
+    }
+  },
+  "CollapseIffWitnessSearch": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.CollapseIffWitnessSearch; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 3244 constants",
+    "statement_sha256": "dc5aa3c4a4cc3eadcc5c9f9fad02fc106afb39ac4ec7219df13cc18d53e0f94a",
+    "files": {
+      "lean/PEqualNP/Outside/CollapseIffWitnessSearch.lean": "897c8f3d2ffe63c51da7b92f85b6a4fc4f83c591f0f02a1768d8e27e0fcc2323",
+      "lean/PEqualNP/Outside/WitnessSearchOfCollapse.lean": "c84176bfa4baf40fa0ea4d8da7a479984b6e3416a04ef4e6e2fa2942249e7498"
+    }
+  },
+  "ShortSeedWitnessSearch": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.ShortSeedWitnessSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3239 constants",
+    "files": {
+      "lean/PEqualNP/Outside/ShortSeedWitnessSearch.lean": "12eaea5f7dcc844eb850cb547209210a791742aabb1cd0903e96647552676e7f"
+    },
+    "statement_sha256": "ba337aefabde3e44cdf805a30940b3c1ef2fda28a4a4ba8712a24d1987aa4a38"
+  },
+  "PolynomialWitnessRecovery": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.PolynomialWitnessRecovery; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3244 constants",
+    "statement_sha256": "908ca02ea6583c809f948b35928798f4dd30984bb5c76d8fe4f650b26c83243f",
+    "files": {
+      "lean/PEqualNP/Outside/PolynomialWitnessRecovery.lean": "ea63031784c5a6946d35208c2918a0660626bfdd83eb53722851ae7647a7453f"
+    }
+  },
+  "DisjunctiveHardImage": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.DisjunctiveHardImage; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3224 constants",
+    "files": {
+      "lean/PEqualNP/Outside/DisjunctiveHardImage.lean": "125bd62c3da1330db7c87319baab7559ed94ff57e75f44fc5b4015955215dd59"
+    },
+    "statement_sha256": "b0ed7830cc826da30718c2ba9dd7c64b9deb70a38076c5eb0e2e84e724f9c96b"
+  },
+  "SparsePruningAlgorithm": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.SparsePruningAlgorithm; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 746 constants",
+    "files": {
+      "lean/PEqualNP/Outside/SparsePruningAlgorithm.lean": "7431c6bb9ff91924ddb7c9e4fc02b62643d86100d841f1672e0b407e0c7c5fe1"
+    },
+    "statement_sha256": "1505d4830d06b031bb8cfed672c227b6ca30f2b876d48f5500e656e6bc903760"
+  },
+  "SparseHardFrontier": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.SparseHardFrontier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3255 constants",
+    "statement_sha256": "c7306e899d704089dcbd6afa5a29d99408902b2d566cff3589e53037c67c8c2c",
+    "files": {
+      "lean/PEqualNP/Outside/SparseHardFrontier.lean": "197522eef0b8d41d64084fc0e45a6cb7f77f527d103c5e442d431bd675c23a83",
+      "lean/PEqualNP/Outside/DisjunctiveHardImage.lean": "125bd62c3da1330db7c87319baab7559ed94ff57e75f44fc5b4015955215dd59",
+      "lean/PEqualNP/Outside/SparsePruningAlgorithm.lean": "7431c6bb9ff91924ddb7c9e4fc02b62643d86100d841f1672e0b407e0c7c5fe1"
+    }
+  },
+  "PolynomialImageMembership": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.PolynomialImageMembership; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4064 constants",
+    "files": {
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3"
+    },
+    "statement_sha256": "c82068bbac8169693d510a54612e3ef19888794c91975f9ae3292a08409ff12b"
+  },
+  "SparsePruningMachine": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.SparsePruningMachine; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4170 constants",
+    "files": {
+      "lean/PEqualNP/Outside/SparsePruningMachine.lean": "9443736dbd57971422074831984f4a89cc152c21c975d1ffc303f8234268e050",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparsePruningAlgorithm.lean": "7431c6bb9ff91924ddb7c9e4fc02b62643d86100d841f1672e0b407e0c7c5fe1",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93"
+    },
+    "statement_sha256": "506262da0fd45b64c63daa286e8bc2900d8aff7edaff6705cc1f4c68207bddd4"
+  },
+  "FrontierExpansionMachine": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.FrontierExpansionMachine; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4137 constants",
+    "files": {
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93"
+    },
+    "statement_sha256": "65b4ce9c21fed10950e08497fc8debc238103c3602d1878eed80ee5fe25c63cb"
+  },
+  "SparseHardImpliesCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.SparseHardImpliesCollapse; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 4284 constants",
+    "statement_sha256": "f8302006a97c1bb03cb87e6275f0ae493535fabec1e13246c75f6a04fff61b99",
+    "files": {
+      "lean/PEqualNP/Outside/SparseHardImpliesCollapse.lean": "95ee2ab1c0e9324956063f40d4590b345a58cf64878b8f0e40a295921718035d",
+      "lean/PEqualNP/Outside/DisjunctiveHardImage.lean": "125bd62c3da1330db7c87319baab7559ed94ff57e75f44fc5b4015955215dd59",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseHardFrontier.lean": "197522eef0b8d41d64084fc0e45a6cb7f77f527d103c5e442d431bd675c23a83",
+      "lean/PEqualNP/Outside/SparsePruningAlgorithm.lean": "7431c6bb9ff91924ddb7c9e4fc02b62643d86100d841f1672e0b407e0c7c5fe1",
+      "lean/PEqualNP/Outside/SparsePruningMachine.lean": "9443736dbd57971422074831984f4a89cc152c21c975d1ffc303f8234268e050",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/WitnessSearchOfCollapse.lean": "c84176bfa4baf40fa0ea4d8da7a479984b6e3416a04ef4e6e2fa2942249e7498"
+    }
+  },
+  "CollapseIffSparseHard": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.CollapseIffSparseHard; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4287 constants",
+    "statement_sha256": "aac006565c5bfcbfd50da3a4d2f65940e38a6798475de5050c2dcc5c075e07c6",
+    "files": {
+      "lean/PEqualNP/Outside/CollapseIffSparseHard.lean": "23c36f46c43ac348ccb73d270f4d6785f9c6dcf79a62f2f6102af4af6a3cbabc",
+      "lean/PEqualNP/Outside/DisjunctiveHardImage.lean": "125bd62c3da1330db7c87319baab7559ed94ff57e75f44fc5b4015955215dd59",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseHardFrontier.lean": "197522eef0b8d41d64084fc0e45a6cb7f77f527d103c5e442d431bd675c23a83",
+      "lean/PEqualNP/Outside/SparseHardImpliesCollapse.lean": "95ee2ab1c0e9324956063f40d4590b345a58cf64878b8f0e40a295921718035d",
+      "lean/PEqualNP/Outside/SparsePruningAlgorithm.lean": "7431c6bb9ff91924ddb7c9e4fc02b62643d86100d841f1672e0b407e0c7c5fe1",
+      "lean/PEqualNP/Outside/SparsePruningMachine.lean": "9443736dbd57971422074831984f4a89cc152c21c975d1ffc303f8234268e050",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/WitnessSearchOfCollapse.lean": "c84176bfa4baf40fa0ea4d8da7a479984b6e3416a04ef4e6e2fa2942249e7498"
+    }
+  },
+  "UnaryBudgetWitnessRecovery": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.UnaryBudgetWitnessRecovery; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3247 constants",
+    "statement_sha256": "8026ec551026a6131f83a2d19573bc4f3bc04b10dac7e661f2366261aa988fab",
+    "files": {
+      "lean/PEqualNP/Outside/UnaryBudgetWitnessRecovery.lean": "60d1d64610af7a248e8603249d158541ac146427371d8bace98174dd3fd0feb7",
+      "lean/PEqualNP/Outside/PolynomialWitnessRecovery.lean": "ea63031784c5a6946d35208c2918a0660626bfdd83eb53722851ae7647a7453f"
+    }
+  },
+  "UnaryPaddedSearchForNP": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.UnaryPaddedSearchForNP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3246 constants",
+    "statement_sha256": "f63058a75a54e1ee6bdf04ce2bf817150beacb2e1032b7930a262055047a1d1f",
+    "files": {
+      "lean/PEqualNP/Outside/UnaryPaddedSearchForNP.lean": "7c17bb39d9ce3b4940d93ee8a4ca555494c9de7c84cfcf7c545efa157e910b67",
+      "lean/PEqualNP/Outside/PolynomialWitnessRecovery.lean": "ea63031784c5a6946d35208c2918a0660626bfdd83eb53722851ae7647a7453f"
+    }
+  }
+}
