@@ -1,0 +1,20 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (p : Polynomial ℕ),
+    ∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF,
+        (∃ (σ : Assignment) (path : List (Clause × Literal)),
+          CNF.eval σ φ = true ∧
+          (∀ i v, path[i]? = some v →
+            let k := (path.take i).map (fun q => q.2.1)
+            let ρ := fun x : ℕ => if x ∈ k then some (σ x) else none
+            ((show CNF from φ.filterMap fun d =>
+              if d.any (fun l => ρ l.1 == some l.2) then none
+              else some (d.filter fun l => (ρ l.1).isNone))).find?
+                (fun d => decide (2 < d.length)) = some v.1 ∧ v.2 ∈ v.1) ∧
+          (let k := path.map (fun q => q.2.1)
+           let ρ := fun x : ℕ => if x ∈ k then some (σ x) else none
+           IsKCNF 2 (φ.filterMap fun d =>
+             if d.any (fun l => ρ l.1 == some l.2) then none
+             else some (d.filter fun l => (ρ l.1).isNone))) ∧
+          2 ^ (path.map (fun v => (v.1.length - 1).size + 1)).sum ≤ p.eval (encodeCNF φ).length) →
+        encodeCNF φ ∈ L

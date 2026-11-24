@@ -1,0 +1,20 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ n : ℕ, 5 ≤ n →
+        let φ : CNF :=
+          [[(0, true), (1, false), (1, false)], List.replicate n (0, true),
+            [(1, true), (1, true), (1, true)]]
+        encodeCNF φ ∈ L ∧
+        ¬ ∃ (a : Finset ℕ) (σ : Assignment) (w : ℕ),
+          CNF.eval σ φ = true ∧
+          (let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+           IsKCNF 2 (φ.filterMap fun c =>
+             if c.any (fun l => ρ l.1 == some l.2) then none
+             else some (c.filter fun l => (ρ l.1).isNone))) ∧
+          (∀ b ⊆ a, ∀ c,
+            (let ρ := fun i : ℕ => if i ∈ b then some (σ i) else none
+             ((show CNF from φ.filterMap fun d =>
+               if d.any (fun l => ρ l.1 == some l.2) then none
+               else some (d.filter fun l => (ρ l.1).isNone))).find?
+                 (fun d => decide (2 < d.length))) = some c → c.length ≤ w) ∧
+          2 ^ (((w - 1).size + 1) * a.card) ≤ 64
