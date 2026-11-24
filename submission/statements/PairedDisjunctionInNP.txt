@@ -1,0 +1,5 @@
+open PEqualNP.Library in
+∀ G : Language Bool, G ∈ NP →
+      ∃ H : Language Bool, H ∈ NP ∧
+        ∀ x y : List Bool,
+          (List.replicate x.length true ++ false :: (x ++ y)) ∈ H ↔ x ∈ G ∨ y ∈ G
