@@ -1,0 +1,12 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∃ F : List Bool → List Bool,
+      ComputableInPolyTime (fun s : List Bool => s) (fun s : List Bool => s) F ∧
+      ∀ φ : CNF, IsKCNF 4 φ →
+        ∃ ψ : CNF, F (encodeCNF φ) = encodeCNF ψ ∧ IsKCNF 3 ψ ∧
+          Nonempty (
+            {a : {i : ℕ // i ∈ φ.flatMap (List.map Prod.fst)} → Bool //
+              CNF.eval (fun i => if h : i ∈ φ.flatMap (List.map Prod.fst)
+                then a ⟨i,h⟩ else false) φ = true} ≃
+            {b : {i : ℕ // i ∈ ψ.flatMap (List.map Prod.fst)} → Bool //
+              CNF.eval (fun i => if h : i ∈ ψ.flatMap (List.map Prod.fst)
+                then b ⟨i,h⟩ else false) ψ = true})

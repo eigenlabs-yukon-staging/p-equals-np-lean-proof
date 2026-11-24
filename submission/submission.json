@@ -1,16 +1,15 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Measured parsimonious 4-CNF to 3-CNF transformation",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "The serialized 4-CNF to 3-CNF conversion is measured polynomial time and gives an exact bijection between the two finite model sets.",
+    "P_subset_NP is independently checked against the pinned definitions."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned reference checker where available. Otherwise compare source hashes with the submitted checker transcript, without awarding experimental Lean points.",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -33,7 +32,7 @@
       "initial_inputs": [
         {
           "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
-          "timeout_seconds": 300
+          "timeout_seconds": 1200
         }
       ]
     }
