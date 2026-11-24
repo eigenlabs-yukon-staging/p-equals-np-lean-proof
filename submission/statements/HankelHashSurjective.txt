@@ -1,0 +1,4 @@
+    ∀ (n k : ℕ) (d : Fin n → ZMod 2), d ≠ 0 →
+      ∀ b : Fin k → ZMod 2, ∃ s : Fin (n+k) → ZMod 2,
+        ∀ i : Fin k, (∑ j : Fin n, s ⟨i.val+j.val,
+          Nat.lt_of_lt_of_le (Nat.add_lt_add i.isLt j.isLt) (Nat.le_of_eq (Nat.add_comm k n))⟩ * d j) = b i
