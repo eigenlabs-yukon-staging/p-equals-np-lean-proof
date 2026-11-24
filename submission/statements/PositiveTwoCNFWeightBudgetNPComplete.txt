@@ -1,0 +1,9 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ L : Language Bool, L ∈ NP ∧ (∀ A ∈ NP, PolyTimeReducible A L) ∧
+      ∀ (φ : CNF) (b : List Bool),
+        let x := encodeCNF φ
+        (List.replicate x.length true ++ false :: (x ++ b)) ∈ L ↔
+          (∀ c ∈ φ, (c.length = 1 ∨ c.length = 2) ∧ c.all Prod.snd = true) ∧
+          ∃ σ : Assignment, CNF.eval σ φ = true ∧
+            2 * ((φ.flatMap fun c => c.map Prod.fst).toFinset.filter
+              (fun i => σ i = true)).card ≤ b.length
