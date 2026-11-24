@@ -1,0 +1,22 @@
+open PEqualNP.Library in
+∀ L : Language Bool, L ∈ NP →
+      ∃ (p : Polynomial ℕ) (W : List Bool → Finset (List Bool))
+        (sample : (b : ℕ) → (Fin (2 * b + 3) → ((Fin (2 * b + 1) → ZMod 2) × ZMod 2)) → List Bool)
+        (Q : (x : List Bool) → (Fin (2 * p.eval x.length + 3) →
+          ((Fin (2 * p.eval x.length + 1) → ZMod 2) × ZMod 2)) → List (List Bool))
+        (generate : List Bool × List Bool → List Bool)
+        (D : List Bool × List Bool → Bool) (K : Language Bool),
+        K ∈ NP ∧ ComputableInPolyTime encodePair Computability.encodeBool D ∧
+        ComputableInPolyTime encodePair (fun w : List Bool => w) generate ∧
+        (∀ z, z ∈ K ↔ ∃ w, D (z,w) = true) ∧
+        (∀ b f, (sample b f).length = (2 * b + 3) * (2 * b + 2)) ∧
+        (∀ x f, (Q x f).length = 2 * p.eval x.length + 3 ∧
+          generate (x, sample (p.eval x.length) f) =
+            (Q x f).foldr (fun y r => List.replicate y.length true ++ false :: (y ++ r)) []) ∧
+        (∀ x ∉ L, ∀ f, ∀ z ∈ Q x f, z ∉ K) ∧
+        ∀ x ∈ L,
+          let b := p.eval x.length
+          Fintype.card (Fin (2 * b + 3) → ((Fin (2 * b + 1) → ZMod 2) × ZMod 2)) ≤ 8 *
+            ((Finset.univ : Finset (Fin (2 * b + 3) → ((Fin (2 * b + 1) → ZMod 2) × ZMod 2))).filter
+              (fun f => ∃ z ∈ (Q x f).toFinset, ∃ w ∈ W x, D (z,w) = true ∧
+                ∀ v ∈ W x, v ≠ w → D (z,v) = false)).card
