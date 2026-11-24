@@ -1,0 +1,6 @@
+open PEqualNP.Library in
+∀ b m : ℕ, ∃ E : (Fin m → ((Fin (2*b+1) → ZMod 2) × ZMod 2)) →
+        {w : List Bool // w.length = m * (2*b+2)},
+      Function.Bijective E ∧
+      ∀ f, (E f).val = (List.ofFn (fun i : Fin m =>
+        decide ((f i).2 = 1) :: List.ofFn (fun j : Fin (2*b+1) => decide ((f i).1 j = 1)))).flatten

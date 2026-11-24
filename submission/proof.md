@@ -1,16 +1,25 @@
-# Starter submission notes
+# Exact finite bijection between affine matrices and bit tapes
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+The checked map takes a matrix of m affine rows over the
+two-element field, each of dimension 2b + 1, to the
+concatenation of its row encodings. A row begins with its
+offset bit and continues with its coefficient bits in index
+order. The resulting length is exactly m times (2b + 2).
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+Injectivity is proved through the actual row organization.
+Splitting the word into fixed-size blocks recovers the
+canonical encoded record list. One-to-one decoding of the
+unary-prefixed pairing recovers the individual rows. Equality
+of the bit representation forces equality of every field
+coordinate, because Boolean serialization and field coercion
+are inverse on the two-element field.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
-
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The finite type of tapes of a specified length is equivalent
+to a finite-indexed Boolean function. Its cardinal equals the
+power of two for that length. The same product calculation
+gives the number of affine matrices. An injection between the
+two finite sets of equal size is surjective, so every exact
+length Boolean tape is the encoding of one and only one matrix,
+including the zero-row case. This permits transporting uniform
+counts between the mathematical seed matrices and raw tapes
+used by the batch-query machine.
