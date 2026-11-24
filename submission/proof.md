@@ -1,16 +1,27 @@
-# Starter submission notes
+# One-sided simulation under an isolated-query promise oracle
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+For every pinned NP language the theorem constructs a seeded
+query verifier, its query language in NP, and a polynomial
+number of explicit Boolean coin bits. It then quantifies over
+a hypothetical polynomial-time oracle that answers false on
+queries with no accepted witness and true on queries with
+exactly one accepted witness. The oracle can answer either way
+on a query with multiple witnesses.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+Under those assumptions, a polynomial-time paired-input
+machine constructs the affine prefix query batch, evaluates
+the assumed oracle on each query, and returns their Boolean
+disjunction. The list scan uses the canonical raw pairing
+encoding and a measured loop. A polynomial unary clock
+computes and checks the required tape length. On any source
+no-input the simulated result is false, including at malformed
+tape lengths. For every source yes-input at least one eighth
+of the exact-length tapes yield a true result.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
-
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The yes proof uses the checked finite isolation property.
+An isolated batch query has one accepted witness in the
+finite source witness set. All accepted query witnesses lie
+in that set, so the promise is satisfied over all raw witness
+words. The proof assumes the oracle and does not claim that
+such an oracle has been constructed or that arbitrary NP
+languages are deterministically decidable in polynomial time.
