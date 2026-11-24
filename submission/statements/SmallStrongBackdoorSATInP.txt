@@ -1,0 +1,8 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ p : Polynomial ℕ,
+    ∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF,
+        (∃ a : Finset ℕ,
+          (∀ c ∈ φ, (c.filter (fun l => decide (l.1 ∉ a))).length ≤ 2) ∧
+          8 ^ a.card ≤ p.eval (encodeCNF φ).length) →
+        (encodeCNF φ ∈ L ↔ Satisfiable φ)

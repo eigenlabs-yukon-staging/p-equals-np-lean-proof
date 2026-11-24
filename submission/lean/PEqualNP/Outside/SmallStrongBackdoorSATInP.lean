@@ -1,0 +1,78 @@
+import PEqualNP.Outside.BackdoorPathComplete
+import PEqualNP.Outside.EnumeratingSelector
+import PEqualNP.Library.L030
+
+open PEqualNP.Library PEqualNP.Library.Machines PEqualNP.Library.Universal
+open PEqualNP.Search PEqualNP.Library.SearchHelpers.SatV
+open PEqualNP.Outside.BackdoorPathMachine (query query_cpt)
+open PEqualNP.Outside.BackdoorPathSemantics (query_sound)
+open PEqualNP.Outside.BackdoorPathComplete (complete_query)
+
+private theorem cpt_nonempty :
+    ComputableInPolyTime (fun x : List Bool => x) Computability.encodeBool
+      (fun x : List Bool => !x.isEmpty) := by
+  let move : Bool → Bool → Bool × Option Bool := fun _ _ => (true, none)
+  have ht (l : List Bool) : fstRun move (fun b => some b) true l = [true] := by
+    induction l with
+    | nil => rfl
+    | cons b l ih => simp [fstRun, move, ih]
+  refine fst_polyTime _ _ _ move (fun b => some b) false ?_
+  intro l
+  cases l with
+  | nil => rfl
+  | cons b l => simp [fstRun, move, ht, Computability.encodeBool]
+
+private theorem wfFlag_cpt :
+    ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x)
+      (fun x => bflag (wfB x)) :=
+  fst_polyTime _ _ _ (fun (q : WS) (a : Bool) => (wfD q a, (none : Option Bool)))
+    (fun q => if q = WS.a then some true else none) WS.a (fun s => wfB_eq_fstRun s)
+
+theorem PEqualNP.Outside.SmallStrongBackdoorSATInP (p : Polynomial ℕ) :
+    ∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF,
+        (∃ a : Finset ℕ,
+          (∀ c ∈ φ, (c.filter (fun l => decide (l.1 ∉ a))).length ≤ 2) ∧
+          8 ^ a.card ≤ p.eval (encodeCNF φ).length) →
+        (encodeCNF φ ∈ L ↔ Satisfiable φ) := by
+  obtain ⟨dec, hd, hc⟩ := L030
+  let R : Set (List Bool × List Bool) := {q | query q ∈ KSAT 2}
+  let test : List Bool × List Bool → Bool := fun q => dec (query q)
+  have htest : ∀ q, q ∈ R ↔ test q = true := fun q => hd (query q)
+  have htime : ComputableInPolyTime encodePair Computability.encodeBool test :=
+    cpt_comp query_cpt hc
+  obtain ⟨select, hselect, hfind⟩ :=
+    EnumeratingSelector.select_bounded R p (Polynomial.C 2 * p) ⟨test, htest, htime⟩
+  let answer (x : List Bool) := !(sel (bflag (wfB x)) [] (bflag (test (x, select x)))).isEmpty
+  let L : Language Bool := {x | answer x = true}
+  have hanswer : ∀ x, x ∈ L ↔ wfB x = true ∧ test (x, select x) = true := by
+    intro x
+    change answer x = true ↔ wfB x = true ∧ test (x, select x) = true
+    cases h : wfB x <;> cases ht : test (x, select x) <;>
+      simp [L, answer, h, ht, sel, bflag]
+  have htimeL : ComputableInPolyTime (fun x : List Bool => x) Computability.encodeBool answer := by
+    have hf := cpt_bitFlag (cpt_comp (cpt_pair cpt_id hselect) htime)
+    have h := cpt_comp (cpt_sel wfFlag_cpt (cpt_const []) hf) cpt_nonempty
+    exact h
+  have hsound (φ : CNF) (h : encodeCNF φ ∈ L) : Satisfiable φ :=
+    query_sound φ _ ((htest _).mpr ((hanswer _).mp h).2)
+  refine ⟨L, ⟨answer, fun _ => Iff.rfl, htimeL⟩, ?_, ?_⟩
+  · intro x hx
+    obtain ⟨φ, rfl⟩ := (wfB_iff x).mp ((hanswer x).mp hx).1
+    exact ⟨φ, rfl, hsound φ hx⟩
+  · rintro φ ⟨a, ha, hb⟩
+    refine ⟨hsound φ, fun hsat => (hanswer _).mpr ⟨(wfB_iff _).mpr ⟨φ, rfl⟩, ?_⟩⟩
+    obtain ⟨b, hlen, hmem⟩ := complete_query φ a ha hsat
+    have hpow : 2 ^ b.length ≤ p.eval (encodeCNF φ).length := by
+      calc
+        _ ≤ 2 ^ (3 * a.card) := Nat.pow_le_pow_right (by decide) hlen
+        _ = 8 ^ a.card := by rw [pow_mul]; rfl
+        _ ≤ _ := hb
+    have hblen : b.length ≤ p.eval (encodeCNF φ).length := Nat.lt_two_pow_self.le.trans hpow
+    have hlim : 2 ^ (b.length + 1) ≤ (Polynomial.C 2 * p).eval (encodeCNF φ).length := by
+      rw [pow_succ, Nat.mul_comm]
+      simp only [Polynomial.eval_mul, Polynomial.eval_C]
+      exact Nat.mul_le_mul_left _ hpow
+    have hrank := (BoundedEnumeration.idx_bound b).trans hlim
+    exact (htest _).mp (hfind (encodeCNF φ)
+      ⟨b, ⟨hblen, hmem⟩, (Nat.le_add_right _ _).trans hrank⟩).2
