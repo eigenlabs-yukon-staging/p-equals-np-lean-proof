@@ -1,0 +1,361 @@
+{
+  "TruthTableSparseNextWitness": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.TruthTableSparseNextWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4666 constants",
+    "statement_sha256": "f9ce23f35a9623c9be4d065c9bbce780f7199174c94809d11ac3d17c4589a789",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexTruthTableSparseWitness.lean": "aadd2c51f04f2934b59eaf97cf307c2fa9fad70a3e0d67d614232c6f5f406551",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/ShortlexTruthTableSparseWitness.lean": "553b2e4fdf5611b71862e751f3415340225c5e0709a76dd5cb45cea23fc33064",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/TruthTableSparseNextWitness.lean": "7e55e676eddedc9bf1b50950a204fd200d9aadb3973ad63a8985849bf57ebca6",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "LexTruthTableSparseWitness": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.LexTruthTableSparseWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4648 constants",
+    "statement_sha256": "113d709bd5f16d726c6f7a8426dce3accde4aedbdb50a965f32a1125ca0304bb",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexTruthTableSparseWitness.lean": "aadd2c51f04f2934b59eaf97cf307c2fa9fad70a3e0d67d614232c6f5f406551",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/ShortlexTruthTableSparseWitness.lean": "553b2e4fdf5611b71862e751f3415340225c5e0709a76dd5cb45cea23fc33064",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "ShortlexTruthTableSparseWitness": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.ShortlexTruthTableSparseWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4599 constants",
+    "statement_sha256": "c9c97a47445460191cafe6b6a67c086126d146e0da2466e03e2f73e481b47fd4",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/ShortlexTruthTableSparseWitness.lean": "553b2e4fdf5611b71862e751f3415340225c5e0709a76dd5cb45cea23fc33064",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "VariableTruthTableSparseWitness": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.VariableTruthTableSparseWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4576 constants",
+    "statement_sha256": "cc6f11d9f6ffec2e102284cff171050c6060a766eb888bbe58593d722f7848ed",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "LastEncodedMatch": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.LastEncodedMatch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4209 constants",
+    "statement_sha256": "5ad0492b2b1efe35b41b6b74139f7cbe3b26b810a55d588e387b90c8e4d8a6eb",
+    "files": {
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93"
+    }
+  },
+  "MeasuredCompressedTruthBoundary": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.MeasuredCompressedTruthBoundary; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4418 constants",
+    "statement_sha256": "b60d6101a7d28237ac0cd5d9a7928bc55b20c27b3da4043ee1cc505994002967",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73"
+    }
+  },
+  "DirectionalTruthTableTrim": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.DirectionalTruthTableTrim; axioms [propext, Classical.choice, Quot.sound]; kernel re-checked 734 constants",
+    "statement_sha256": "ac0945016cfb7dbd146c51703001f9c16914b3f7c9185814ef78dc701102930e",
+    "files": {
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f"
+    }
+  },
+  "AdaptiveTranscriptSparseCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.AdaptiveTranscriptSparseCollapse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4598 constants",
+    "statement_sha256": "7d36273aaaf93676ba456258bd4d4a287979d0922b5d1c24367f969b9f34de73",
+    "files": {
+      "lean/PEqualNP/Outside/AdaptiveTranscriptSparseCollapse.lean": "8f5a47166fcbf0273aa625c8790e9d18642ef1dd79be23ec0deb1e9cb79e6324",
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseCollapse.lean": "5cdea25859851f74ab58e3338c8364c98851026f5afe651b39bc90297ad6818e",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "AdaptiveTranscriptCoSparseCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.AdaptiveTranscriptCoSparseCollapse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4605 constants",
+    "statement_sha256": "2d85a4cf3a687c3ff5bd7f34e0b65aa3e43c3500befd30236ec13860417d400d",
+    "files": {
+      "lean/PEqualNP/Outside/AdaptiveTranscriptCoSparseCollapse.lean": "d5c9b76ea32de39fc2996426d86ac6f470ac0a3c31f1521a0a114edb196cd01e",
+      "lean/PEqualNP/Outside/AdaptiveTranscriptSparseCollapse.lean": "8f5a47166fcbf0273aa625c8790e9d18642ef1dd79be23ec0deb1e9cb79e6324",
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseCollapse.lean": "5cdea25859851f74ab58e3338c8364c98851026f5afe651b39bc90297ad6818e",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "EncodedTruthTableSparseCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.EncodedTruthTableSparseCollapse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4597 constants",
+    "statement_sha256": "3add45fe555072563db83fe2361fd2095b00dbee3594680709213f7e1f058fb0",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/EncodedTruthTableSparseCollapse.lean": "5241f53d706ffb697fa3ca886a8983f1835a2fb02ce9818b6112f7883d324eec",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseCollapse.lean": "5cdea25859851f74ab58e3338c8364c98851026f5afe651b39bc90297ad6818e",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "VariableTruthTableSparseCollapse": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.VariableTruthTableSparseCollapse; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 4585 constants",
+    "statement_sha256": "1025aa2520caa5dd9380ebd5c9f028b552aee1578ca03f7ef510b015e559bf4c",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/CompressedVariableTruthBoundary.lean": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+      "lean/PEqualNP/Outside/DirectionalTruthTableTrim.lean": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/LastEncodedMatch.lean": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/MeasuredCompressedTruthBoundary.lean": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+      "lean/PEqualNP/Outside/OrderedSparseFrontierSolver.lean": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseCollapse.lean": "5cdea25859851f74ab58e3338c8364c98851026f5afe651b39bc90297ad6818e",
+      "lean/PEqualNP/Outside/VariableTruthTableSparseWitness.lean": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16"
+    }
+  },
+  "MeasuredBoundedTruthTableBoundary": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.MeasuredBoundedTruthTableBoundary; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4335 constants",
+    "statement_sha256": "7249ccf5a111f1558319fd8376d8cf0d8802dd079319a24ff4d7825a25fc4f5d",
+    "files": {
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+      "lean/PEqualNP/Outside/FiberCompressionPass.lean": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/MeasuredBoundedTruthTableBoundary.lean": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73"
+    }
+  },
+  "BoundedTruthTableBoundary": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.BoundedTruthTableBoundary; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 773 constants",
+    "statement_sha256": "80b4ad3cc09c10a723b6075d9c86e75a20229a8bd4e102c0132f1ffd995fd9d7",
+    "files": {
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+      "lean/PEqualNP/Outside/BoundedTruthTableBoundary.lean": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9"
+    }
+  },
+  "TruthTableBoundaryTrim": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.TruthTableBoundaryTrim; axioms [propext, Classical.choice, Quot.sound]; kernel re-checked 735 constants",
+    "statement_sha256": "d144952f293354196b8949181d7f704c6d0e8c02d7f1f2b5ad2fd97542eb6b71",
+    "files": {
+      "lean/PEqualNP/Outside/TruthTableBoundaryTrim.lean": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73"
+    }
+  },
+  "ParameterizedFrontierExpansion": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.ParameterizedFrontierExpansion; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4168 constants",
+    "statement_sha256": "3b36abff333c15325301bbd6a7e5b9604b1876b342d79e692d0a6c42c3da3e4e",
+    "files": {
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93"
+    }
+  },
+  "FrontierFilterByParameter": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.FrontierFilterByParameter; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4185 constants",
+    "statement_sha256": "24d8a3ed32130e03be293e038b52634674f02f8134c21cbf1f91e4a37ba385eb",
+    "files": {
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/FrontierFilterByParameter.lean": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+      "lean/PEqualNP/Outside/ParameterizedFrontierExpansion.lean": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93"
+    }
+  },
+  "TrimEncodedFrontier": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.TrimEncodedFrontier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4172 constants",
+    "statement_sha256": "b726ecc473fe5a12bffa17d965f6cd73fa746af5e7c0a61402496b112697d60a",
+    "files": {
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+      "lean/PEqualNP/Outside/TrimEncodedFrontier.lean": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e"
+    }
+  },
+  "LexicographicWordCompare": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.LexicographicWordCompare; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4063 constants",
+    "statement_sha256": "bfd1a8542c85237c72adbc19bf59d52079941cbe0930ba18b941c1dd35e5c505",
+    "files": {
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab"
+    }
+  },
+  "ExactWitnessPadding": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.ExactWitnessPadding; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3227 constants",
+    "statement_sha256": "31ea9da9e47ea7be365f5b354b3d9a4288113b83be209b453d1604932b3aefe7",
+    "files": {
+      "lean/PEqualNP/Outside/ExactWitnessPadding.lean": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa"
+    }
+  },
+  "LexPrefixQueryNP": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.LexPrefixQueryNP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4081 constants",
+    "statement_sha256": "3102d26e5295238d0975b96abd1a3e87f2a0f8a21852bb5a167c1bf31df0735b",
+    "files": {
+      "lean/PEqualNP/Outside/LexicographicWordCompare.lean": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+      "lean/PEqualNP/Outside/LexPrefixQueryNP.lean": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07"
+    }
+  },
+  "PolynomialImageMembership": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.PolynomialImageMembership; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4064 constants",
+    "files": {
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3"
+    },
+    "statement_sha256": "c82068bbac8169693d510a54612e3ef19888794c91975f9ae3292a08409ff12b"
+  },
+  "FrontierExpansionMachine": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.FrontierExpansionMachine; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4137 constants",
+    "files": {
+      "lean/PEqualNP/Outside/FrontierExpansionMachine.lean": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+      "lean/PEqualNP/Outside/PolynomialImageMembership.lean": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+      "lean/PEqualNP/Outside/SparseRepresentativesMachine.lean": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93"
+    },
+    "statement_sha256": "65b4ce9c21fed10950e08497fc8debc238103c3602d1878eed80ee5fe25c63cb"
+  },
+  "P_subset_NP": {
+    "result": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+    "files": {
+      "lean/PEqualNP/Outside/P_subset_NP.lean": "39c9c126cb8d7c5b44ccb3bd72ea130d978fc8c103a6081af1f1523407a747a8"
+    },
+    "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+  }
+}

@@ -1,16 +1,28 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Measured lexicographic witness iteration under bounded sparse reductions",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "A measured cursor operation chooses the first or next accepted witness in lexicographic order, including exact exhaustion.",
+    "A measured order-preserving word encoding lets the sparse truth-table witness machine return the lexicographically first accepted witness even when accepted lengths differ.",
+    "Under the bounded sparse truth-table hypothesis, a reference polynomial-time machine outputs a shortest accepted witness for any polynomially bounded relation, breaking ties lexicographically.",
+    "Under a fixed-arity truth-table reduction from an NP-hard language to a sparse target, the new reference machine returns the lexicographically least accepted exact-length witness, or explicit failure.",
+    "A measured parameterized selector returns the last matching word in an encoded frontier with a success tag.",
+    "The variable truth-table and constant-round adaptive conditional collapse theorems now derive decision from the directed pruning and witness machine.",
+    "A measured variable-table pruner uses two query restrictions per fiber, then retains only the required side of each all-false-entry group.",
+    "The exact one-sided boundary lemma proves the false-default prefix and true-default suffix guarantees, including the zero budget.",
+    "A pinned polynomial-time fixed-round adaptive reduction from an NP-hard or coNP-hard language to a cumulatively sparse target implies P = NP.",
+    "For each fixed answer assignment, the transcript compiler measures the leaf computation and proves the correct adaptive transcript using exact query indices.",
+    "For fixed arity, an encoded polynomial-time truth-table reduction from an NP-hard language to a cumulatively polynomially sparse target implies P = NP.",
+    "The measured pruning machine handles a different Boolean truth table at each candidate and preserves every valid last-true boundary of the same frontier.",
+    "The fixed-table pruner has a verified polynomial width bound and only uses the encoded candidates and unary sparse count.",
+    "The ordered frontier solver uses reference polynomial-time machines for fixed-depth binary witness expansion, certified pruning and terminal verification.",
+    "The pinned P subset NP theorem checks independently."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {
