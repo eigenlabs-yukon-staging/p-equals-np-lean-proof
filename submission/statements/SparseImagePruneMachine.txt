@@ -1,0 +1,15 @@
+open PEqualNP.Library in
+    ∃ (E : List (List Bool) → List Bool)
+      (shrink : List Bool → List (List Bool × List Bool) → List (List Bool))
+      (F : (List Bool × List Bool) → List Bool),
+      E [] = [] ∧
+      (∀ a as, E (a :: as) = List.replicate a.length true ++ false :: (a ++ E as)) ∧
+      ComputableInPolyTime encodePair (fun w => w) F ∧
+      ∀ (pivot : List Bool) (as : List (List Bool × List Bool)),
+        F (pivot, E (as.map (fun a => List.replicate a.1.length true ++ false :: (a.1 ++ a.2)))) =
+          E (shrink pivot as) ∧
+        (shrink pivot as).Sublist (pivot :: as.map Prod.fst) ∧
+        (shrink pivot as).length + 1 = as.length + 1 ∧
+        ∀ (G : List Bool → Prop) (S : Finset (List Bool)),
+          S.card < as.length → (∀ q ∈ as, q.2 ∈ S ↔ G pivot ∨ G q.1) →
+          ((∃ x ∈ shrink pivot as, G x) ↔ G pivot ∨ ∃ q ∈ as, G q.1)
