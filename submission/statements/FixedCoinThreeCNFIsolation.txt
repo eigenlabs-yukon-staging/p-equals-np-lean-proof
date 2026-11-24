@@ -1,0 +1,21 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∀ L : Language Bool, L ∈ NP →
+      ∃ (p : Polynomial ℕ)
+        (B : (x : List Bool) →
+          (Fin ((2 * p.eval x.length + 3) * (2 * p.eval x.length + 2)) → Bool) → List CNF)
+        (generate : List Bool × List Bool → List Bool),
+        ComputableInPolyTime encodePair (fun s : List Bool => s) generate ∧
+        (∀ x u, generate (x, List.ofFn u) =
+          ((B x u).map encodeCNF).foldr
+            (fun y rest => List.replicate y.length true ++ false :: (y ++ rest)) []) ∧
+        (∀ x u φ, φ ∈ B x u → IsKCNF 3 φ) ∧
+        (∀ x ∉ L, ∀ u φ, φ ∈ B x u → ¬ Satisfiable φ) ∧
+        ∀ x ∈ L,
+          let n := (2 * p.eval x.length + 3) * (2 * p.eval x.length + 2)
+          let U : CNF → Prop := fun φ =>
+            ∃! a : {i : ℕ // i ∈ φ.flatMap (List.map Prod.fst)} → Bool,
+              CNF.eval (fun i => if h : i ∈ φ.flatMap (List.map Prod.fst)
+                then a ⟨i,h⟩ else false) φ = true
+          Fintype.card (Fin n → Bool) ≤ 8 *
+            (@Finset.filter (Fin n → Bool) (fun u => ∃ φ ∈ B x u, U φ)
+              (fun _ => Classical.propDecidable _) Finset.univ).card
