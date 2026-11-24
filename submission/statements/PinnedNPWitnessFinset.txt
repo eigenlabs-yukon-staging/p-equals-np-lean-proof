@@ -1,0 +1,8 @@
+open PEqualNP.Library in
+∀ L : Language Bool, L ∈ NP →
+      ∃ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ)
+        (W : List Bool → Finset (List Bool)),
+        DecidableInPolyTime encodePair R ∧
+        (∀ x w, w ∈ W x ↔ w.length ≤ p.eval x.length ∧ (x,w) ∈ R) ∧
+        (∀ x, x ∈ L ↔ (W x).Nonempty) ∧
+        ∀ x, (W x).card + 1 ≤ 2 ^ (p.eval x.length + 1)
