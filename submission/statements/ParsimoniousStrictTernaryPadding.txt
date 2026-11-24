@@ -1,0 +1,11 @@
+open PEqualNP.Search in
+    ∀ F : CNF, IsKCNF 3 F →
+      (∀ v, (F.flatMap (List.map Prod.fst)).count v ≤ 5) →
+      ∃ G : CNF,
+        (∀ c ∈ G, c.length = 3 ∧ (c.map Prod.fst).Nodup) ∧
+        (∀ v, (G.flatMap (List.map Prod.fst)).count v ≤ 5) ∧
+        Nonempty (
+          {a : {i : ℕ // i ∈ F.flatMap (List.map Prod.fst)} → Bool //
+            CNF.eval (fun i => if h : i ∈ F.flatMap (List.map Prod.fst) then a ⟨i,h⟩ else false) F = true} ≃
+          {a : {i : ℕ // i ∈ G.flatMap (List.map Prod.fst)} → Bool //
+            CNF.eval (fun i => if h : i ∈ G.flatMap (List.map Prod.fst) then a ⟨i,h⟩ else false) G = true})
