@@ -1,16 +1,48 @@
-# Starter submission notes
+# Minimum-cardinality certificates for budgeted CNF projection
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+`LeastBudgetedPartialAssignment` proves a polynomial-time search
+function for every fixed polynomial p and residual predicate H in P.
+When some budget-eligible selection of names and values produces
+an H-member residual, it outputs such a selection of minimum
+cardinality. The output encodes the selected names and their true
+names as canonical unit-clause lists using the reference pair
+format. The selected list contains no duplicates.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The checked rank enumerator stops at the first passing word.
+Every semantic witness has a branch code of exactly the per-name
+record cost times its selected-list length. The rank order is
+monotone by word length. The interpreter can consume no more
+records than fit in the selected word, so its returned list
+cannot be longer than any passing semantic witness. Removing
+duplicate names would preserve the same residual and lower the
+cost, so the minimum list is duplicate-free.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+This is a polynomial-budget search theorem and does not establish
+an unrestricted universal witness extractor. Both this declaration
+and `P_subset_NP` passed the pinned checker.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+## Reproduce
+
+Prepare a checkout of brilliant-hq/pequalnp-proofs at
+`a9ad395e8fab5537a9017734c14360773f375cd8` with Elan, Node.js and the
+Mathlib cache from `lake exe cache get` in its `lean` directory.
+Install the submitted proof sources into that checkout with
+
+```sh
+python3 submission/check.py --overlay /path/to/pinned/reference
+```
+
+The command installs only submitted Outside modules and refuses to
+overwrite different source. The split XZ archive also contains the
+unchanged upstream proof dependencies. The checker compares the
+decoded bytes with the pinned checkout before running. With
+`PEQUALNP_REFERENCE_ROOT` set to the absolute reference checkout, run
+
+```sh
+python3 submission/check.py <<'JSON'
+{"reference_commit":"a9ad395e8fab5537a9017734c14360773f375cd8","timeout_seconds":1200}
+JSON
+```
+
+The exact statements and recorded checker manifests are supplied.
+Hosted Python can check source hashes but does not run Lean.

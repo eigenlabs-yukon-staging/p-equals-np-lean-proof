@@ -1,0 +1,20 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (H : Language Bool) (hH : H ∈ P)
+    (p : Polynomial ℕ),
+    let accepts := fun (φ : CNF) (a : List ℕ) (σ : Assignment) =>
+      (let m := (φ.flatMap fun c => c.map Prod.fst).toFinset.card
+       2 ^ (((m - 1).size + 1) * a.length) ≤ p.eval (encodeCNF φ).length) ∧
+      (∀ i ∈ a, ∃ c ∈ φ, ∃ l ∈ c, l.1 = i) ∧
+      (let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+       encodeCNF (φ.filterMap fun c =>
+         if c.any (fun l => ρ l.1 == some l.2) then none
+         else some (c.filter fun l => (ρ l.1).isNone)) ∈ H)
+    ∃ find : List Bool → List Bool,
+      ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) find ∧
+      ∀ φ : CNF, (∃ (a : List ℕ) (σ : Assignment), accepts φ a σ) →
+        ∃ a v : List ℕ,
+          (let names := encodeCNF (a.map (fun i => [(i, true)]))
+           let values := encodeCNF (v.map (fun i => [(i, true)]))
+           find (encodeCNF φ) = List.replicate names.length true ++ false :: (names ++ values)) ∧
+          a.Nodup ∧ accepts φ a (fun i => decide (i ∈ v)) ∧
+          ∀ (b : List ℕ) (σ : Assignment), accepts φ b σ → a.length ≤ b.length
