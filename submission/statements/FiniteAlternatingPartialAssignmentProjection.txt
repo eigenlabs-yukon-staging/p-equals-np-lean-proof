@@ -1,0 +1,17 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (H : Language Bool) (hH : H ∈ P) (stages : List (Bool × Polynomial ℕ)),
+    ∃ L : Language Bool, L ∈ P ∧
+      ∀ φ : CNF, encodeCNF φ ∈ L ↔
+        stages.foldr (fun q next ψ =>
+          let admissible := fun a : List ℕ =>
+            let m := (ψ.flatMap fun c => c.map Prod.fst).toFinset.card
+            2 ^ (((m - 1).size + 1) * a.length) ≤ q.2.eval (encodeCNF ψ).length ∧
+              ∀ i ∈ a, ∃ c ∈ ψ, ∃ l ∈ c, l.1 = i
+          let res := fun (a : List ℕ) (σ : Assignment) =>
+            let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+            ψ.filterMap fun c =>
+              if c.any (fun l => ρ l.1 == some l.2) then none
+              else some (c.filter fun l => (ρ l.1).isNone)
+          if q.1 then ∀ a : List ℕ, ∀ σ : Assignment, admissible a → next (res a σ)
+          else ∃ (a : List ℕ) (σ : Assignment), admissible a ∧ next (res a σ))
+          (fun ψ => encodeCNF ψ ∈ H) φ
