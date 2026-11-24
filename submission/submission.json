@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Measured exact witness counts and unary rank selection",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "Under the bounded sparse truth-table reduction hypothesis, exact witness counts can be computed in unary when accepted witness sets have polynomial cardinality.",
+    "Under the same reduction hypothesis, a unary-indexed selector returns the exact zero-based lexicographic rank or explicit out-of-range failure.",
+    "The measured enumerator returns the exact sorted distinct prefix of accepted witnesses.",
+    "The directed measured boundary pruner preserves every sparse-consistent last-true candidate.",
+    "The exact unconditional inclusion P subset NP checks independently."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {
