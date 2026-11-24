@@ -1,0 +1,11 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (p : Polynomial ℕ),
+    ({x : List Bool | ∃ φ : CNF, encodeCNF φ = x ∧
+      ∃ (a : List ℕ) (σ flip : Assignment),
+        (let n := (φ.flatMap fun c => c.map Prod.fst).toFinset.card
+         2 ^ (((n - 1).size + 1) * a.length) ≤ p.eval x.length) ∧ (∀ i ∈ a, ∃ c ∈ φ, ∃ l ∈ c, l.1 = i) ∧ CNF.eval σ φ = true ∧
+        let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+        ∀ c ∈ (φ.filterMap fun d =>
+          if d.any (fun l => ρ l.1 == some l.2) then none
+          else some (d.filter fun l => (ρ l.1).isNone)),
+          (c.filter fun l => xor l.2 (flip l.1)).length ≤ 1} : Language Bool) ∈ P

@@ -1,16 +1,50 @@
-# Starter submission notes
+# Exact SAT-residual projection under a polynomial bit budget
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+`PolynomialBudgetPartialAssignmentProjection` constructs a P
+language for each polynomial p and each residual predicate H in P.
+An input CNF has m distinct variable names. An eligible witness
+chooses a list of occurring names A and Boolean values subject to
+`2^(((m-1).size+1)*A.length) ≤ p.eval (encodeCNF φ).length`.
+Acceptance is equivalent to existence of an eligible choice whose
+actual residual encoding is in H. No names or backdoor bound are
+supplied as input.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The checked interpreter truncates each code to the binary size
+of its budget minus one, consumes only complete records, and
+separately rejects budget zero. A conserved record cost proves
+the exact exponent bound for every accepting code. A complete
+semantic witness has an exact record encoding and is found by
+the polynomial rank enumerator. The well-formedness test rejects
+malformed input.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+The checked renamable-Horn specialization applies the generic
+language construction to a verified residual SAT solver. It decides
+the exact restricted language under the stated cost and does not
+put general SAT in P. Both new declarations and `P_subset_NP` passed
+the pinned checker.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+## Reproduce
+
+Prepare a checkout of brilliant-hq/pequalnp-proofs at
+`a9ad395e8fab5537a9017734c14360773f375cd8` with Elan, Node.js and the
+Mathlib cache from `lake exe cache get` in its `lean` directory.
+Install the submitted proof sources into that checkout with
+
+```sh
+python3 submission/check.py --overlay /path/to/pinned/reference
+```
+
+The command installs only submitted Outside modules and refuses to
+overwrite different source. The split XZ archive also contains the
+unchanged upstream proof dependencies. The checker compares the
+decoded bytes with the pinned checkout before running. With
+`PEQUALNP_REFERENCE_ROOT` set to the absolute reference checkout, run
+
+```sh
+python3 submission/check.py <<'JSON'
+{"reference_commit":"a9ad395e8fab5537a9017734c14360773f375cd8","timeout_seconds":1200}
+JSON
+```
+
+The exact statements and recorded checker manifests are supplied.
+Hosted Python can check source hashes but does not run Lean.
