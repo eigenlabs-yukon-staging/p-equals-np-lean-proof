@@ -1,0 +1,13 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∀ (v : List Bool × List Bool → Bool) (p : Polynomial ℕ),
+      ComputableInPolyTime encodePair Computability.encodeBool v →
+      ∃ F : List Bool → CNF,
+        ComputableInPolyTime (fun x : List Bool => x) (fun y : List Bool => y)
+          (fun x => encodeCNF (F x)) ∧
+        ∀ x : List Bool,
+          let φ := F x
+          IsKCNF 4 φ ∧
+          Nonempty ({w : List Bool // w.length ≤ p.eval x.length ∧ v (x,w) = true} ≃
+                    {a : {i : ℕ // i ∈ φ.flatMap (List.map Prod.fst)} → Bool //
+                      CNF.eval (fun i => if h : i ∈ φ.flatMap (List.map Prod.fst)
+                        then a ⟨i,h⟩ else false) φ = true})
