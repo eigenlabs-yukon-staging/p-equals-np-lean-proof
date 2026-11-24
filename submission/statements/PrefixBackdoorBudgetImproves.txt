@@ -1,0 +1,7 @@
+open PEqualNP.Library PEqualNP.Search in
+    (∀ φ : CNF,
+      (φ.flatMap (fun c => (c.take (c.length - 2)).map Prod.fst)).toFinset.card ≤
+      (φ.flatMap (fun c => if 2 < c.length then c.map Prod.fst else [])).toFinset.card) ∧
+    (∃ φ : CNF,
+      (φ.flatMap (fun c => (c.take (c.length - 2)).map Prod.fst)).toFinset.card <
+      (φ.flatMap (fun c => if 2 < c.length then c.map Prod.fst else [])).toFinset.card)

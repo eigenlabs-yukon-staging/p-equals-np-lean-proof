@@ -1,0 +1,7 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ p : Polynomial ℕ,
+    ∃ L : Language Bool, L ∈ P ∧ (∀ x, x ∈ L → x ∈ SAT) ∧
+      ∀ φ : CNF,
+        2 ^ (φ.flatMap (fun c => (c.take (c.length - 2)).map Prod.fst)).toFinset.card ≤
+          p.eval (encodeCNF φ).length →
+        (encodeCNF φ ∈ L ↔ Satisfiable φ)
