@@ -1,97 +1,166 @@
+"""Run the reference checker when a prepared pinned checkout is available."""
+
+import base64
+import hashlib
 import json
+import lzma
 import os
 import re
+from pathlib import Path
 import shutil
 import subprocess
 import sys
-import tempfile
-from pathlib import Path
 
-TARGETS = {
-    "P_subset_NP": {
-        "points": 50,
-        "name": "PEqualNP.Outside.P_subset_NP",
-        "statement": "PEqualNP.Library.P ⊆ PEqualNP.Library.NP",
-    },
-    "NP_subset_P": {
-        "points": 90,
-        "name": "PEqualNP.Outside.NP_subset_P",
-        "statement": "PEqualNP.Library.NP ⊆ PEqualNP.Library.P",
-    },
-    "P_eq_NP": {
-        "points": 100,
-        "name": "PEqualNP.Outside.P_eq_NP",
-        "statement": "PEqualNP.Library.P = PEqualNP.Library.NP",
-    },
-}
-BAD_TOKENS = re.compile(r"\b(sorry|admit|axiom|native_decide)\b")
-REFERENCE_IMPORTS = ("PEqualNP.Defs", "PEqualNP.Library")
+PIN = "a9ad395e8fab5537a9017734c14360773f375cd8"
+TARGETS = {"BoundedNPWitnessIsolation": 65, "P_subset_NP": 50}
+SOURCE = Path("/snapshot/files")
+if not SOURCE.is_dir():
+    SOURCE = Path(__file__).resolve().parent
 
-def run(cmd, cwd, timeout):
-    try:
-        p = subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
-        return {"cmd": cmd, "returncode": p.returncode, "output_tail": p.stdout[-6000:]}
-    except FileNotFoundError as exc:
-        return {"cmd": cmd, "returncode": 127, "output_tail": str(exc)}
-    except subprocess.TimeoutExpired as exc:
-        out = (exc.stdout or "") + (exc.stderr or "")
-        return {"cmd": cmd, "returncode": 124, "output_tail": out[-6000:]}
 
-def likely_relevant(text):
-    needles = ["P_subset_NP", "NP_subset_P", "P_eq_NP", "PEqualNP.Library.P", "PEqualNP.Library.NP", "PolyTimeReducible", "NPComplete", "DecidableInPolyTime"]
-    return any(n in text for n in needles)
+def sources():
+    overlay = {
+        path.relative_to(SOURCE / "lean").as_posix(): path.read_bytes()
+        for path in (SOURCE / "lean").rglob("*.lean")
+    }
+    packed = b"".join(
+        bundle.read_bytes().strip() for bundle in sorted(SOURCE.glob("upstream-source-*.b64"))
+    )
+    document = lzma.decompress(base64.b64decode(packed, validate=True), memlimit=96 * 1024 * 1024)
+    for name, text in json.loads(document).items():
+        if name in overlay:
+            raise ValueError(f"Repeated Lean source: {name}")
+        if not re.fullmatch(
+            r"PEqualNP/(?:Library|MetaComplexity|Outside)/(?:[A-Za-z][A-Za-z0-9_]*/)*"
+            r"[A-Za-z][A-Za-z0-9_]*\.lean", name
+        ):
+            raise ValueError(f"Unexpected packed module path: {name}")
+        overlay[name] = text.encode("utf-8")
+    return overlay
 
-inp = json.load(sys.stdin)
-timeout = int(inp.get("timeout_seconds", 300))
-root = Path.cwd()
-lean_files = sorted(root.rglob("*.lean"))
 
-candidates = []
-for path in lean_files:
-    rel = path.relative_to(root).as_posix()
-    text = path.read_text(errors="replace")
-    if likely_relevant(text):
-        candidates.append(rel)
+def compare_transcript(overlay):
+    hashes = {
+        path.removesuffix(".lean").replace("/", "."): hashlib.sha256(data).hexdigest()
+        for path, data in overlay.items()
+    }
+    evidence = json.loads((SOURCE / "reference-check.json").read_text())
+    expected_hashes = evidence["module_sha256"]
+    results = {}
+    for target, entry in evidence["targets"].items():
+        modules = entry["modules"]
+        statement = SOURCE / "statements" / f"{target}.txt"
+        results[target] = {
+            "recorded_verdict": entry["verdict"],
+            "submitted_modules": len(modules),
+            "source_hashes_match": bool(modules) and all(
+                hashes.get(module) == expected_hashes[module] for module in modules
+            ),
+            "statement_hash_matches": hashlib.sha256(statement.read_bytes()).hexdigest()
+            == entry["statement_sha256"],
+        }
+    return results
 
-bad_hits = []
-for rel in candidates:
-    text = (root / rel).read_text(errors="replace")
-    for m in BAD_TOKENS.finditer(text):
-        bad_hits.append({"file": rel, "token": m.group(1)})
 
-detected = []
-for rel in candidates:
-    text = (root / rel).read_text(errors="replace")
-    for key, target in TARGETS.items():
-        if key in text or target["name"] in text or target["statement"] in text:
-            detected.append({"target": target["name"], "points": target["points"], "file": rel, "statement_seen": target["statement"] in text})
+def require_pinned_reference(reference):
+    head = subprocess.check_output(
+        ["git", "-C", str(reference), "rev-parse", "HEAD"], text=True, timeout=30
+    ).strip()
+    if head != PIN:
+        raise ValueError(f"Expected reference commit {PIN}, found {head}")
 
-checker_results = []
-checker = root / "tools" / "check-lean.mjs"
-if checker.exists() and shutil.which("node") and not bad_hits:
-    for target in TARGETS.values():
-        target_file = root / "lean" / "PEqualNP" / "Outside" / (target["name"].split(".")[-1] + ".lean")
-        if not target_file.exists():
+def install_overlay(reference, overlay):
+    require_pinned_reference(reference)
+    lean = (reference / "lean").resolve()
+    writes = []
+    for name, data in sorted(overlay.items()):
+        if not name.startswith("PEqualNP/Outside/"):
             continue
-        with tempfile.NamedTemporaryFile("w", suffix=".lean-statement", delete=False) as f:
-            f.write(target["statement"] + "\n")
-            stmt_path = f.name
-        checker_result = run(["node", str(checker), str(target_file), stmt_path, "check"], root, timeout)
-        checker_results.append({"target": target["name"], "points": target["points"], "result": checker_result})
+        dest = lean / name
+        if dest.resolve() != dest or not dest.is_relative_to(lean):
+            raise ValueError(f"Unsafe overlay path: {name}")
+        if dest.exists():
+            if dest.read_bytes() != data:
+                raise ValueError(f"Existing source differs; use a clean reference clone: {name}")
+        else:
+            writes.append((dest, data))
+    for dest, data in writes:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with dest.open("xb") as stream:
+            stream.write(data)
+    print(f"Installed {len(writes)} submitted Outside modules")
+
+
+def check(reference, timeout, overlay):
+    require_pinned_reference(reference)
+    for name, data in sorted(overlay.items()):
+        if (reference / "lean" / name).read_bytes() != data:
+            raise ValueError(f"Reference checkout lacks the exact submitted overlay: {name}")
+
+    results = {}
+    for name, points in TARGETS.items():
+        target = reference / "lean" / "PEqualNP" / "Outside" / f"{name}.lean"
+        statement = SOURCE / "statements" / f"{name}.txt"
+        command = ["node", str(reference / "tools" / "check-lean.mjs"),
+                   str(target), str(statement), "check"]
         try:
-            os.unlink(stmt_path)
-        except OSError:
-            pass
+            result = subprocess.run(
+                command, cwd=reference, text=True, capture_output=True, timeout=timeout
+            )
+            verdict = next(
+                (line for line in result.stdout.splitlines() if line.startswith("ACCEPTED (check)")),
+                None,
+            )
+            accepted = result.returncode == 0 and verdict is not None
+            results[name] = {
+                "accepted": accepted,
+                "points_if_accepted": points,
+                "returncode": result.returncode,
+                "verdict": verdict,
+                "output_tail": (result.stdout + result.stderr)[-1000:],
+            }
+        except subprocess.TimeoutExpired:
+            results[name] = {"accepted": False, "error": "reference checker timed out"}
+    return results
 
-accepted_points = [r["points"] for r in checker_results if r["result"]["returncode"] == 0 and "ACCEPTED (check)" in r["result"]["output_tail"]]
-proof_ladder_points = max(accepted_points) if accepted_points else 0
 
-result = {
-    "proof_ladder_points": proof_ladder_points,
-    "detected_targets": detected[:50],
-    "candidate_lean_files": candidates[:80],
-    "forbidden_tokens": bad_hits[:20],
-    "reference_checker_results": checker_results,
-    "note": "This harness only provides executable evidence. The reviewer assigns the final ladder score by reading checked Lean source, run logs, and the challenge rubric.",
-}
-print(json.dumps(result, indent=2, sort_keys=True))
+def main():
+    inputs = json.load(sys.stdin)
+    reference = os.environ.get("PEQUALNP_REFERENCE_ROOT")
+    overlay = sources()
+    inventory = {
+        name: (SOURCE / "lean" / "PEqualNP" / "Outside" / f"{name}.lean").is_file()
+        and (SOURCE / "statements" / f"{name}.txt").is_file()
+        for name in TARGETS
+    }
+    output = {
+        "proof_ladder_points": 0,
+        "source_and_statement_present": inventory,
+        "transcript_source_comparison": compare_transcript(overlay),
+        "reference_commit": PIN,
+    }
+    if inputs.get("reference_commit") != PIN:
+        output["status"] = "input did not select the pinned reference"
+    elif not reference or not shutil.which("node") or not shutil.which("lake"):
+        output["status"] = "Lean was not run. A prepared pinned checkout, Node.js and Lake are required."
+    else:
+        try:
+            results = check(Path(reference).resolve(), inputs["timeout_seconds"], overlay)
+            output["reference_checker_results"] = results
+            output["proof_ladder_points"] = max(
+                (item["points_if_accepted"] for item in results.values() if item["accepted"]),
+                default=0,
+            )
+            output["status"] = "reference checker executed"
+        except (OSError, ValueError, subprocess.SubprocessError) as exc:
+            output["status"] = f"reference checker unavailable: {exc}"
+    print(json.dumps(output, sort_keys=True))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3 and sys.argv[1] == "--overlay":
+        install_overlay(Path(sys.argv[2]).resolve(), sources())
+    elif len(sys.argv) == 1:
+        main()
+    else:
+        raise SystemExit("Usage: check.py [--overlay PINNED_REFERENCE]")
