@@ -1,16 +1,9 @@
-# Starter submission notes
+# Checking whether a bounded witness has minimum length
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+The main theorem constructs a fixed polynomial-time verifier and a fixed polynomial length bound for which recognizing a feasible shortest witness is coNP-complete. Its statement uses the pinned many-one reduction and coNP definitions. This proves an unconditional classification of the checking language. The theorem does not assume a polynomial-time SAT algorithm or provide one.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The verifier accepts a distinguished word consisting entirely of ones, of length equal to the input length plus two. It also accepts a word beginning with a zero tag followed by a witness accepted by the reference SAT verifier. The bounds admit the distinguished word on every input. If SAT holds, the reference verifier has a witness of length at most the input length, so the zero tag and witness remain strictly shorter than the distinguished word. Conversely a shorter accepted word must use the SAT tag, which gives satisfiability through the pinned verifier. This equivalence is on raw binary words, including malformed SAT encodings. No SAT promise is needed to compute the reduction.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+A polynomial-time length comparison implements the local relation that one witness is strictly shorter than the other. The general coNP upper bound for feasible witnesses with no bounded feasible improvement applies to this comparison. The reduction maps a raw SAT word to its canonical pair with the distinguished witness. CoNP-hardness uses the exact completeness of SAT for the reference NP and closure of polynomial reductions under composition. The explicit construction supplies an unconditional limitation on a proposed way of certifying shortest answers by pairing an input with a candidate witness.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The complete Lean import closure is supplied as plain source and a byte-preserving archive. The checker reconstructs identical source bytes from base64 and fixed-width decimal archive records. It checks hashes against the exact statement records and reports separately whether the pinned Lean checker actually ran.

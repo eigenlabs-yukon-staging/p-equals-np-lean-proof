@@ -1,0 +1,8 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ) (L : Language Bool),
+      DecidableInPolyTime encodePair R ∧ L ∈ coNP ∧
+      (∀ A ∈ coNP, PolyTimeReducible A L) ∧
+      ∀ x w : List Bool,
+        (List.replicate x.length true ++ false :: (x ++ w)) ∈ L ↔
+          w.length ≤ p.eval x.length ∧ (x, w) ∈ R ∧
+          ∀ v : List Bool, v.length ≤ p.eval x.length → (x, v) ∈ R → w.length ≤ v.length
