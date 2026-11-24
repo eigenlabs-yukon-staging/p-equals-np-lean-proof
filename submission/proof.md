@@ -1,16 +1,11 @@
-# Starter submission notes
+# Fixed finite bounded quantification under P = NP
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+FiniteQuantifiedWordCollapse is a checked equivalence in the pinned reference model. It says that P = NP holds exactly when applying any fixed finite word of existential and universal polynomially bounded quantifiers to any P language always produces a P language. Each quantifier extends the input by the reference Boolean word pairing. A polynomial bound applies to the current prefix word, so a later bound can depend on the encoded prefix length. The theorem does not assert the claim for lengths of quantifier lists that vary with the input.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The forward implication is induction over the quantifier list. In the existential case, the pinned verifier formulation puts the projected language in NP, so the collapse hypothesis makes it P. In the universal case, complement the P continuation, use existential projection on the complement, and complement the resulting P language. The rest of the induction applies independently of the list of concrete witness values and length polynomials.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+For the converse it suffices to use one existential stage. The reference NP-to-bounded-verifier equivalence supplies the deterministic test, and canonical pairing is computed using the pinned encoder. Projection of the test recovers the original NP language. The pointwise language identification and the reference P inclusion yield the equality of the classes.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+FiniteQuantifiedWordOptimalMove also gives a machine-existence theorem under P = NP. With a fixed finite tail of further quantifiers, the algorithm returns a shortest then lexicographically least existential choice making the continuation true, or a shortest then lexicographically least universal counterexample making it false. An empty result is characterized by the absence of a useful move. A tagged canonical result distinguishes a useful empty word from absence. The construction instantiates the exact shortest-lex witness theorem with the P continuation created by the quantifier induction. There is no uniform alternating-time simulation claim.
+
+The checkable source and theorem statements include the pinned P subset NP fallback. The observed checker record can be independently reproduced on the pinned reference checkout.

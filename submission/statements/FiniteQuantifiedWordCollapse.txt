@@ -1,0 +1,9 @@
+open PEqualNP.Library PEqualNP.Search in
+P = NP ↔
+      ∀ (H : Language Bool), H ∈ P → ∀ (stages : List (Bool × Polynomial ℕ)),
+        ∃ L : Language Bool, L ∈ P ∧ ∀ x : List Bool,
+          x ∈ L ↔ stages.foldr (fun q next y =>
+            let extend (w : List Bool) := List.replicate y.length true ++ false :: (y ++ w)
+            if q.1 then ∀ w : List Bool, w.length ≤ q.2.eval y.length → next (extend w)
+            else ∃ w : List Bool, w.length ≤ q.2.eval y.length ∧ next (extend w))
+            (fun y => y ∈ H) x
