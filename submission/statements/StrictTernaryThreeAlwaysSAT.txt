@@ -1,0 +1,5 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∀ F : CNF,
+      (∀ c ∈ F, c.length = 3 ∧ (c.map Prod.fst).Nodup) →
+      (∀ v, (F.flatMap (List.map Prod.fst)).count v ≤ 3) →
+      Satisfiable F
