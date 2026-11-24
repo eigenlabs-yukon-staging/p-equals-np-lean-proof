@@ -1,0 +1,16 @@
+open PEqualNP.Library PEqualNP.Search in
+P = NP ↔
+    ∀ (R : Set (List Bool × List Bool)) (p r : Polynomial ℕ)
+      (cost : List Bool × List Bool → List Bool),
+      DecidableInPolyTime encodePair R →
+      ComputableInPolyTime encodePair (fun x : List Bool => x) cost →
+      (∀ x w, w.length ≤ p.eval x.length → (x, w) ∈ R → (cost (x, w)).length ≤ r.eval x.length) →
+      ∃ select : List Bool → List Bool,
+        ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) select ∧
+        ∀ x : List Bool, (∃ w : List Bool, w.length ≤ p.eval x.length ∧ (x, w) ∈ R) →
+          (select x).length ≤ p.eval x.length ∧ (x, select x) ∈ R ∧
+          ∀ v : List Bool, v.length ≤ p.eval x.length → (x, v) ∈ R →
+            (cost (x, select x)).length < (cost (x, v)).length ∨
+            (cost (x, select x)).length = (cost (x, v)).length ∧
+              (cost (x, select x) = cost (x, v) ∨
+                List.Lex (fun a b => a = false ∧ b = true) (cost (x, select x)) (cost (x, v)))
