@@ -1,0 +1,7 @@
+open PEqualNP.Library PEqualNP.Search in
+    ∀ {ι κ : Type} [DecidableEq κ] (neighbors : ι → Finset κ) (matchLeft : ι → Option κ)
+      (S : Finset ι) (start : ι),
+      start ∈ S → matchLeft start = none →
+      S.card ≤ (S.biUnion neighbors).card →
+      (∀ y ∈ S.biUnion neighbors, ∀ i, matchLeft i = some y → i ∈ S) →
+      ∃ y ∈ S.biUnion neighbors, ∀ i, matchLeft i ≠ some y
