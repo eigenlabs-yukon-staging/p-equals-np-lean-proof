@@ -1,0 +1,4 @@
+open PEqualNP.Library PEqualNP.Search in
+({x : List Bool | ∃ φ : CNF, encodeCNF φ = x ∧ Satisfiable φ ∧
+      ∃ ρ : Assignment, ∀ c ∈ φ,
+        (c.filter fun l => xor l.2 (ρ l.1)).length ≤ 1} : Language Bool) ∈ P
