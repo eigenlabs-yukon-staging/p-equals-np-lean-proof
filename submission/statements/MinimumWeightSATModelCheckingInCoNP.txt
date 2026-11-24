@@ -1,0 +1,11 @@
+open PEqualNP.Library PEqualNP.Search in
+∃ L : Language Bool, L ∈ coNP ∧
+      ∀ (φ : CNF) (names : List ℕ),
+        let x := encodeCNF φ
+        let w := names.flatMap (fun i => (encodeLiteral (i, true)).drop 2)
+        let σ := fun i : ℕ => decide (i ∈ names)
+        let W := fun (τ : Assignment) => ((φ.flatMap fun c => c.map Prod.fst).toFinset.filter
+          (fun i => τ i = true)).card
+        (List.replicate x.length true ++ false :: (x ++ w)) ∈ L ↔
+          w.length ≤ x.length ∧ CNF.eval σ φ = true ∧
+          ∀ τ : Assignment, CNF.eval τ φ = true → W σ ≤ W τ

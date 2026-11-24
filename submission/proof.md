@@ -1,16 +1,25 @@
-# Starter submission notes
+# Checking a minimum-weight CNF model is in coNP
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+The objective counts distinct occurring names which the candidate
+assignment sets true. It does not count literal occurrences, and
+it does not charge names absent from the formula. An exact polynomial
+machine first gathers names using the canonical SAT item encoding
+and deduplicates them. The second scan tests each name in the
+candidate's true-name word and emits one unary marker per positive
+membership. The resulting length equals the cardinality of the
+semantic Finset of true occurring names.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The comparator runs that counting machine on the proposed model
+and on a possible improvement. A pinned polynomial-time length
+decider gives strict comparison of their counts. The generic
+coNP upper bound supplies a language accepting legal, length-bounded,
+satisfying inputs with no feasible improvement. The witness bound
+uses the input length. Any semantic satisfying model contributes a
+reference witness of that length, and the canonical witness
+agrees with the model on all names occurring in the formula.
+Thus the optimum measured through the bit-word comparison is the
+same as the mathematical minimum over all satisfying assignments.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
-
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The exact kernel check is reproducible with the supplied sources,
+statement and pinned reference checkout. The compressed archive
+preserves the same XZ bits and exact source hashes.
