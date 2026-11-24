@@ -1,0 +1,8 @@
+    ∀ (α β : Type) [DecidableEq β],
+      ∃ prune : α → List (α × β) → List α,
+        ∀ (pivot : α) (as : List (α × β)),
+          (prune pivot as).Sublist (pivot :: as.map Prod.fst) ∧
+          (prune pivot as).length + 1 = as.length + 1 ∧
+          ∀ (G : α → Prop) (S : Finset β),
+            S.card < as.length → (∀ q ∈ as, q.2 ∈ S ↔ G pivot ∨ G q.1) →
+              ((∃ x ∈ prune pivot as, G x) ↔ G pivot ∨ ∃ q ∈ as, G q.1)
