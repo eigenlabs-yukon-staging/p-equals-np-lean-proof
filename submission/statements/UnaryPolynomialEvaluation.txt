@@ -1,0 +1,7 @@
+open PEqualNP.Library in
+    ∃ eval : List Bool → List Bool,
+      ComputableInPolyTime (fun w => w) (fun w => w) eval ∧
+      ∀ (q a : List Bool) (n : ℕ) (u : Fin n → Bool), 0 < q.length →
+        eval (List.replicate q.length true ++ false ::
+          (q ++ (List.replicate a.length true ++ false :: (a ++ List.ofFn u)))) =
+          List.replicate ((∑ i : Fin n, (if u i then 1 else 0) * a.length ^ i.val) % q.length) true
