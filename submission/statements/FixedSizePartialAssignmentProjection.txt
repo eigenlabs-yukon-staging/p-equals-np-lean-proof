@@ -1,0 +1,10 @@
+open PEqualNP.Library PEqualNP.Search in
+∀ (H : Language Bool) (hH : H ∈ P) (k : ℕ),
+    ∃ L : Language Bool, L ∈ P ∧
+      ∀ x, x ∈ L ↔ ∃ φ : CNF, encodeCNF φ = x ∧
+        ∃ (a : List ℕ) (σ : Assignment), a.length ≤ k ∧
+          (∀ i ∈ a, ∃ c ∈ φ, ∃ l ∈ c, l.1 = i) ∧
+          (let ρ := fun i : ℕ => if i ∈ a then some (σ i) else none
+           encodeCNF (φ.filterMap fun c =>
+             if c.any (fun l => ρ l.1 == some l.2) then none
+             else some (c.filter fun l => (ρ l.1).isNone)) ∈ H)
