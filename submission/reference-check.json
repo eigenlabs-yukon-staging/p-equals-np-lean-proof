@@ -1,0 +1,435 @@
+{
+  "modules": {
+    "ExactWitnessPadding": "7b83b5ce37f387c7c18a783693b020d228d99ba6fb2e5b757146cc09daa893aa",
+    "FrontierExpansionMachine": "01103761568482d0d193952cd437c701ec06b6b39416d70b0397d18b7c96371a",
+    "FrontierFilterByParameter": "ec1a0bb327666826e5fa151c475da5024a5ad36866605ebe480870c91a8eec2a",
+    "LexPrefixQueryNP": "77b58a908cae256a063b3740b9ebd2c6aaa6688d25f5deb69d50b92a01d92c07",
+    "LexicographicWordCompare": "1874f226f5c2ce5773cb780cd124e694af09d68dd625a06fd2b402d77c9886ab",
+    "OrderedSparseFrontierSolver": "993b40bf70ac668407b2713412940060c512ac53366025d780342445c1ef4b79",
+    "ParameterizedFrontierExpansion": "115c7159216caa22faf660151d0140147b9fe24cf4c0f7ed2a50f9eab2e0cd05",
+    "PolynomialImageMembership": "816c785b5e227067a251051243c070d2a2a14e14a7901bf8e719c0c32f0e13a3",
+    "SparseRepresentativesMachine": "efdea24ca7e7aef7f5c733b3ece15e0c2485422b79b36efbe73be22ea33e8b93",
+    "ThresholdWitnessNP": "ac938c25b19b6873182a741324fca5c37c1af70cae406e71582c3e20bbf7d893",
+    "BoundedTruthTableBoundary": "d978c80fd6fa116153d491b431fb238335e4815cbe35a9ff3c41304e597e42a9",
+    "CompressedVariableTruthBoundary": "41f0b4e5511c732fa19bcdf2dee63a8e8110710e5858f7a3d2f174a13f87743c",
+    "DirectionalTruthTableTrim": "bfe41a66370eda9a044a31ec3e892e0353504c9383062c057b7541c7ed223f0f",
+    "FiberCompressionPass": "77135e3573b014fade44a34d89d678dd34b8a6a02bebbc54b9f4cba62d8ac05b",
+    "LastEncodedMatch": "8c0f2caabb7812115f5164a2a685c8f184324ff1feb78cca0fc84ddf5a8c3a96",
+    "LexTruthTableSparseWitness": "aadd2c51f04f2934b59eaf97cf307c2fa9fad70a3e0d67d614232c6f5f406551",
+    "MeasuredBoundedTruthTableBoundary": "8a5c02af51a8174c37768fd5b04e3af746ef6bf31cf08feed99cfe09827f0937",
+    "MeasuredCompressedTruthBoundary": "9d524e37eba89e3c2837817e57acbee19aee968583163253648c94b5b108afa7",
+    "ShortlexTruthTableSparseWitness": "553b2e4fdf5611b71862e751f3415340225c5e0709a76dd5cb45cea23fc33064",
+    "TrimEncodedFrontier": "ad713130756e840e6239c264f2e34efb77252eb0b906f298c9fa1d4091a3129e",
+    "TruthTableBoundaryTrim": "64a4d9ee47f2b100459e805936f61b77ab8858903a197a1261d5d06579005b73",
+    "TruthTableSparseNextWitness": "7e55e676eddedc9bf1b50950a204fd200d9aadb3973ad63a8985849bf57ebca6",
+    "TruthTableSparseWitnessEnumeration": "5ea660e99b5f266807310ef9f2e6d0943f28e8b9031a8cd9ffa798d4b3d0ace4",
+    "VariableTruthTableSparseWitness": "1844b7930efdbad6a2e505aafa1881481a407d223959c54d8772658fd1138d16",
+    "AdaptiveTranscriptSparseCollapse": "8f5a47166fcbf0273aa625c8790e9d18642ef1dd79be23ec0deb1e9cb79e6324",
+    "VariableTruthTableSparseCollapse": "5cdea25859851f74ab58e3338c8364c98851026f5afe651b39bc90297ad6818e",
+    "AdaptiveTranscriptCoSparseCollapse": "d5c9b76ea32de39fc2996426d86ac6f470ac0a3c31f1521a0a114edb196cd01e",
+    "P_subset_NP": "39c9c126cb8d7c5b44ccb3bd72ea130d978fc8c103a6081af1f1523407a747a8"
+  },
+  "targets": {
+    "ThresholdWitnessNP": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.ThresholdWitnessNP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4339 constants",
+      "statement_sha256": "8a943486da144b1c56debc9876f0dc6e1eb91853566031e287cadd0328946ba8",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n    \u2200 (p : Polynomial Nat),\n      (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length \u2264 p.eval x.length) \u2192\n      \u2203 L : Language Bool, L \u2208 PEqualNP.Library.NP \u2227\n        \u2200 x fuel : List Bool,\n          (List.replicate x.length true ++ false :: (x ++ fuel)) \u2208 L \u2194\n            \u2203 S : Finset (List Bool), S.card = fuel.length \u2227 \u2200 w \u2208 S, (x,w) \u2208 R\n",
+      "modules": [
+        "ExactWitnessPadding",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LexPrefixQueryNP",
+        "LexicographicWordCompare",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "ThresholdWitnessNP"
+      ]
+    },
+    "TruthTableSparseWitnessEnumeration": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.TruthTableSparseWitnessEnumeration; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4696 constants",
+      "statement_sha256": "b70c224c58ca05e8fbcb8c4c856e4006493235c31cfd5975aa33661c15b5fcb6",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n    \u2200 (p : Polynomial Nat),\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length \u2264 p.eval x.length) \u2192\n    \u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n      \u2200 (s : Polynomial Nat),\n        (\u2200 (n : Nat) (ys : Finset (List Bool)),\n          (\u2200 y \u2208 ys, y \u2208 B \u2227 y.length \u2264 n) \u2192 ys.card \u2264 s.eval n) \u2192\n        \u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n          (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n          \u2200 (T : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n            (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => T x a)) \u2192\n            (\u2200 x : List Bool, x \u2208 A \u2194\n              T x (fun i => @decide (q x i \u2208 B) (Classical.propDecidable _)) = true) \u2192\n            \u2203 run : List Bool \u00d7 List Bool \u2192 List Bool,\n              PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n              (\u2200 x : List Bool, \u2203 ws : List (List Bool),\n                ws.Pairwise (\u00b7 < \u00b7) \u2227 \u2200 w : List Bool, w \u2208 ws \u2194 (x,w) \u2208 R) \u2227\n              \u2200 (x fuel : List Bool) (ws : List (List Bool)), ws.Pairwise (\u00b7 < \u00b7) \u2192\n                (\u2200 w : List Bool, w \u2208 ws \u2194 (x,w) \u2208 R) \u2192\n                run (x,fuel) = (ws.take fuel.length).foldr\n                  (fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)) []\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexTruthTableSparseWitness",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "ShortlexTruthTableSparseWitness",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "TruthTableSparseNextWitness",
+        "TruthTableSparseWitnessEnumeration",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "TruthTableSparseNextWitness": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.TruthTableSparseNextWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4666 constants",
+      "statement_sha256": "f9ce23f35a9623c9be4d065c9bbce780f7199174c94809d11ac3d17c4589a789",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n    \u2200 (p : Polynomial Nat),\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length \u2264 p.eval x.length) \u2192\n    \u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n      \u2200 (s : Polynomial Nat),\n        (\u2200 (n : Nat) (ys : Finset (List Bool)),\n          (\u2200 y \u2208 ys, y \u2208 B \u2227 y.length \u2264 n) \u2192 ys.card \u2264 s.eval n) \u2192\n        \u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n          (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n          \u2200 (T : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n            (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => T x a)) \u2192\n            (\u2200 x : List Bool, x \u2208 A \u2194\n              T x (fun i => @decide (q x i \u2208 B) (Classical.propDecidable _)) = true) \u2192\n            \u2203 next : List Bool \u00d7 List Bool \u2192 List Bool,\n              PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) next \u2227\n              \u2200 x cursor : List Bool,\n                (next (x,cursor) = [] \u2227 \u2200 w : List Bool, (x,w) \u2208 R \u2192\n                  \u00ac(cursor = [] \u2228 cursor.tail < w)) \u2228\n                \u2203 w : List Bool, next (x,cursor) = true :: w \u2227 (x,w) \u2208 R \u2227\n                  (cursor = [] \u2228 cursor.tail < w) \u2227\n                  \u2200 u : List Bool, (x,u) \u2208 R \u2192 (cursor = [] \u2228 cursor.tail < u) \u2192 w \u2264 u\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexTruthTableSparseWitness",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "ShortlexTruthTableSparseWitness",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "TruthTableSparseNextWitness",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "LexTruthTableSparseWitness": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.LexTruthTableSparseWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4648 constants",
+      "statement_sha256": "113d709bd5f16d726c6f7a8426dce3accde4aedbdb50a965f32a1125ca0304bb",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n    \u2200 (p : Polynomial Nat),\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length \u2264 p.eval x.length) \u2192\n    \u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n      \u2200 (s : Polynomial Nat),\n        (\u2200 (n : Nat) (ys : Finset (List Bool)),\n          (\u2200 y \u2208 ys, y \u2208 B \u2227 y.length \u2264 n) \u2192 ys.card \u2264 s.eval n) \u2192\n        \u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n          (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n          \u2200 (T : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n            (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => T x a)) \u2192\n            (\u2200 x : List Bool, x \u2208 A \u2194\n              T x (fun i => @decide (q x i \u2208 B) (Classical.propDecidable _)) = true) \u2192\n            \u2203 f : List Bool \u2192 List Bool,\n              PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) f \u2227\n              \u2200 x : List Bool,\n                (f x = [] \u2227 \u2200 w : List Bool, (x,w) \u2209 R) \u2228\n                  \u2203 w : List Bool, f x = true :: w \u2227 (x,w) \u2208 R \u2227\n                    \u2200 u : List Bool, (x,u) \u2208 R \u2192 w \u2264 u\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexTruthTableSparseWitness",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "ShortlexTruthTableSparseWitness",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "ShortlexTruthTableSparseWitness": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.ShortlexTruthTableSparseWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4599 constants",
+      "statement_sha256": "c9c97a47445460191cafe6b6a67c086126d146e0da2466e03e2f73e481b47fd4",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n    \u2200 (p : Polynomial Nat),\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length \u2264 p.eval x.length) \u2192\n    \u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n      \u2200 (s : Polynomial Nat),\n        (\u2200 (n : Nat) (ys : Finset (List Bool)),\n          (\u2200 y \u2208 ys, y \u2208 B \u2227 y.length \u2264 n) \u2192 ys.card \u2264 s.eval n) \u2192\n        \u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n          (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n          \u2200 (T : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n            (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => T x a)) \u2192\n            (\u2200 x : List Bool, x \u2208 A \u2194\n              T x (fun i => @decide (q x i \u2208 B) (Classical.propDecidable _)) = true) \u2192\n            \u2203 f : List Bool \u2192 List Bool,\n              PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) f \u2227\n              \u2200 x : List Bool,\n                (f x = [] \u2227 \u2200 w : List Bool, (x,w) \u2209 R) \u2228\n                  \u2203 w : List Bool, f x = true :: w \u2227 (x,w) \u2208 R \u2227\n                    \u2200 u : List Bool, (x,u) \u2208 R \u2192 w.length \u2264 u.length \u2227 (w.length = u.length \u2192 w \u2264 u)\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "ShortlexTruthTableSparseWitness",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "VariableTruthTableSparseWitness": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.VariableTruthTableSparseWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4576 constants",
+      "statement_sha256": "cc6f11d9f6ffec2e102284cff171050c6060a766eb888bbe58593d722f7848ed",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n    \u2200 (p : Polynomial Nat),\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length = p.eval x.length) \u2192\n    \u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n      \u2200 (s : Polynomial Nat),\n        (\u2200 (n : Nat) (ys : Finset (List Bool)),\n          (\u2200 y \u2208 ys, y \u2208 B \u2227 y.length \u2264 n) \u2192 ys.card \u2264 s.eval n) \u2192\n        \u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n          (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n          \u2200 (T : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n            (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => T x a)) \u2192\n            (\u2200 x : List Bool, x \u2208 A \u2194\n              T x (fun i => @decide (q x i \u2208 B) (Classical.propDecidable _)) = true) \u2192\n            \u2203 f : List Bool \u2192 List Bool,\n              PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) f \u2227\n              \u2200 x : List Bool,\n                (f x = [] \u2227 \u2200 w : List Bool, (x,w) \u2209 R) \u2228\n                  \u2203 w : List Bool, f x = true :: w \u2227 (x,w) \u2208 R \u2227\n                    \u2200 u : List Bool, (x,u) \u2208 R \u2192 w \u2264 u\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "LastEncodedMatch": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.LastEncodedMatch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4209 constants",
+      "statement_sha256": "5ad0492b2b1efe35b41b6b74139f7cbe3b26b810a55d588e387b90c8e4d8a6eb",
+      "statement": "\u2200 (pred : List Bool \u00d7 List Bool \u2192 Bool),\n  PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair Computability.encodeBool pred \u2192\n    \u2203 run : List Bool \u00d7 List Bool \u2192 List Bool,\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n      \u2200 (a : List Bool) (xs : List (List Bool)),\n        let pack := fun x y : List Bool => List.replicate x.length true ++ false :: (x ++ y)\n        run (a,xs.foldr pack []) =\n          ((xs.filter (fun x => pred (a,x))).getLast?.map (List.cons true)).getD []\n",
+      "modules": [
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine"
+      ]
+    },
+    "MeasuredCompressedTruthBoundary": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.MeasuredCompressedTruthBoundary; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4418 constants",
+      "statement_sha256": "b60d6101a7d28237ac0cd5d9a7928bc55b20c27b3da4043ee1cc505994002967",
+      "statement": "\u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool)\n    (t : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n    (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n    (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => t x a)) \u2192\n    \u2203 (run : List Bool \u00d7 List Bool \u2192 List Bool) (prune : Nat \u2192 List (List Bool) \u2192 List (List Bool)),\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n      (\u2200 (b : List Bool) (xs : List (List Bool)),\n        let enc := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n        run (b, xs.foldr enc []) = (prune b.length xs).foldr enc []) \u2227\n      \u2200 (b : Nat) (xs : List (List Bool)), xs.Nodup \u2192\n        (prune b xs).Sublist xs \u2227\n        (prune b xs).length \u2264 Nat.rec 1 (fun i m => 2 * ((i+1) * b * (2*m)) + 1) k \u2227\n        \u2200 (S : Finset (List Bool)) (l r : List (List Bool)) (x : List Bool), S.card \u2264 b \u2192 xs = l ++ x :: r \u2192\n          (\u2200 y \u2208 l ++ [x], t y (fun i => decide (q y i \u2208 S)) = true) \u2192\n          (\u2200 y \u2208 r, t y (fun i => decide (q y i \u2208 S)) = false) \u2192 x \u2208 prune b xs\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim"
+      ]
+    },
+    "DirectionalTruthTableTrim": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.DirectionalTruthTableTrim; axioms [propext, Classical.choice, Quot.sound]; kernel re-checked 734 constants",
+      "statement_sha256": "ac0945016cfb7dbd146c51703001f9c16914b3f7c9185814ef78dc701102930e",
+      "statement": "\u2200 (m : Nat) (l r : List (List Bool)) (w : List Bool)\n    (touch value : List Bool \u2192 Bool) (default : Bool),\n    ((l ++ w::r).filter touch).length \u2264 m \u2192\n    (\u2200 y \u2208 l ++ w::r, touch y = false \u2192 value y = default) \u2192\n    (\u2200 y \u2208 l ++ [w], value y = true) \u2192\n    (\u2200 y \u2208 r, value y = false) \u2192\n    let xs := l ++ w::r\n    let ys := if default then xs.drop (xs.length - (m+1)) else xs.take m\n    ys.Sublist xs \u2227 ys.length \u2264 m + default.toNat \u2227 w \u2208 ys\n",
+      "modules": [
+        "DirectionalTruthTableTrim"
+      ]
+    },
+    "AdaptiveTranscriptSparseCollapse": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.AdaptiveTranscriptSparseCollapse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4598 constants",
+      "statement_sha256": "7d36273aaaf93676ba456258bd4d4a287979d0922b5d1c24367f969b9f34de73",
+      "statement": "\u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n  \u2200 (s : Polynomial Nat),\n    (\u2200 (n : Nat) (S : Finset (List Bool)),\n      (\u2200 y \u2208 S, y \u2208 B \u2227 y.length \u2264 n) \u2192 S.card \u2264 s.eval n) \u2192\n    \u2200 (d : Nat) (query : List Bool \u00d7 List Bool \u2192 List Bool)\n      (leaf : List Bool \u00d7 List Bool \u2192 Bool),\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) query \u2192\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair Computability.encodeBool leaf \u2192\n      (\u2200 x : List Bool, x \u2208 A \u2194\n        (Nat.rec (fun p => leaf (x,p))\n          (fun _ run p => run (p ++ [@decide (query (x,p) \u2208 B) (Classical.propDecidable _)])) d []) = true) \u2192\n      PEqualNP.Library.P = PEqualNP.Library.NP\n",
+      "modules": [
+        "AdaptiveTranscriptSparseCollapse",
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "VariableTruthTableSparseCollapse",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "AdaptiveTranscriptCoSparseCollapse": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.AdaptiveTranscriptCoSparseCollapse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4605 constants",
+      "statement_sha256": "2d85a4cf3a687c3ff5bd7f34e0b65aa3e43c3500befd30236ec13860417d400d",
+      "statement": "\u2200 (A B : Language Bool), (\u2200 L \u2208 PEqualNP.Library.coNP, PEqualNP.Library.PolyTimeReducible L A) \u2192\n  \u2200 (s : Polynomial Nat),\n    (\u2200 (n : Nat) (S : Finset (List Bool)),\n      (\u2200 y \u2208 S, y \u2208 B \u2227 y.length \u2264 n) \u2192 S.card \u2264 s.eval n) \u2192\n    \u2200 (d : Nat) (query : List Bool \u00d7 List Bool \u2192 List Bool)\n      (leaf : List Bool \u00d7 List Bool \u2192 Bool),\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) query \u2192\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair Computability.encodeBool leaf \u2192\n      (\u2200 x : List Bool, x \u2208 A \u2194\n        (Nat.rec (fun p => leaf (x,p))\n          (fun _ run p => run (p ++ [@decide (query (x,p) \u2208 B) (Classical.propDecidable _)])) d []) = true) \u2192\n      PEqualNP.Library.P = PEqualNP.Library.NP\n",
+      "modules": [
+        "AdaptiveTranscriptCoSparseCollapse",
+        "AdaptiveTranscriptSparseCollapse",
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "VariableTruthTableSparseCollapse",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "VariableTruthTableSparseCollapse": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.VariableTruthTableSparseCollapse; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 4585 constants",
+      "statement_sha256": "1025aa2520caa5dd9380ebd5c9f028b552aee1578ca03f7ef510b015e559bf4c",
+      "statement": "\u2200 (A B : Language Bool), PEqualNP.Library.NPHard A \u2192\n  \u2200 (s : Polynomial Nat),\n    (\u2200 (n : Nat) (ys : Finset (List Bool)),\n      (\u2200 y \u2208 ys, y \u2208 B \u2227 y.length \u2264 n) \u2192 ys.card \u2264 s.eval n) \u2192\n    \u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n      (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n      \u2200 (T : List Bool \u2192 (Fin k \u2192 Bool) \u2192 Bool),\n        (\u2200 a, PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool (fun x => T x a)) \u2192\n        (\u2200 x : List Bool, x \u2208 A \u2194\n          T x (fun i => @decide (q x i \u2208 B) (Classical.propDecidable _)) = true) \u2192\n        PEqualNP.Library.P = PEqualNP.Library.NP\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "CompressedVariableTruthBoundary",
+        "DirectionalTruthTableTrim",
+        "ExactWitnessPadding",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "LastEncodedMatch",
+        "LexPrefixQueryNP",
+        "LexicographicWordCompare",
+        "MeasuredBoundedTruthTableBoundary",
+        "MeasuredCompressedTruthBoundary",
+        "OrderedSparseFrontierSolver",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim",
+        "VariableTruthTableSparseCollapse",
+        "VariableTruthTableSparseWitness"
+      ]
+    },
+    "MeasuredBoundedTruthTableBoundary": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.MeasuredBoundedTruthTableBoundary; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4335 constants",
+      "statement_sha256": "7249ccf5a111f1558319fd8376d8cf0d8802dd079319a24ff4d7825a25fc4f5d",
+      "statement": "\u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n    (\u2200 i, PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) (fun x => q x i)) \u2192\n    \u2203 (run : List Bool \u00d7 List Bool \u2192 List Bool)\n      (prune : Nat \u2192 List (List Bool) \u2192 List (List Bool)) (bound : Polynomial Nat),\n      PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n      (\u2200 (b : List Bool) (xs : List (List Bool)),\n        let enc := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n        run (b, xs.foldr enc []) = (prune b.length xs).foldr enc []) \u2227\n      \u2200 (b : Nat) (xs : List (List Bool)), xs.Nodup \u2192\n        (prune b xs).Sublist xs \u2227 (prune b xs).length \u2264 bound.eval b \u2227\n        \u2200 (S : Finset (List Bool)) (T : (Fin k \u2192 Bool) \u2192 Bool)\n          (left right : List (List Bool)) (x : List Bool), S.card \u2264 b \u2192\n          xs = left ++ x::right \u2192\n          (\u2200 y \u2208 left ++ [x], T (fun i => decide (q y i \u2208 S)) = true) \u2192\n          (\u2200 y \u2208 right, T (fun i => decide (q y i \u2208 S)) = false) \u2192\n          x \u2208 prune b xs\n",
+      "modules": [
+        "BoundedTruthTableBoundary",
+        "FiberCompressionPass",
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "MeasuredBoundedTruthTableBoundary",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier",
+        "TruthTableBoundaryTrim"
+      ]
+    },
+    "BoundedTruthTableBoundary": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.BoundedTruthTableBoundary; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 773 constants",
+      "statement_sha256": "80b4ad3cc09c10a723b6075d9c86e75a20229a8bd4e102c0132f1ffd995fd9d7",
+      "statement": "\u2200 (k : Nat) (q : List Bool \u2192 Fin k \u2192 List Bool),\n    \u2203 prune : Nat \u2192 List (List Bool) \u2192 List (List Bool),\n      \u2200 (b : Nat) (xs : List (List Bool)), xs.Nodup \u2192\n        let limit := Nat.rec 1 (fun j acc => 2*((j+1)*b*acc)+1) k\n        (prune b xs).Sublist xs \u2227 (prune b xs).length \u2264 limit \u2227\n        \u2200 (S : Finset (List Bool)) (T : (Fin k \u2192 Bool) \u2192 Bool)\n          (left right : List (List Bool)) (x : List Bool),\n          S.card \u2264 b \u2192 xs = left ++ x :: right \u2192\n          (\u2200 y \u2208 left ++ [x], T (fun i => decide (q y i \u2208 S)) = true) \u2192\n          (\u2200 y \u2208 right, T (fun i => decide (q y i \u2208 S)) = false) \u2192\n          x \u2208 prune b xs\n",
+      "modules": [
+        "TruthTableBoundaryTrim",
+        "BoundedTruthTableBoundary"
+      ]
+    },
+    "TruthTableBoundaryTrim": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.TruthTableBoundaryTrim; axioms [propext, Classical.choice, Quot.sound]; kernel re-checked 735 constants",
+      "statement_sha256": "d144952f293354196b8949181d7f704c6d0e8c02d7f1f2b5ad2fd97542eb6b71",
+      "statement": "\u2200 (m : Nat) (left right : List (List Bool)) (x : List Bool)\n    (touch value : List Bool \u2192 Bool) (default : Bool),\n    ((left ++ x :: right).filter touch).length \u2264 m \u2192\n    (\u2200 y \u2208 left ++ x :: right, touch y = false \u2192 value y = default) \u2192\n    (\u2200 y \u2208 left ++ [x], value y = true) \u2192\n    (\u2200 y \u2208 right, value y = false) \u2192\n    let xs := left ++ x :: right\n    let ys := xs.take m ++ xs.drop (max m (xs.length - (m+1)))\n    ys.Sublist xs \u2227 ys.length \u2264 2*m + 1 \u2227 x \u2208 ys\n",
+      "modules": [
+        "TruthTableBoundaryTrim"
+      ]
+    },
+    "ParameterizedFrontierExpansion": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.ParameterizedFrontierExpansion; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4168 constants",
+      "statement_sha256": "3b36abff333c15325301bbd6a7e5b9604b1876b342d79e692d0a6c42c3da3e4e",
+      "statement": "\u2200 (children : List Bool \u00d7 List Bool \u2192 List (List Bool)),\n  PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) (fun p =>\n    (children p).foldr (fun a b => List.replicate a.length true ++ false :: (a ++ b)) []) \u2192\n  \u2203 run : List Bool \u00d7 List Bool \u2192 List Bool,\n    PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n    \u2200 (p : List Bool) (xs : List (List Bool)),\n      let consWord := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n      run (p, xs.foldr consWord []) = (xs.flatMap (fun x => children (p,x))).foldr consWord []\n",
+      "modules": [
+        "FrontierExpansionMachine",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine"
+      ]
+    },
+    "FrontierFilterByParameter": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.FrontierFilterByParameter; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4185 constants",
+      "statement_sha256": "24d8a3ed32130e03be293e038b52634674f02f8134c21cbf1f91e4a37ba385eb",
+      "statement": "\u2200 (pred : List Bool \u00d7 List Bool \u2192 Bool),\n  PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair Computability.encodeBool pred \u2192\n  \u2203 run : List Bool \u00d7 List Bool \u2192 List Bool,\n    PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n    \u2200 (p : List Bool) (xs : List (List Bool)),\n      let consWord := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n      run (p, xs.foldr consWord []) = (xs.filter (fun x => pred (p,x))).foldr consWord []\n",
+      "modules": [
+        "FrontierExpansionMachine",
+        "FrontierFilterByParameter",
+        "ParameterizedFrontierExpansion",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine"
+      ]
+    },
+    "TrimEncodedFrontier": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.TrimEncodedFrontier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4172 constants",
+      "statement_sha256": "b726ecc473fe5a12bffa17d965f6cd73fa746af5e7c0a61402496b112697d60a",
+      "statement": "\u2203 run : List Bool \u00d7 List Bool \u2192 List Bool,\n  PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) run \u2227\n  \u2200 (m : List Bool) (xs : List (List Bool)),\n    let consWord := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n    run (m, xs.foldr consWord []) =\n      (xs.take m.length ++ xs.drop (max m.length (xs.length - (m.length+1)))).foldr consWord []\n",
+      "modules": [
+        "FrontierExpansionMachine",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine",
+        "TrimEncodedFrontier"
+      ]
+    },
+    "LexicographicWordCompare": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.LexicographicWordCompare; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4063 constants",
+      "statement_sha256": "bfd1a8542c85237c72adbc19bf59d52079941cbe0930ba18b941c1dd35e5c505",
+      "statement": "PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair Computability.encodeBool\n  (fun p : List Bool \u00d7 List Bool => p.1.lex p.2 (fun a b => !a && b))\n",
+      "modules": [
+        "LexicographicWordCompare"
+      ]
+    },
+    "ExactWitnessPadding": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.ExactWitnessPadding; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3227 constants",
+      "statement_sha256": "31ea9da9e47ea7be365f5b354b3d9a4288113b83be209b453d1604932b3aefe7",
+      "statement": "\u2200 (L : Language Bool), L \u2208 PEqualNP.Library.NP \u2192\n  \u2203 (R : Set (List Bool \u00d7 List Bool)) (p : Polynomial Nat),\n    PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2227\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length = p.eval x.length) \u2227\n    (\u2200 x : List Bool, x \u2208 L \u2194 \u2203 w : List Bool, (x,w) \u2208 R)\n",
+      "modules": [
+        "ExactWitnessPadding"
+      ]
+    },
+    "LexPrefixQueryNP": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.LexPrefixQueryNP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4081 constants",
+      "statement_sha256": "3102d26e5295238d0975b96abd1a3e87f2a0f8a21852bb5a167c1bf31df0735b",
+      "statement": "\u2200 (R : Set (List Bool \u00d7 List Bool)),\n  PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R \u2192\n  \u2200 (p : Polynomial Nat),\n    (\u2200 x w : List Bool, (x,w) \u2208 R \u2192 w.length \u2264 p.eval x.length) \u2192\n    \u2203 A : Language Bool, A \u2208 PEqualNP.Library.NP \u2227\n      \u2200 x t : List Bool,\n        (List.replicate x.length true ++ false :: (x ++ t)) \u2208 A \u2194\n          \u2203 w : List Bool, (x,w) \u2208 R \u2227\n            t.lex (w.take t.length) (fun a b => !a && b) = false\n",
+      "modules": [
+        "LexicographicWordCompare",
+        "LexPrefixQueryNP"
+      ]
+    },
+    "PolynomialImageMembership": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.PolynomialImageMembership; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4064 constants",
+      "statement_sha256": "c82068bbac8169693d510a54612e3ef19888794c91975f9ae3292a08409ff12b",
+      "statement": "\u2200 (f : List Bool \u00d7 List Bool \u2192 List Bool),\n    PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x => x) f \u2192\n    \u2203 matchImage : List Bool \u2192 Bool,\n      PEqualNP.Library.ComputableInPolyTime (fun x => x) Computability.encodeBool matchImage \u2227\n        \u2200 (p k : List Bool) (xs : List (List Bool)),\n          let consWord := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n          matchImage (consWord p (consWord k (xs.foldr consWord []))) = true \u2194\n            \u2203 x \u2208 xs, f (p,x) = k\n",
+      "modules": [
+        "PolynomialImageMembership"
+      ]
+    },
+    "FrontierExpansionMachine": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.FrontierExpansionMachine; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4137 constants",
+      "statement_sha256": "65b4ce9c21fed10950e08497fc8debc238103c3602d1878eed80ee5fe25c63cb",
+      "statement": "\u2200 (g : List Bool \u2192 List Bool),\n    PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) g \u2192\n    \u2200 (children : List Bool \u2192 List (List Bool)),\n    (\u2200 x, g x =\n      (children x).foldr (fun a b => List.replicate a.length true ++ false :: (a ++ b)) []) \u2192\n    \u2203 run : List Bool \u2192 List Bool,\n      PEqualNP.Library.ComputableInPolyTime (fun x => x) (fun x => x) run \u2227\n      \u2200 xs : List (List Bool),\n        let consWord := fun a b : List Bool => List.replicate a.length true ++ false :: (a ++ b)\n        run (xs.foldr consWord []) = (xs.flatMap children).foldr consWord []\n",
+      "modules": [
+        "FrontierExpansionMachine",
+        "PolynomialImageMembership",
+        "SparseRepresentativesMachine"
+      ]
+    },
+    "P_subset_NP": {
+      "result": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154",
+      "statement": "PEqualNP.Library.P \u2286 PEqualNP.Library.NP\n",
+      "modules": [
+        "P_subset_NP"
+      ]
+    }
+  }
+}

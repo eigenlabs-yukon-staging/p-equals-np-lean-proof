@@ -1,16 +1,19 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "An unconditional NP verifier for unary distinct-witness thresholds",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "Every measured polynomially bounded verifier admits an unconditional NP verifier for a unary threshold on distinct accepted witnesses.",
+    "The conditional machine enumerates exactly the unary-budgeted prefix of distinct witnesses in lexicographic order.",
+    "The ranked witness variants return a shortest or lexicographically first witness, with an explicit failure output.",
+    "The measured directed pruner preserves each sparse-consistent last-true boundary.",
+    "The constant-round adaptive and bounded truth-table hypotheses imply P = NP.",
+    "The exact unconditional inclusion P subset NP checks independently."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Run the pinned exact-statement checker when the reference checkout is available and otherwise report unavailability.",
       "input_schema": {
         "type": "object",
         "properties": {
