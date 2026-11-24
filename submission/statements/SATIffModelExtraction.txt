@@ -1,0 +1,8 @@
+open PEqualNP.Library PEqualNP.Search in
+SAT ∈ P ↔
+      ∃ find : List Bool → List Bool,
+        ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) find ∧
+        ∀ φ : CNF, Satisfiable φ →
+          ∃ v : List ℕ,
+            find (encodeCNF φ) = v.flatMap (fun i => (encodeLiteral (i, true)).drop 2) ∧
+            CNF.eval (fun i => decide (i ∈ v)) φ = true
