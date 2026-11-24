@@ -1,0 +1,12 @@
+open PEqualNP.Library in
+∀ f : List Bool × List Bool → List Bool,
+      ComputableInPolyTime encodePair (fun x => x) f →
+      ∃ (E : List (List Bool) → List Bool) (F : List Bool × List Bool → List Bool),
+        E [] = [] ∧
+        (∀ a as, E (a :: as) = List.replicate a.length true ++ false :: (a ++ E as)) ∧
+        ComputableInPolyTime encodePair (fun w => w) F ∧
+        ∀ (G : List Bool → Prop) (S : Finset (List Bool)) (cap : List Bool) (as : List (List Bool)),
+          S.card < cap.length →
+          (∀ x ∈ as, ∀ y ∈ as, f (x,y) ∈ S ↔ G x ∨ G y) →
+          ∃ bs : List (List Bool), F (cap,E as) = E bs ∧
+            bs.Sublist as ∧ bs.length ≤ cap.length ∧ ((∃ x ∈ bs, G x) ↔ ∃ x ∈ as, G x)
