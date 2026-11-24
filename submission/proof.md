@@ -1,16 +1,9 @@
-# Starter submission notes
+# Checking whether a CNF model is lexicographically least
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+The theorem classifies a language of raw input words in the pinned coNP definition. On canonical pairs it accepts exactly a length-bounded candidate model satisfying the formula with no satisfying model preceding it. Models are compared on the sequence of variable occurrences, with false before true. At the first differing variable, subsequent repeats have no effect. This order need not coincide with sorting the numerical names of the variables.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+CoNP membership uses a measured comparison on the actual SAT witness coding. The machine scans the original CNF, reads literal name codes, checks each name in both witness words, and freezes at the first difference. A canonical witness for any semantic assignment is at most the length of the encoded formula and agrees on every occurring variable, so the bounded no-improvement test is equivalent to the quantified proposition over all semantic assignments.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+For hardness, reserve selector name zero and rename each original variable to an odd name. Insert a selector tautology first, then add the positive selector to all renamed clauses. The constructed formula is always satisfied by setting only the selector true. A model with the selector false is possible exactly when the original formula is satisfiable and would immediately precede the fallback. If no such model exists, the fallback is least because it uses false for every remaining variable. A raw malformed source word maps to the gated formula for a single empty clause. The polynomial reduction compiles encodings with the actual bounded scan, and the argument uses the pinned SAT completeness result.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The final theorem and principal scanner and comparison proofs are supplied as plain Lean source. The archive carries the remaining helper modules. Earlier dependencies and upstream source are supplied byte-for-byte in the compressed archive. The base64 and decimal records reconstruct the same XZ stream. The checker reports hash agreement separately from execution of the actual Lean kernel check.
