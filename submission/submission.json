@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Polynomial-time sparse model search by bounded elimination replay",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "MeasuredReverseClause reverses the sequence of canonical encoded literals in polynomial time.",
+    "MeasuredEliminationWitness returns a verified sparse satisfying assignment or the empty word exactly on unsatisfiable inputs under supplied stage coverage and a complete variable order.",
+    "MeasuredWidthEliminationWitness generates the fixed-width universe automatically and implements the same exact search for complete orders with bounded intermediate clause cardinality."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind all archived Lean overlay sources and the recorded exact statements to the local reference replay. The isolated experiment reports its live Lean invocation count, which may be zero.",
       "input_schema": {
         "type": "object",
         "properties": {

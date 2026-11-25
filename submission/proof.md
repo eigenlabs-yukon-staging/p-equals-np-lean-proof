@@ -1,16 +1,33 @@
-# Starter submission notes
+# Sparse satisfying assignments from covered elimination orders
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission turns the earlier exact bounded Davis–Putnam decision procedure into a measured search procedure. The input consists of a canonical CNF, a supplied variable order that covers all variables of the original formula, and a universe containing the clauses in every prefix stage. Under those conditions, the new deterministic polynomial-time machine returns the empty word on unsatisfiable formulas and a tagged sparse satisfying assignment on satisfiable formulas. A second theorem instantiates the universe with the previously measured fixed-width generator, leaving only the order and the original formula as inputs. Both results use the reference encoding and polynomial-time predicate.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## What the output represents
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+A successful output consists of a true marker followed by a concatenation of the reference variable codes. Each code gives the binary digits of a variable identifier and the literal-word terminator, without any polarity prefix. A variable evaluates to true exactly when its identifier occurs in the decoded list. All unlisted variables evaluate to false. In Lean the output theorem exhibits the list of variable identifiers and verifies that the resulting total assignment makes the original canonical CNF evaluate to true. The marker leaves room for the valid all-false witness, which has an empty code payload. The empty output word is distinct and denotes failure to produce a model.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The theorem assumes coverage of all prefix stages and all original variables. The universe contains every finite-set clause at each stage, including the original stage. Finite-set equality permits different ordering or repetition in clause representations. Neither universe selection nor order selection is performed by the unrestricted search theorem. Fixed-width specialization automatically generates the universe, with the width a fixed parameter, and continues to take a proposed order.
+
+## Reverse reconstruction
+
+If a covered complete order eliminates a satisfiable formula, its final stage contains no clauses. The all-false assignment satisfies this empty stage. The reconstruction processes the pivots in reverse order. It recomputes the preceding stage using the bounded measured forward walk on the corresponding proper prefix of the original order. The successful forward output contains a marker followed by a canonical clause representation of that stage, so dropping the marker yields a word accepted by the pinned CNF verifier.
+
+Consider one reverse step at pivot x. The current assignment satisfies the stage after eliminating x. If that same assignment already satisfies the preceding stage, retain it. Otherwise the semantic lifting theorem gives an assignment for the preceding stage by changing only x. The invariant says that no remaining pivot is present in the sparse true-variable list. In particular, the current value of x is false, so a successful change must set x to true. The machine then prepends the encoded variable identifier to the sparse list. The connective between the semantic finite-set clause model and the reference verifier is proved by expanding the pinned CNF evaluator and using literal membership in the finite-set representation.
+
+Repeated variables are allowed. When a pivot occurs again earlier in the chronological order, it was already eliminated before the current forward step. No subsequent elimination can introduce a literal whose variable is absent. Elimination at an absent pivot is the identity on the finite-set formula. Therefore the semantic check succeeds without setting that pivot true while another copy remains to be unwound. This is the case needed to maintain disjointness of remaining pivots and chosen true variables without restricting the input order to distinct entries.
+
+The final raw result is gated by the pinned SAT verifier on the original formula and reconstructed witness. On the promised canonical input, the inductive reconstruction proves that the verifier passes for every satisfiable formula. It also proves that the verifier cannot pass on an unsatisfiable formula. This final check guards the output even when the supplied order or universe is outside the completeness premises. The principal exact statement gives the equivalence on its stated canonical domain.
+
+## Measured operations and size bound
+
+Reversing the order preserves the bit order of each literal word. The measured reversal state retains the unread literal suffix and the reversed prefix. Each enabled transition transfers the full next encoded literal from the unread suffix to the front of the reversed prefix. A clause delimiter marks the completed input and freezes the state. On canonical input the output retains the delimiter and reverses exactly the literal sequence. The proof uses the reference splitter identity on arbitrary raw words to bound state growth by one bit per transition. The encoded input length dominates the number of literals, so the bounded clock suffices.
+
+The reconstruction state stores the remaining reversed order, the immutable formula and universe words, and the sparse witness word. It reverses the remaining suffix after dropping the current pivot to form the exact preceding chronological prefix. It calls the earlier measured forward walk once in a transition and then evaluates the pinned verifier. Each enabled transition consumes one full literal code and adds at most the length of that literal to the witness. On raw words, the actual variable-code slice can only be shorter than the consumed word. The measured bound uses the reference unpairing inequalities and the exact splitting identity to show that the full state grows by at most three bits per round, even on malformed input. The state and the encoded order length therefore satisfy the pinned growing-iteration theorem. The final verifier composes with this measured function. The nested forward replay is polynomial under the same reference definition because an individual rewind step is a measured function of its polynomially bounded state.
+
+## Fixed-width specialization and validation
+
+For any fixed width k the measured generator enumerates clause words up to length k over the signed literals of the original formula. The earlier finite-set width theorem shows that the generated universe represents all prefix stages exactly when those stages have clause cardinality at most k. The new specialization takes only the original formula and a covering order, substitutes the generated universe, and returns the same exact sparse model whenever the width condition holds. The specialization does not claim every satisfiable formula has such an order at a fixed width.
+
+The bounded-walk submission supplies the measured prefix evaluator, pure terminal SAT equivalence, and the stage-width characterization. The earlier elimination submission supplies semantic assignment lifting and the absence and source-support lemmas used to handle repeated pivots. The earlier fixed-width resolution submission supplies the measured generated universe. The new modules provide measured literal-word reversal, the verification bridge for sparse codes, the reverse pass, and its fixed-width model-producing specialization. The pinned reference supplies the SAT verifier and machine closure and iteration results.
+
+All recorded exact statement checks use reference a9ad395e8fab5537a9017734c14360773f375cd8 and Lean 4.36.0. The archive includes source hashes, exact statements and the accepted local replay records. Replay in a prepared pinned checkout validates the Lean proofs. The hosted archive experiment separately reports the Lean process count it actually achieves.
