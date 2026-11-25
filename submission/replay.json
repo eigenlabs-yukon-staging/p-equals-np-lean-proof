@@ -1,0 +1,77 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "MeasuredVariableDeletionSAT": {
+      "source_sha256": "c09f2fac46790b45b7d8563ddc7f4242ee413c56412be6641cfe5c3e08379f7a",
+      "statement_sha256": "fcc6cfaf18204fc34c643aaeff37bdac82438f059ad7ede10d72232c6aab164c"
+    },
+    "ExactVariableDeletionSAT": {
+      "source_sha256": "94cac615241f5a72669068f62c839d4ea6554e798ae3caa826bf129d510bf869",
+      "statement_sha256": "0962da12238d1b9e89805c5ba092313e4a24f847b297bceb495cdb1a78a55552"
+    },
+    "ExactHornVariableDeletionSAT": {
+      "source_sha256": "ce0edd6ea0c482bfc7068e09bec3436b5e82b699d798f405b1e6bd50881d463a",
+      "statement_sha256": "82edfafe5458e4e5e47a44546bf60f2707132a5a366d6b786871214b84459e84"
+    },
+    "HornVariableDeletionSATSearch": {
+      "source_sha256": "8b0555928dea01917721c7b6c6fd841ec2f85c880135ba2ad84c1c5cf15124ad",
+      "statement_sha256": "e3da6737550856db0069872eac69567c67b3dff06c18fde2576b2d898d2cd735"
+    },
+    "ExactRenamableHornVariableDeletionSAT": {
+      "source_sha256": "da0d06e766e4989ebdc94bec8aeb959d4f4cd6fd343deba8fc8f2cccc1cf91a3",
+      "statement_sha256": "783f5f14ed503e942579418ff2457bd44e7b2b63d5d37e03f1e68d1e0ffd6653"
+    },
+    "RenamableHornVariableDeletionSATSearch": {
+      "source_sha256": "7d386ef6ddbc2f38113fd798f44fb0a6bf36ef7bcb9c4b9eaf2e44089787c859",
+      "statement_sha256": "6580851d30c561920fbadaf45aca53f0c422fb7107772bc11020f648eb76d436"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    }
+  },
+  "checks": {
+    "MeasuredVariableDeletionSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredVariableDeletionSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4220 constants",
+      "checker_manifest_sha256": "998691767064107b9083f99245c3f53c346e5496137df5ec0b63783b66de8ce6"
+    },
+    "ExactVariableDeletionSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactVariableDeletionSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4223 constants",
+      "checker_manifest_sha256": "e2e33d4388a45f7b89055aa0635cfe6cb7020af423665447f05c60e24acbf336"
+    },
+    "ExactHornVariableDeletionSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactHornVariableDeletionSAT; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 4478 constants",
+      "checker_manifest_sha256": "2552e8d1a87d9e5b345c60d55abb81969985c4cf705ef4493fa62ff41c65e1fd"
+    },
+    "HornVariableDeletionSATSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.HornVariableDeletionSATSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4595 constants",
+      "checker_manifest_sha256": "055ee4e3ab2f32e4ec1ccb641645b9b318e21e82353cd375fa3079e1996caae9"
+    },
+    "ExactRenamableHornVariableDeletionSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactRenamableHornVariableDeletionSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4673 constants",
+      "checker_manifest_sha256": "dce89a39d41ed3e8440ed1571a61a9a9febd42f2832930260ff85b08a1201000"
+    },
+    "RenamableHornVariableDeletionSATSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.RenamableHornVariableDeletionSATSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4675 constants",
+      "checker_manifest_sha256": "b1a1722cdc619c60bc91bd9c0c5292dce59325d95e1a26c37512c989f457d297"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    }
+  }
+}

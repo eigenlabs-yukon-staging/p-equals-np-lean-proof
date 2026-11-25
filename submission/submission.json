@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Generic measured fixed-size variable deletion for guarded SAT",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "ExactVariableDeletionSAT checks exact canonical domain recognition and satisfiability after deleting a fixed number of variables into any sublist-closed guarded P base.",
+    "MeasuredVariableDeletionSAT gives a paired structural and residual machine with exact canonical semantics.",
+    "ExactHornVariableDeletionSAT and ExactRenamableHornVariableDeletionSAT check the exact guard and SAT languages for their respective bases.",
+    "HornVariableDeletionSATSearch and RenamableHornVariableDeletionSATSearch recover sparse satisfying assignments with encoded length at most the input length.",
+    "P_subset_NP checks the reference inclusion."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind the archived Lean modules and exact statements to the recorded local reference replay. The isolated experiment reports zero Lean invocations and can be complemented by replay with the pinned reference.",
       "input_schema": {
         "type": "object",
         "properties": {
