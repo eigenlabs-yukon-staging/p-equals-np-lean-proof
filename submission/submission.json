@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Exact SAT language with polynomially bounded wide-clause width product",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "ExactProductBudgetSAT checks P membership for the exact canonical language with product of widths of clauses wider than two bounded by a fixed polynomial of input length.",
+    "MeasuredMixedRadixUnits computes a unit-clause branch for a unary mixed-radix index and covers every satisfying assignment within the exact product bound.",
+    "MeasuredCappedClauseProduct checks the exact capped width product for arbitrary canonical CNF.",
+    "MeasuredUnaryDivMod checks exact tagged unary quotient and remainder.",
+    "P_subset_NP checks the reference inclusion."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind the archived Lean modules and exact statements to the recorded local reference replay. The isolated experiment reports zero Lean invocations and can be complemented by replay with the pinned reference.",
       "input_schema": {
         "type": "object",
         "properties": {
