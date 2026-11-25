@@ -1,16 +1,35 @@
-# Starter submission notes
+# Verified component-wise RUP certificate generation
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission lifts a measured refutation generator on individual formulas to a measured generator on independent variable components. The global machine returns a trace only if the exact reference proof verifier accepts it against the original canonical formula and its encoded length is within the specified linear bound. The generator has a completeness theorem whenever the supplied local generator is complete on each unsatisfiable component. The archive supplies a concrete local combination of width-two and renamable Horn generators and checks the resulting global guarantee.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The specialized theorem applies when every variable component of a canonical CNF is independently width-two or renamable Horn. A component need only satisfy one of these conditions, and different components can use different certificate methods. No component partition or solver choice is supplied as input. For every unsatisfiable formula in this class, the measured output is a valid canonical RUP refutation with encoded length at most twice the original formula length plus six bits. For a satisfiable formula it is empty. On canonical formulas outside the promised class, any nonempty output still denotes a verified bounded refutation. An empty result outside the promise makes no satisfiability claim.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+## Components and sound transfer to the original formula
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+A co-occurrence component for a literal consists of the original clauses containing a variable connected to its variable by the reflexive transitive closure of sharing a clause. The earlier component extractor implements this relation using a binary-implication graph and a measured reachability routine. It retains the original clause order and repeated occurrences. Each nonempty clause lies in one variable component, so the measured scan can extract the component by its head literal. Empty original clauses are handled directly. Their one-clause refutation is valid without inspecting any component.
+
+When a local trace refutes a component, it also refutes the full original formula. The component is a sublist of the original formula, so its corresponding finite-set clauses lie in the global premise set. The earlier RUP monotonicity theorem preserves every learned step when enlarging that premise set. The set of previously learned clauses stays identical at each corresponding step. The same certificate word is retained, and the component's encoded length does not exceed the original length. This establishes that a certificate within twice the component length plus six bits is also within twice the original length plus six.
+
+Conversely, if none of the components is unsatisfiable and there is no empty original clause, the pure co-occurrence factorization proves that the original formula is satisfiable. It combines assignments consistently across variable classes. The measured procedure uses this factorization only in its correctness proof. It does not need to construct those component assignments or compute numerical representative identifiers.
+
+## Verified search
+
+The generic construction visits the original clauses using the measured clause map with the entire original encoding as shared argument. On a nonempty clause it extracts its component, calls the supplied measured generator on that component, and checks the result against the original formula. Both the exact RUP refutation relation and the encoded length bound are checked. The local generator need not do anything meaningful outside its own scope. If it returns an invalid candidate, that candidate does not enter the output list.
+
+Each accepted candidate is written as a unary-length-prefixed record. Concatenation of these records is measured by the clause map, and the measured pairing projection extracts the first accepted certificate without a search through raw byte patterns. The proof shows every nonempty record contains a nonempty valid trace of the required size. Parsing the first record therefore returns a valid refutation itself. If there are no accepted records, the output is empty. An empty original clause generates the same bounded singleton refutation directly and is always covered.
+
+Completeness follows for inputs with covered components. An unsatisfiable input with no empty clause has an unsatisfiable component of some clause head. The local generator's guarantee produces a bounded certificate there. After the validity and size transfer, the same trace passes verification against the original formula in that clause's branch, so the global output cannot be empty. Conversely, a satisfiable input cannot have any nonempty verified refutation because the exact verifier is sound. Together these give the exact output-emptiness characterization under the coverage premise and an unconditional soundness theorem for nonempty outputs on canonical inputs.
+
+## Width-two and renamable Horn specialization
+
+The concrete generator first tries the unit-propagation certificate procedure, which is complete for renamable Horn formulas. It tests the result as a bounded exact proof on the local formula. If that result does not pass, it tries the width-two implication-graph certificate generator. The global verifier then checks the candidate emitted by either path against the full original formula and its length bound. A satisfiable input cannot acquire an accepted proof through either generator, including through a call on an unpromised component.
+
+For any unsatisfiable component in the promised class, the renamable Horn branch gives the singleton empty learned clause when that condition holds. The width-two branch otherwise returns the exact three-clause-or-smaller trace previously proved for width-two inputs. If the initial candidate passes exact verification, the fallback is unnecessary. If it fails and the component is renamable Horn and unsatisfiable, that failure contradicts the earlier generator's complete certificate theorem. Hence the fallback covers the remaining width-two case. The resulting proof follows the actual measured branch selection and does not assume the solver knows the class assignment for each component.
+
+This is a restricted proof-producing SAT procedure with a certificate-producing negative branch. It does not assert that every CNF has width-two or renamable Horn components, that unrestricted SAT lies in deterministic polynomial time, or that P equals NP.
+
+## Attribution and reproducibility
+
+This development uses the earlier measured co-occurrence component extractor and pure component factorization, the exact RUP verifier and soundness argument, and the short-certificate generators, bound checker, and monotonicity theorem. The new contribution is the measured checked output selection, its global completeness proof, and the hybrid-local generator proof. The archive retains selected supporting exact statements and the checked reference inclusion.
+
+The source overlay is for reference commit `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0 and the pinned Mathlib. Its statement map and recorded local replay are tied to the archive's source bytes. The pinned `tools/check-lean.mjs` checks the exact declarations and transitive axiom discipline. The isolated experiment verifies the archive bindings and reports its actual Lean invocation count, which may be zero. A configured reference checkout provides the reproducible kernel replay of the recorded targets.

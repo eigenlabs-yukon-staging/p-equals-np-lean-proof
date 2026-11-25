@@ -1,0 +1,67 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "ComponentwiseRUPSearch": {
+      "source_sha256": "6c6573be9ea34f4782900d59bd2f76ea25aa370e95455480435beb1896522512",
+      "statement_sha256": "369673646fb634b4d112202cf3a16a66d3bf6f929fc624820a3cedf0422b5b50"
+    },
+    "HybridComponentRUPSearch": {
+      "source_sha256": "5fcf8eac13546a262381e4b706e2a54da6ceee2e7334a6198b27fc0a186c7971",
+      "statement_sha256": "c8b49f0b5d5880d87bbb46974008d81d3cda66678ba027c982e183c35975e142"
+    },
+    "ExactRUPRefutationVerifier": {
+      "source_sha256": "d7bee07848c3ef69ec63457a8cc91379e5d63350deb6f441f1f83330a1ba2fa7",
+      "statement_sha256": "021d050e202b77110e8401eca496d0c258e8b01635b85a7a639858ca24014c4c"
+    },
+    "MeasuredTwoSATRUPSearch": {
+      "source_sha256": "c9eaa9d5e5cb460070442b160f092c07006b75bd8a9628757285e3602685c5d1",
+      "statement_sha256": "91d05cd037aee363bf421cccfb7eaa8b4b93c5796cedcf0d8972b44b7acd064e"
+    },
+    "MeasuredRenamableHornRUPSearch": {
+      "source_sha256": "417b6406ebbff590060b8b97bd53fdf81094203575a6727b2012b83aec9c767f",
+      "statement_sha256": "25381fc732b1304531e37835f4bf2f19fae807bc83175d55f6f59271bc5982fc"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    }
+  },
+  "checks": {
+    "ComponentwiseRUPSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ComponentwiseRUPSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4293 constants",
+      "checker_manifest_sha256": "66aa6cef9b39111d964614e2d451850e67f57d14e04114c162c29144abb7672c"
+    },
+    "HybridComponentRUPSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.HybridComponentRUPSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4359 constants",
+      "checker_manifest_sha256": "84b2121356542f787b8e26cf375f562f661747f5b1f5e36cd37675c61272036b"
+    },
+    "ExactRUPRefutationVerifier": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactRUPRefutationVerifier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4234 constants",
+      "checker_manifest_sha256": "7e566cde7ea19093bd2802326fb64388b07d5ac4c5f56f42a0f050e41037c81a"
+    },
+    "MeasuredTwoSATRUPSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredTwoSATRUPSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3504 constants",
+      "checker_manifest_sha256": "9f50d91c0efa9430c1c71e7e5530a27bdef5bf5a589b794994cf33f64ef198a0"
+    },
+    "MeasuredRenamableHornRUPSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredRenamableHornRUPSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4233 constants",
+      "checker_manifest_sha256": "afe85d1fe5150def917418511675c1f63fbe9e7fae955063c59a8d3da8631193"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    }
+  }
+}
