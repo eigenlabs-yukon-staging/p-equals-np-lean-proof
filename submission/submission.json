@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Linear-row locality windows for measured sparse SAT model search",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "MeasuredLiteralSuffixMap and MeasuredSignedLiteralWindow implement canonical literal-suffix and signed window transforms.",
+    "MeasuredWindowSubsequences and MeasuredLocalityClauseUniverse generate all allowed window subsequences and give the exact row-count bound.",
+    "LocalityUniverseCoverage proves that each finite-set elimination-stage clause is represented by a signed occurrence window.",
+    "MeasuredWindowLocalityWitness uses the smaller generated universe to recover verified sparse models on the stated locality domain."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind all archived Lean overlay sources and the recorded exact statements to the local reference replay. The isolated experiment reports its live Lean invocation count, which may be zero.",
       "input_schema": {
         "type": "object",
         "properties": {
