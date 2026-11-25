@@ -1,16 +1,35 @@
-# Starter submission notes
+# Exact P membership for bounded ternary-clause branching
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This candidate proves that an exact language of reference-encoded satisfiable 3-CNFs is in the pinned class P. A member must be a canonical encoding, every clause must have width at most three, and the number of ternary clauses must fit an explicit polynomial branching budget. The previous theorem gave a deterministic decider with correct answers on the promised inputs. The new guard supplies polynomial-time recognition of the promise itself, so the final theorem describes the set of accepted raw words on all inputs.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## The language and its budget
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+Fix a polynomial with natural coefficients. The exact statement quantifies over raw Boolean words and requires that a word encode a formula with width at most three and that two to the power of one plus twice its number of ternary clauses fit the polynomial evaluated on that word's length. Finally, the formula must be satisfiable. The factor of two in the exponent permits two-bit choices among the three literals in a ternary clause. The extra one follows the reference enumerator's bound on indices of a given word length.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The previous branching algorithm interprets each choice as a unit clause, retains all original short clauses, and invokes the pinned 2-SAT decider. It suffices to find one accepting branch. For an accepting branch, every selected unit implies the corresponding ternary clause under the same assignment. For a satisfying original formula, an assignment chooses a true literal from each ternary clause. The witness for those choices appears within the bounded enumeration, so at least one generated branch accepts. Earlier exact statements specify the parser, measured chooser, packed branch algorithm, and agreement of the raw-composed decider on canonical promised inputs.
+
+## Guarding width and syntax
+
+`MeasuredWidthThree` constructs a finite-state scan over the pairs of bits in the reference CNF format. Its state remembers a count from zero through three and whether the scan is at a pair boundary or inside a pair. A digit leaves the count unchanged. The end of a literal increments the count, with the fourth committed literal sending the machine to a permanent rejection state. A clause delimiter resets the count. A zero-width clause is syntactically valid. It is preserved by the partition machine and is unsatisfiable, so the final satisfiability check handles it. The width computation is combined with the pinned well-formedness machine, which guarantees canonical representation rather than merely plausible raw pair structure.
+
+The width proof relates the reference literal encoding to a stream of digit pairs and a literal-end marker. It then proves that processing an encoded clause and continuing with a raw suffix faithfully enforces the width bound on that clause. Iteration over a formula gives the exact width characterization. Combining with the reference well-formedness specification gives a P decider for the guard's language on all raw words.
+
+## Counting groups and checking the budget
+
+`MeasuredRecordCount` recognizes the nested encoding of a list of raw Boolean records in the sense that it computes one true bit for each record on every canonical list encoding. Empty record values still contribute a count because the delimiter makes their pair encoding nonempty. The state stores the current encoded suffix and a unary accumulator. A step on a nonempty suffix drops the first record and adds one bit to the accumulator. An empty suffix leaves the state unchanged. The iteration clock length is the encoded input size. Every canonical record contributes at least one bit, and the arbitrary-state step increases length by at most two bits. On an ordinary valid 3-CNF, the partitioner's canonical second field contains exactly one record for each original three-literal clause, so the transducer computes the count needed for the budget.
+
+`UnaryPowerBudget` checks whether two raised to a unary exponent fits in a unary budget. The measured implementation uses exact repeated halving of the budget and tests whether a bit remains. It never creates the power-of-two-sized word. Each halving is length-nonincreasing, and the tagged exponent length supplies the number of rounds. The proof uses the reference exact formula for the length after repeated halving, namely the natural-division quotient by that power of two. For this application the exponent is formed by duplicating the group-count word and adding a bit. The budget is generated by the reference natural-polynomial clock at the length of the original formula.
+
+## Exact language equality and scope
+
+The main theorem intersects the P language for canonical width, the P language for the budget guard, and the prior P language that decides promised inputs. One direction follows by constructing the width and budget witnesses for the canonical formula and invoking the prior correctness implication. The converse first obtains an actual canonical formula from width membership, then uses the exact measured count and budget behavior to discharge the premise of the prior satisfiability theorem. This restricts the accepted raw language to precisely the stated set. The proof does not assume any machine behavior on malformed encodings when reasoning about satisfiability.
+
+The immediately preceding submission received an automated score of 80 and is awaiting human review. Its proved promise-family result is restricted to small ternary branching space. The current theorem makes that restricted language exact. It does not establish P membership for unrestricted reference SAT or unrestricted reference 3-SAT. The suitable claim here is a reusable verified construction on a restricted family.
+
+## Reproduction and provenance
+
+Use brilliant-hq/pequalnp-proofs at revision `a9ad395e8fab5537a9017734c14360773f375cd8` with Lean v4.36.0 and Mathlib revision `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`. Prepare the reference checkout using `lake exe cache get` from its Lean directory. With Node.js available, run `python3 check.py --reference /path/to/reference` from the candidate root. The script replays the separate exact statement strings and overlays only the listed outside modules. The local artifacts record source, statement, and checker manifest digests. The hosted experiment cannot run Lean in its isolated Python-only environment and reports archive identity and zero kernel invocations in that mode.
+
+The immediately preceding mixed formula package `e56dfff7-f1bb-48b1-886c-b23d59493de3` supplies the promise-decider theorem and ordinary 3-CNF partitioner used directly by the new exact-language proof. The package retains those modules, indexed verifier projection, and the reference P contained in NP inclusion. The new results use the pinned measured Boolean and string operations and import the reference syntax checker and halving proof. The ordinary Yukon local run needs experiment and review artifacts unavailable in the workstation runtime because the account lacks access to the Docker socket. No claimed numeric score accompanies the archive.
+
+The checker accepted all ten exact statements. It kernel-rechecked 4,078 constants for the width guard, 2,416 for record counting, 3,264 for unary budget comparison, and 4,275 for the exact language theorem. The only reported transitive axioms were `propext`, `Quot.sound`, and `Classical.choice`.
