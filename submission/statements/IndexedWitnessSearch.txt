@@ -1,0 +1,14 @@
+∀ (R : Set (List Bool × List Bool))
+    (hR : PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R)
+    (clock : List Bool → List Bool)
+    (hc : PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) clock)
+    (generate : List Bool × List Bool → List Bool)
+    (hg : PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x : List Bool => x) generate), ∃ search : List Bool → List Bool,
+      PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) search ∧
+      (∀ x : List Bool,
+        (∀ i < (clock x).length, (x, generate (List.replicate i true, x)) ∉ R) →
+        search x = []) ∧
+      ∀ (x : List Bool) (i : ℕ), i < (clock x).length →
+        (x, generate (List.replicate i true, x)) ∈ R →
+        (∀ j < i, (x, generate (List.replicate j true, x)) ∉ R) →
+        search x = true :: generate (List.replicate i true, x)

@@ -1,0 +1,5 @@
+∀ (R : Set (List Bool × List Bool)) (hR : PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R)
+    (predict : List Bool → List Bool)
+    (hp : PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) predict)
+    (k : ℕ), {x : List Bool | ∃ is : List ℕ, is.length = k ∧
+      (x, is.foldl (fun word i => word.modify i Bool.not) (predict x)) ∈ R} ∈ PEqualNP.Library.P

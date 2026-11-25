@@ -1,0 +1,8 @@
+∀ (L : Language Bool) (R : Set (List Bool × List Bool))
+    (hR : PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R)
+    (predict : List Bool → List Bool)
+    (hp : PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) predict)
+    (q : Polynomial ℕ)
+    (complete : ∀ x : List Bool, x ∈ L →
+      ∃ s : List Bool, 2 ^ (s.length + 1) ≤ q.eval x.length ∧ (x, predict x ++ s) ∈ R)
+    (sound : ∀ x s : List Bool, (x, predict x ++ s) ∈ R → x ∈ L), L ∈ PEqualNP.Library.P

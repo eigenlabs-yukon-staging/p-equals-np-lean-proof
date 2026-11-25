@@ -1,0 +1,8 @@
+∀ (cover : ∀ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ),
+      PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R →
+      (∀ x w : List Bool, (x, w) ∈ R → w.length ≤ p.eval x.length) →
+      ∃ (clock : List Bool → List Bool) (generate : List Bool × List Bool → List Bool),
+        PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) clock ∧
+        PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x : List Bool => x) generate ∧
+        ∀ x : List Bool, (∃ w : List Bool, (x, w) ∈ R) →
+          ∃ i < (clock x).length, (x, generate (List.replicate i true, x)) ∈ R), PEqualNP.Library.P = PEqualNP.Library.NP

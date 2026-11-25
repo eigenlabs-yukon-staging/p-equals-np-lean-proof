@@ -1,0 +1,9 @@
+∀ (L : Language Bool) (R : Set (List Bool × List Bool))
+    (hR : PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R)
+    (predict : List Bool → List Bool)
+    (hp : PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) predict)
+    (k : ℕ)
+    (complete : ∀ x : List Bool, x ∈ L → ∃ w : List Bool,
+      (x, w) ∈ R ∧ w.length = (predict x).length ∧
+      (List.zipWith (fun a b => decide (a ≠ b)) (predict x) w).count true ≤ k)
+    (sound : ∀ x w : List Bool, (x, w) ∈ R → x ∈ L), L ∈ PEqualNP.Library.P
