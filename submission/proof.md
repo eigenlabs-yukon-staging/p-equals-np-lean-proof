@@ -1,16 +1,33 @@
-# Starter submission notes
+# Exact measured resolution refutation verification
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission gives a deterministic polynomial-time verifier for the resolution proof system in `PEqualNP.ProofComplexity`. The verifier accepts precisely pairs of canonical CNF encodings in which the second encoding represents an exact newest-first resolution refutation of the first. It rejects malformed encodings, candidates that resolve from a clause outside the older suffix, and incomplete refutations that never contain the empty clause. A separate soundness argument proves that acceptance rules out a satisfying assignment of the original formula. The runtime measure is the combined encoded length of the input and the supplied proof, and no upper bound on the shortest proof for an arbitrary formula is assumed.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The core distinction is between a proposed axiom or an exact resolvent and a clause that merely follows semantically or by weakening. The pinned resolution rule has no weakening rule. The verification proof uses the pinned `IsResolvent`, `IsDerivation` and `IsRefutation` predicates directly, with the canonical lists converted into their finite sets of literals. Literal repetitions and clause order do not change those finite sets. The machine compares sets using encoded literal membership in both directions, so the measured semantics matches the finite-set rule even on a canonical input containing duplicate literals.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+## Local resolution verification
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+`MeasuredClauseSetEquality` constructs a measured equality test for the finite sets presented by two encoded clauses. It scans the actual canonical literal boundaries and checks membership on the other side, and then reverses the sides. The exact result is equality of the two `List.toFinset` values. The related payload routine removes every copy of one selected literal and retains the rest of the literal encoding, without a clause terminator. It compares the entire literal code, so deleting a positive pivot does not delete a negative occurrence of the same variable in the same clause.
+
+`MeasuredResolutionStep` receives two parent clauses and a candidate clause. It enumerates positive pivot occurrences in the first parent, checks that the opposite literal occurs in the other parent, removes the selected signed pivot from each appropriate parent, and concatenates both remaining payloads. It then checks exact finite-set equality with the candidate. This performs the finite-set union represented as a concatenation of lists, including when some surviving literal is present in both parents. The proof gives both directions of the correspondence with `IsResolvent`, so no weaker test based only on containment or implication is used. The scan uses existing binary variable codes rather than a numerical variable range.
+
+`MeasuredResolutionLine` accepts a candidate when its finite set equals that of an original axiom, or when some ordered pair of older clauses gives an exact resolvent. The original input is an axiom source. It is not implicitly a parent source in a non-axiom line. A copy of an axiom can of course already appear in the older portion of the trace. The implementation uses measured clause scans with one shared argument for axiom testing and two nested scans for older-parent pairs. Those scans, the pivot scan and the literal-comparison routines compose into a polynomial runtime in the pinned model.
+
+## Newest-first trace checks
+
+`MeasuredClauseSuffixChecks` abstracts the measured suffix traversal. Its local test receives the original formula, the exact older suffix, and the current clause. The wrapper accepts precisely when the corresponding predicate holds for every decomposition of the original trace into a newer prefix, the current clause and the older suffix. This is a reusable result for other proof systems with local checks against the original premises and previous lines.
+
+`MeasuredResolutionDerivation` instantiates that wrapper with the axiom-and-resolvent rule. The proof follows the constructors of the actual reference derivation relation. In the axiom case the candidate's finite set belongs to the original premise set. In the resolution case the checked parents belong to the finite-set image of the older suffix and satisfy the exact local rule. The empty derivation is accepted as a derivation. The refutation wrapper additionally measures the two canonical syntax checks and the requirement of an empty clause in the trace. That requirement agrees with membership of the empty finite set in the mapped clause list.
+
+`ExactResolutionRefutationVerifier` states the exact measured pair relation and recovers unsatisfiability. If an assignment satisfied the original canonical formula, its interpretation on the finite-set axioms would satisfy every derivation line by the pinned semantic resolution lemma. The empty line cannot be satisfied. The theorem therefore certifies negative instances rather than making claims about how to find a proof.
+
+## Certificate language and relation to RUP
+
+`BoundedResolutionRefutationsInNP` places the language with a fixed polynomial bound on the trace's encoded bit length in the reference class `NP`. The witness is the canonical trace encoding itself. The verifier for that witness is the exact measured relation above. This is a proof-verification result and gives no polynomial proof-length bound for arbitrary unsatisfiable formulas.
+
+`ResolutionDerivationIsRUP` proves that the unchanged sequence of clauses of any resolution derivation is also a learning run in the pinned RUP system. An axiom is RUP because assuming all its literals false falsifies it immediately. For a resolvent, assume the complements of its literals. The positive-pivot parent forces that positive pivot once every other member is false. The negative-pivot parent is then completely falsified. The argument gives a RUP derivation of each line in the same newest-first order. It does not assert that every RUP trace is already a resolution derivation. Thus a valid resolution refutation can be checked as a RUP refutation as well, using the earlier measured verifier.
+
+## Attribution and reproducibility
+
+The earlier measured literal and clause scans and clause parsing are retained. The low-weight search development supplied measured literal membership on canonical clause encodings. The RUP verification development supplied the finite-set interpretation of canonical clauses and the suffix-based verification pattern, which is generalized here. The reference contributes the exact finite-set resolution and RUP definitions and semantic resolution soundness. The new work contains the finite-set equality and pivot checks, the generalized suffix wrapper, the exact resolution verifier and its certificate statements. The archive retains the checked reference inclusion `P ⊆ NP`.
+
+The Lean overlay and statement map are tied to reference `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0 and the pinned Mathlib. Each recorded theorem is checked with `tools/check-lean.mjs` in `check` mode. Its recorded exact statement elaborates against the pinned definitions, and the checker verifies the permitted transitive axioms. The isolated experiment verifies archive identity and explicitly reports its own live Lean invocation count. A prepared reference checkout can reproduce the exact kernel checks.
