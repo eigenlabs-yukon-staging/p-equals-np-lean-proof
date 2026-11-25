@@ -1,0 +1,136 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "DavisPutnamElimination": {
+      "source_sha256": "b73c0c359eb25675feb1037ea336fa9a1ef21b6f51243f4cd08ca36b34c59067",
+      "statement_sha256": "b4bbf73a5ec2a3e30aa6714bf3e37a63258a82dce441eb6b17177fa66e1e3c63"
+    },
+    "EliminationOrderRefutation": {
+      "source_sha256": "fc2741ad8fb1e4ffa1438d65eecf990590b118a6b6392d98e527d7792983c732",
+      "statement_sha256": "7dbcd9cefa1e81216b05e75e87e9fe18f74d90edf69a48003801d26f6ac76f78"
+    },
+    "MeasuredPivotClauseFilter": {
+      "source_sha256": "ea0c902dd4e8fe0d7d9cf23151952fb7bd164371fd6490b682efde834ac3d072",
+      "statement_sha256": "3b49cc2d8dfd52124d1f36c05ca95adda7e99cf7651624a659a2f1534dd2f82b"
+    },
+    "MeasuredDavisPutnamStep": {
+      "source_sha256": "edd1d4a0343832bc5574f554d4697753396e1b0d507032bca88dea3d9efb9dc2",
+      "statement_sha256": "b89355c7b7f9bfea75012cb05a554b742e18e6b1a158600e750b7a4fbe3a3f6f"
+    },
+    "MeasuredCNFIntersection": {
+      "source_sha256": "f50db9324a65e2fea5fb53c90c7942088d06747df6d1322f6ea8ccb8e957b9c2",
+      "statement_sha256": "7902d2c640f5bb865c9a2f61b327eee8220e9863be951800dbf44d6d93415906"
+    },
+    "MeasuredEliminationOrderResolutionSearch": {
+      "source_sha256": "e1ef9703f7a15bc9a069d2d85861c08ef1591674a160f3a8f3328d1039a01467",
+      "statement_sha256": "986661acbbde497474fa912556e87969d34975ecacdab4b279f1660427c38372"
+    },
+    "SuppliedUniverseRefutationSearch": {
+      "source_sha256": "d423c2f02476650da2c14239330bd11503997abdfa28aec291a6b84389fc21ee",
+      "statement_sha256": "1ba9be9ebcd564b81b8fef438c570827ecfdcf82168f9970dc597eebd1015886"
+    },
+    "ExactSuppliedUniverseRefutation": {
+      "source_sha256": "fadc134a10bda90024b98798dc0056cb36b4c4acb8bd0ef65b17d166b2b5e3fb",
+      "statement_sha256": "649e7bdf5b576e06ade981a453fc5ebdfcab9ceeebdf150b8f14148a5c1a1b2c"
+    },
+    "MeasuredUniverseResolution": {
+      "source_sha256": "cc28b434f6cf2109cb95d96690c9a32802397b2e06a4399df732c76c1017bb58",
+      "statement_sha256": "45966585f503f147048c490f1e7548580d58bd57fafbf3f44755c1ee59f10fa9"
+    },
+    "ExactResolutionRefutationVerifier": {
+      "source_sha256": "5bc4b4349b5cd00c1db7aad6d5a6cc6acd49c4215d1939b538e93b4fb50ec492",
+      "statement_sha256": "2266289b8d15b5e7964565b421db327e04b0cd1f72281d8c2604536e6617c026"
+    }
+  },
+  "checks": {
+    "DavisPutnamElimination": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.DavisPutnamElimination; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 732 constants",
+      "checker_manifest_sha256": "f35c5153b784ad344216e0a679e563161485d72229df4768ac568ce7757709f9"
+    },
+    "EliminationOrderRefutation": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.EliminationOrderRefutation; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 746 constants",
+      "checker_manifest_sha256": "4ad7e53a9e84880dd70180dc6eca1302b149e8a54a926141b708bede45dc49d9"
+    },
+    "MeasuredPivotClauseFilter": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredPivotClauseFilter; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3434 constants",
+      "checker_manifest_sha256": "f14c68ad71586e520ce3375ce2e7f124ce2a9b64784b6f70e5e97a7723cdf007"
+    },
+    "MeasuredDavisPutnamStep": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredDavisPutnamStep; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4238 constants",
+      "checker_manifest_sha256": "2cd2ba465f486178dbcb1925b1ef6900f2f820c65c69c02cad9eb17c0b291b50"
+    },
+    "MeasuredCNFIntersection": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredCNFIntersection; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4148 constants",
+      "checker_manifest_sha256": "7c3076dbd6b34abca046431c1378f9732f36bcd76a26bff9f5fd1f929d74e398"
+    },
+    "MeasuredEliminationOrderResolutionSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredEliminationOrderResolutionSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4360 constants",
+      "checker_manifest_sha256": "0b526b30ebe1a78cc14c9a7c27a7697336e97f472ef1349c3e1dfef20cbcba32"
+    },
+    "SuppliedUniverseRefutationSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.SuppliedUniverseRefutationSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4334 constants",
+      "checker_manifest_sha256": "c41649f9e27bf52eaca00273b7afbb2d9e99a74a48e3c56c39e1c8cf91ef5c10"
+    },
+    "ExactSuppliedUniverseRefutation": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactSuppliedUniverseRefutation; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4333 constants",
+      "checker_manifest_sha256": "8fca01c4bf204dcd7fe12195634fb0cc4f9d691ae61899fbcab26797fc52cc3f"
+    },
+    "MeasuredUniverseResolution": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredUniverseResolution; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4299 constants",
+      "checker_manifest_sha256": "4d90229ceec21df0056ca5f9648e0f374cab76370e5c6716cd1f90de78e2cf77"
+    },
+    "ExactResolutionRefutationVerifier": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactResolutionRefutationVerifier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4253 constants",
+      "checker_manifest_sha256": "eadf5165bc5404db655345b4f18badd3a1fd01091dbf0c4086c2ffc53142a8d7"
+    }
+  },
+  "overlay_files": {
+    "lean/PEqualNP/Outside/BoundedResolutionSaturation.lean": "cca1f5511723716c7830aed17cdc3aa6b70580590ba30cfdc9fa7d7aba29e7f9",
+    "lean/PEqualNP/Outside/DavisPutnamElimination.lean": "b73c0c359eb25675feb1037ea336fa9a1ef21b6f51243f4cd08ca36b34c59067",
+    "lean/PEqualNP/Outside/EliminationOrderRefutation.lean": "fc2741ad8fb1e4ffa1438d65eecf990590b118a6b6392d98e527d7792983c732",
+    "lean/PEqualNP/Outside/ExactResolutionRefutationVerifier.lean": "5bc4b4349b5cd00c1db7aad6d5a6cc6acd49c4215d1939b538e93b4fb50ec492",
+    "lean/PEqualNP/Outside/ExactSuppliedUniverseRefutation.lean": "fadc134a10bda90024b98798dc0056cb36b4c4acb8bd0ef65b17d166b2b5e3fb",
+    "lean/PEqualNP/Outside/FiniteListFixedPoint.lean": "15b3c0c179e3331a01e2c862099e5c2afa7ad067bb908b290d33e278f9c7df36",
+    "lean/PEqualNP/Outside/MeasuredBoundedClauseUniverse.lean": "5eb4de68fa49dd55e17d49a53057b3a9b88580af2198558be784a91ba5808679",
+    "lean/PEqualNP/Outside/MeasuredCNFIntersection.lean": "f50db9324a65e2fea5fb53c90c7942088d06747df6d1322f6ea8ccb8e957b9c2",
+    "lean/PEqualNP/Outside/MeasuredCanonicalTraceWithEmptyClause.lean": "299c7864ea5944d2220d5c2c406c8e84573f5ead017fddace2aed5641c7b5476",
+    "lean/PEqualNP/Outside/MeasuredClauseMap.lean": "850aa544e883fe5e7aa4cfe7eb2d3c83a4b0e57dfb5fed331f12db36322517f0",
+    "lean/PEqualNP/Outside/MeasuredClauseSetEquality.lean": "5ebd0f03499ba26053844b6c2c5422985d0646ca990471273c48a863fe2d66ee",
+    "lean/PEqualNP/Outside/MeasuredClauseSuffixChecks.lean": "0b5ddad24228d86d6115f17bcbfad7593578f7a5ae135dfd5dea3608b6ab4c60",
+    "lean/PEqualNP/Outside/MeasuredDavisPutnamStep.lean": "edd1d4a0343832bc5574f554d4697753396e1b0d507032bca88dea3d9efb9dc2",
+    "lean/PEqualNP/Outside/MeasuredEliminationOrderResolutionSearch.lean": "e1ef9703f7a15bc9a069d2d85861c08ef1591674a160f3a8f3328d1039a01467",
+    "lean/PEqualNP/Outside/MeasuredFirstClause.lean": "25078d74acc1dc44beb9bffdc8964a9e4b95ae62e6f1244a2ba5bb021c732d5d",
+    "lean/PEqualNP/Outside/MeasuredLiteralMap.lean": "e9a388420c193fdfe6e928cd81959d007bac2cc2deb9723d36513183918febcd",
+    "lean/PEqualNP/Outside/MeasuredPivotClauseFilter.lean": "ea0c902dd4e8fe0d7d9cf23151952fb7bd164371fd6490b682efde834ac3d072",
+    "lean/PEqualNP/Outside/MeasuredResolutionDerivation.lean": "7bed7e0c97d13c11cb50d2b77196d74e78a3dba17f1f36416c6abb406d8a6fb7",
+    "lean/PEqualNP/Outside/MeasuredResolutionLine.lean": "6982a2544aa51ced53b8437efb0b2b8cdfc826f17b6eb16344becab6287ee706",
+    "lean/PEqualNP/Outside/MeasuredResolutionRound.lean": "e648ba8bf6495bd42764bba6e94c10e9bb783e9d33429952d876daa4738491dd",
+    "lean/PEqualNP/Outside/MeasuredResolutionSaturation.lean": "99074b2426048ca1fc1c5434ddaf064d479526d0bd1fb53311581b5ae1bdfe7f",
+    "lean/PEqualNP/Outside/MeasuredResolutionStep.lean": "13830f9b3c655ae9b91b61dbfb315443ebd97c2fb3a7547c73c6acf58c08ea56",
+    "lean/PEqualNP/Outside/MeasuredUniverseResolution.lean": "cc28b434f6cf2109cb95d96690c9a32802397b2e06a4399df732c76c1017bb58",
+    "lean/PEqualNP/Outside/MeasuredVariableRestriction.lean": "ee69849285d6c7384daa134288f37f11b9a3b373c5a0809d2e9ba0034bb2233d",
+    "lean/PEqualNP/Outside/ResolutionWithinUniverse.lean": "a7f0bf98065fd6d4e66d66d93a5e623e3ccb07b646b0948b5c9f87fe541a07c1",
+    "lean/PEqualNP/Outside/SuppliedUniverseRefutationSearch.lean": "d423c2f02476650da2c14239330bd11503997abdfa28aec291a6b84389fc21ee",
+    "lean/PEqualNP/Outside/UnitPropagationCorrect.lean": "2a43767276d7afc1185575219d77245f1f891bae8d475dcaf4ca899103d4d720"
+  }
+}

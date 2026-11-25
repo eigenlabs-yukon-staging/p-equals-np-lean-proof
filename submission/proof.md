@@ -1,16 +1,35 @@
-# Starter submission notes
+# Davis–Putnam elimination with exact measured resolution search
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission formalizes the Davis–Putnam variable elimination rule, implements an exact polynomial-time step for canonical CNF encodings, and gives a measured resolution refutation search for formulas supplied with a universe of clauses that covers the stages of a suitable variable order. The size of that universe is part of the input to the search. The covering order serves as a sufficient condition for completeness. The underlying search can also succeed on other universes when they happen to contain every line of some resolution refutation.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Semantic elimination
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+Fix a variable and separate the clauses into four categories according to presence of its positive and negative literals. Keep each clause containing neither sign. For every clause containing only the positive sign and every clause containing only the negative sign, take their exact resolvent on the pivot. Discard a clause containing both signs because every assignment satisfies it. The result is a set of finite-set clauses, and each literal in an output clause comes from an input clause and has a variable different from the pivot.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+An input satisfying assignment satisfies all retained clauses and all resolvents by the pinned resolution soundness lemma. For the reverse direction, start with a satisfying assignment of the eliminated formula. A positive-only parent whose residue is entirely false demands a true pivot, while a negative-only parent whose residue is entirely false demands a false pivot. Both demands cannot occur because the two residues form an output resolvent, which the assignment satisfies. Change the assignment only at the pivot, choosing true if any positive parent demands it and false otherwise. The retained clauses remain satisfied because they contain neither polarity of the pivot. The resulting assignment satisfies every original clause. Empty clauses and empty input formulas are covered by the same argument.
+
+## Exact measured step on canonical inputs
+
+The measured pivot filter recognizes both signs by canonical literal membership, and keeps the original encodings of exactly the clauses for the selected pair of presence bits. In particular it can select the neutral, positive-only and negative-only parts independently. A measured payload erase helper removes all repetitions of the relevant signed literal from a clause. A nested measured clause map enumerates the positive-by-negative product, concatenates the two residual literal payloads, and appends the canonical clause delimiter. Concatenating the neutral part with these resolvents gives a canonical CNF whose set of finite-set clauses is exactly the semantic elimination result.
+
+The raw-bit machine implements this step with the reference polynomial-time closure lemmas for pairing, projections, literal and clause scans, and concatenation. The measured theorem uses the raw paired encoding and proves correctness on canonical positive-pivot and CNF encodings. The raw runtime claim applies independently of canonical correctness. Input clauses may repeat and literals may appear in any order or repeat within a clause. The semantic comparison via finite sets accounts for all such choices without requiring sorted lists.
+
+The independent intersection transformation scans a supplied universe and retains precisely the universe entries represented as finite-set clauses in a second formula. It compares clauses by measured exact finite-set equality. The implementation preserves the order and repetitions of universe entries. This lets a future iterator represent an elimination stage in one fixed vocabulary whose encoded length controls the next stage. Composing the unrestricted single-step machine an input-dependent number of times would require a separate size bound. This submission includes the two measured operations and uses the existing saturation algorithm for its polynomial-time end-to-end search.
+
+## Covered orders produce exact resolution proofs
+
+The pure order theorem assumes that every variable in the original finite-set formula occurs in the order and that every prefix stage lies in the supplied universe, including the initial formula. It carries derivations from the original axioms across every elimination step. A retained clause reuses its old derivation. A resolvent combines both parents’ old derivations and prepends the exact pivot rule. A concatenation lemma preserves derivability in the newest-first convention, so the copied parent lines occupy the correct suffix. All lines arise in covered stages or are copied from an earlier covered derivation.
+
+At the final stage each surviving literal would have to originate in the initial formula, but each original variable occurs in the order and has been removed permanently. Hence every surviving clause is empty. If the initial formula is unsatisfiable, repeated satisfiability preservation makes the final formula unsatisfiable. The final formula therefore contains the empty clause, and its accumulated derivation is a refutation using only the universe. Extra variables and repeated variables in the order are allowed. The proof uses strict resolution without weakening.
+
+## Polynomial-time trace construction from the supplied universe
+
+The end-to-end measured search reuses the earlier paired supplied-universe saturation machine. Elimination supplies a new sufficient condition for that search's completeness. On a canonical formula and canonical universe satisfying the order and coverage premises, it returns the empty word exactly when the original finite-set formula is satisfiable. For any nonempty output the theorem exhibits a canonical trace, a strict resolution refutation of the original formula, and membership of each trace clause in the supplied universe. The order is a mathematical witness in the theorem, so the search input consists of the formula and the universe only. Positive inputs are handled by resolution soundness, independently of the order condition. Negative inputs are handled by covered-order construction followed by the earlier exact saturation completeness theorem. Running time is polynomial in the combined encoded formula and universe lengths.
+
+A uniformly polynomial-size, polynomial-time construction of a sufficient universe for arbitrary UNSAT would be a further result. This archive establishes the sufficient condition, the trace algorithm, and measured local operations for constructing or checking covered stages. Its unconditional semantic elimination theorem is distinct from its coverage-premised complexity claim.
+
+## Attribution and validation
+
+The earlier supplied-universe submission contributes the paired saturation machine and its exact search theorem, which the new elimination-order search invokes. The earlier exact resolution-verification submission contributes the strict finite-set equality and exact refutation checking machinery, including the measured literal payload eraser used by the elimination step. The earlier measured restriction submission contributes the canonical literal membership machinery reused for the pivot filter. The existing reference contributes the CNF encoding, machine closure lemmas, and resolution soundness. This archive adds the elimination semantics, covered-order derivation theorem, exact pivot partition and elimination step, and the universe intersection and end-to-end order coverage theorem.
+
+Exact recorded statements and Lean sources are included. The development uses the pinned reference commit a9ad395e8fab5537a9017734c14360773f375cd8, Lean 4.36.0 and the reference Mathlib dependency. The replay manifest binds the archived source bytes to the recorded statements and local checker results. The hosted archive experiment reports how many Lean processes it actually runs. The supplied sources and exact statements support local kernel replay in a prepared reference checkout.

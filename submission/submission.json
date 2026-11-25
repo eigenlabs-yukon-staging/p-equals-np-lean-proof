@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Davis\u2013Putnam elimination and measured resolution search from covered stages",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "DavisPutnamElimination proves preservation of satisfiability and EliminationOrderRefutation turns covered elimination stages into a strict resolution refutation.",
+    "MeasuredPivotClauseFilter and MeasuredDavisPutnamStep give exact canonical polynomial-time computation of a single elimination step.",
+    "MeasuredCNFIntersection retains exactly the universe representatives of a candidate formula and preserves universe ordering.",
+    "MeasuredEliminationOrderResolutionSearch returns a checked resolution trace on unsatisfiable canonical inputs with a supplied universe covering all stages of a covering variable order."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind all archived Lean overlay sources and the recorded exact statements to the local reference replay. The isolated experiment reports its live Lean invocation count, which may be zero.",
       "input_schema": {
         "type": "object",
         "properties": {
