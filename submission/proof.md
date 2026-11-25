@@ -1,16 +1,31 @@
-# Starter submission notes
+# Exact SAT at bounded clause-deletion distance from renamable Horn
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission formalizes exact deterministic polynomial-time membership for canonical satisfiable CNFs that can become renamable Horn after deleting at most a fixed number of clauses. The input does not specify the deleted clauses or the renaming. The machine searches possible clause deletions, keeps the removed clauses as satisfiability obligations, and uses the measured renamable Horn decision machine at the base of the search. The proof works for arbitrary widths of removed clauses and arbitrary binary variable identifiers.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Exact packed branching with an independently recognized base
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`PackedProductBudgetSAT` consumes the canonical separate encodings of a base and an extra CNF, packed in a reference self-delimiting raw pair. For a particular base, its supplied deterministic solver need only give the correct satisfiability answer when an arbitrary collection of width-at-most-one clauses is appended. Such extensions cover every generated branch, including an empty clause for an out-of-range literal on malformed or unsuitable input. The measured mixed-radix generator chooses one literal per extra clause and emits exact unit clauses. Its completeness guarantee puts a branch satisfied by any original satisfying assignment below the product of the extra clause widths. A polynomial clock bounded on the packed input is sufficient to reach that index.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+`ExactPackedProductBudgetSAT` adds measured guards for the canonical pair representation, the two canonical formula fields, the recognized base family, and the product budget. The pair guard reconstructs the exact raw pair after total decoding and compares it with the original word. This excludes encodings that the total decoder could otherwise interpret permissively. The product guard clips at one more than the permitted budget, and the resulting length comparison matches the exact arithmetic predicate. The theorem expresses equality with the intended language of packed pairs, including rejection of malformed encodings.
+
+`ExactPackedRenamableHornProductSAT` instantiates these general operations with the prior exact renamable Horn syntax language and its exact satisfiability language. A sign assignment witnessing renamability of the base continues to work when any width-at-most-one clause is appended. The semantic solver contract follows from encoding injectivity and that preservation of renamability. This result permits a supplied decomposition, with any number of extra clauses when their width product is small enough.
+
+## Moving clauses through the measured search state
+
+`MeasuredClauseExtraction` removes a canonical clause at a supplied unary index and returns its original encoding as a distinct component. It repeatedly splits the remaining formula into its first clause and tail, appending each skipped clause to an accumulated prefix. Exact reassembly bounds the raw step growth by a constant even on malformed states. After the unary clock ends the measured splitter separates the selected clause and the remaining suffix. Concatenating the preserved prefix and suffix gives the exact formula with that one occurrence erased. If the index is out of range, its result is the original formula together with an empty selected encoding. This includes the case in which the selected occurrence is itself an empty clause. A selected empty clause has a delimiter and remains a genuine unsatisfiability obligation.
+
+`BoundedClauseDeletionSAT` builds a sequence of measured decision procedures with a fixed total budget and a fixed number of remaining deletions. At a successor level its indexed scan chooses the position of a clause in the current base. It moves that clause to the end of the accumulated extra formula and invokes the previous-level decider. The reference encoding length bounds the number of clause positions, and an extra scheduled index implements a no-op. Moving a clause preserves satisfiability of the combined formula because the same clauses remain in it. The number of already moved clauses plus the remaining level decreases or stays within the fixed total budget.
+
+The logical deletion premise is existence of a retained sublist whose length deficit is at most the remaining number of deletions and whose encoding belongs to the measured base family. A proper retained sublist leaves some occurrence that can be erased while preserving that sublist. The proof obtains an index from the sublist derivation. If the existing base already qualifies, the out-of-range no-op uses up one level without changing the base. These two cases yield the exact inductive characterization in terms of possible indexed operations. Because the number of levels is fixed in the theorem, repeated composition of polynomial-time scans gives a polynomial-time decision procedure for each fixed distance.
+
+At level zero the remaining base must belong to the given family. The final accumulated extra clauses have count bounded by the original fixed budget. Each width is at most the packed input length, so their product is bounded by the fixed-degree polynomial `(X + 1)^k`. The measured packed branching theorem therefore decides the remaining satisfiability obligations with no unverified assumption about their shape. The final ordinary-input theorem uses the original CNF as the initial base and an empty extra formula, and intersects with the canonical syntax guard.
+
+## Scope and replay
+
+`ExactRenamableHornDeletionSAT` gives the exact original-input language specialized to renamable Horn. It applies for every fixed deletion bound. It does not provide a polynomial bound uniform in an input-dependent deletion distance, nor show that all reference SAT inputs are within any fixed distance. This is a measured tractable restriction and a reusable construction for other given base families.
+
+Prepare brilliant-hq/pequalnp-proofs revision `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, Mathlib `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`, and Node.js. Run `lake exe cache get` in the reference Lean directory, then run `python3 check.py --reference /path/to/reference` from the archive. The checker receives exact recorded statements and unchanged pinned imports. The package retains the previous validated source and statement digests and checks the new target dependencies before recording their manifest digests.
+
+The prior renamable Horn package `e9f57759-130d-4245-b8e8-8e098b96e17d` supplies decision and guard. The mixed-radix width-product package `202dd845-0798-4c0a-b30f-1448c78508b9` supplies the unit generator and capped product machine. The original indexed projection `5773f07e-e9f3-4db5-a12e-28b413a7f5c5` is used directly for both the packed branch and deletion scans. The local Yukon finalizer still needs its experiment and review artifacts, and Docker socket access is unavailable to the workstation account. The hosted identity experiment reports zero Lean invocations. The evidence is the separate pinned exact kernel replay.
+
+The checker accepted all six new statements. It rechecked 4,192 constants for packed branching, 4,225 for its exact language, 4,672 for the renamable Horn packed instance, 3,033 for clause extraction, 4,278 for general deletion, and 4,725 for the specialized exact language. The transitive axiom reports were limited to `propext`, `Quot.sound`, and `Classical.choice`. No numeric score is claimed.
