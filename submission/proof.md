@@ -1,16 +1,33 @@
-# Starter submission notes
+# Exact measured Horn satisfiability
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This package formalizes deterministic polynomial-time decision of the exact language of satisfiable canonical Horn formulae using the pinned SAT encoding. A Horn clause has at most one positive literal occurrence. Formulae can have arbitrary clause widths, and variable identifiers stay in their original binary representation. The machine computes a least-model closure by forward propagation and then invokes the pinned deterministic verifier on its computed assignment. An independent measured syntax test ensures that the resulting P language contains exactly satisfiable canonical Horn encodings.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Finite closure and the least model
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+Start with the empty set of true variables. During a sweep, if a clause is already true under the current set, leave the state unchanged. If the clause is false and has a positive literal, insert that variable. If it has no positive literal, leave the state unchanged. The last case is compatible with final rejection by the verifier.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+`HornClosureCompleteness` proves that on a satisfiable Horn formula, every inserted variable is true in every satisfying assignment. The inductive premise is that the current set contains only variables true in a given model. For an unsatisfied clause, no negative literal can be the witness that the model satisfies the clause. If a negative literal were true in the model, its underlying variable would be false there and therefore absent from the current set, making the same negative literal true already. Thus the model makes a positive literal true. The Horn condition identifies it with the selected positive head. That variable is absent from the current set because the clause is currently false, so insertion strictly increases cardinality.
+
+A complete sweep is extensive and stays inside the finite set of original formula variables. If the current assignment satisfies the formula then a sweep is stable. On a satisfiable input whose current assignment is still false, at least one step must enlarge the set. Even if earlier steps change the state before the first originally false clause, this already supplies the strict growth needed for that sweep. Hence after a number of rounds bounded by the cardinality of the variable set the result must satisfy the formula. Any successful output is a model by direct evaluation. The proof also gives the least-model property under inclusion of the true variables.
+
+## From a sweep to a measured machine
+
+`MeasuredPositiveLiteral` computes the original binary variable code of the first positive literal of a canonical clause, or the empty word if none exists. Its item loop skips negative literals and stops when it reaches a positive one. The output drops the two polarity bits and retains the original variable code. The reference bound on the raw item drop supplies length-nonincreasing iteration. The canonical proof covers empty and all-negative clauses as well.
+
+`MeasuredHornSweep` separates the next clause from the remaining encoding using the earlier measured first-clause splitter. On the resulting raw clause and current witness, it calls the pinned polynomial-time Boolean verifier for that single clause. The current witness is a list of original variable codes. If the verifier returns false, the step appends the measured first positive variable, if present. For arbitrary raw states the appended code is clipped to the separated clause length and the split pieces sum exactly to the previous raw input. Thus even a malformed state has a constant-growth bound. On canonical clauses the clipped code is unchanged. The proof relates each canonical step to insertion into a finite set and bounds the accumulated witness growth in a whole sweep by the original formula encoding length.
+
+`MeasuredHornSAT` composes successive measured sweeps. Its state preserves the original formula and a unary cap with size the square of the input length. After each sweep the updated witness is clipped at the cap. The linear witness growth bound per canonical sweep proves that this outer clip is inactive for the input-length many sweeps. The same cap supplies the growth measure for arbitrary raw states. There are enough rounds because the encoding length bounds the number of literal occurrences and hence the number of distinct variables. The composed decider invokes the pinned exact SAT verifier on the original input and the final witness. The correctness proof transfers its witness assignment to the finite least-model argument.
+
+## Exact input guard and scope
+
+`MeasuredHornGuard` scans aligned bit pairs in the canonical reference format. The initial digit pair of each literal records its polarity. Subsequent index digit pairs leave the polarity count unchanged. A literal-end marker permits counting the next polarity, and a clause delimiter resets the clause count. The second positive occurrence in any clause rejects. Combining the scan with the pinned exact CNF well-formedness test produces a P language for canonical Horn syntax. Empty clauses pass the syntax guard and are rejected by the satisfiability test.
+
+`ExactHornSAT` intersects that guard with the measured closure decider and proves set equality on raw words. Its statement uses the unchanged reference class, encoding, and satisfiability predicate. This is a checked deterministic algorithm for Horn satisfiability. It makes no claim that the Horn restriction contains a reference NP-complete language or that arbitrary SAT can be reduced to it in polynomial time.
+
+## Reproduction and provenance
+
+Prepare brilliant-hq/pequalnp-proofs revision `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, Mathlib revision `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`, and Node.js. Run `lake exe cache get` in the reference Lean directory and `python3 check.py --reference /path/to/reference` in the archive. The replay overlays only the named outside source modules, passes the exact intended statement bytes to the original checker, and checks their dependencies under the pinned environment.
+
+The previous fixed-wide-clause package `4eac1a99-49f9-48b5-af25-3549eb8bb9b5` supplies the retained first-clause splitter and its total reassembly specification. The pinned source supplies the measured verifier and machine combinators. The finite Horn argument, measured positive selector, sweep, full closure machine, and exact guard are new in this archive. The default local Yukon run still lacks the upstream experiment and review artifacts and this account cannot access the local Docker socket. The isolated hosted identity experiment reports zero actual Lean checks absent the reference checkout. The independently run exact checker is the evidence for the mathematical result. No claimed score is attached.
+
+The pinned checker accepted all eight exact statements. It kernel-rechecked 754 constants for the least-model argument, 2,970 for positive selection, 3,283 for a measured sweep, 3,494 for closure decision, 4,079 for the guard, and 4,357 for the exact language theorem. The reported transitive axioms were `propext`, `Quot.sound`, and `Classical.choice`.

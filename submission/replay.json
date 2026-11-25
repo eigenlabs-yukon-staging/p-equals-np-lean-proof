@@ -1,0 +1,87 @@
+{
+  "checks": {
+    "ExactHornSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactHornSAT; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 4357 constants",
+      "checker_manifest_sha256": "979400b37d817f5407283d338ee514e6854605983a8685b3f125866fe539c90b"
+    },
+    "HornClosureCompleteness": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.HornClosureCompleteness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 754 constants",
+      "checker_manifest_sha256": "6a90a7afe4584f328bea9d57be7e1f0c7ba882f6e2aaeb7d9904414d609e1d66"
+    },
+    "MeasuredFirstClause": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredFirstClause; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3021 constants",
+      "checker_manifest_sha256": "c6ead3cc6ac18822d9cf914209acb81b81682e353a0c10f385d36320dfbec58a"
+    },
+    "MeasuredHornGuard": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredHornGuard; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4079 constants",
+      "checker_manifest_sha256": "7e8e80c5638366cddf2f172d757d4c8a4fed95a156a1a8f385c3423ce3937d48"
+    },
+    "MeasuredHornSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredHornSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3494 constants",
+      "checker_manifest_sha256": "7f90a0d68ac3ebf7c01b8cb1afa7b93e5a44b72388c0d1f6b665290091b78978"
+    },
+    "MeasuredHornSweep": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredHornSweep; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3283 constants",
+      "checker_manifest_sha256": "caa5ca30594ee09f16e9fafdbf9bad4406b1ce479b78a8861ed9f4de8adf7def"
+    },
+    "MeasuredPositiveLiteral": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredPositiveLiteral; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 2970 constants",
+      "checker_manifest_sha256": "55ae4ac22759104adfd93d9af262ff74b92b82b2ffc39d2ce85bf90621b40a7e"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    }
+  },
+  "files": {
+    "ExactHornSAT": {
+      "source_sha256": "863f2e067c68cb353b94f6aa3bb50c02a79653e64293296bd474c9f0e36762bf",
+      "statement_sha256": "cea4be35000576c3a38d999c4318fe12faeb0b78649559beeabeb2bea801d852"
+    },
+    "HornClosureCompleteness": {
+      "source_sha256": "fc7df7e916bbfddcddd3ea00502d804791ddd47145d41e7bdac8123b7d7fdd78",
+      "statement_sha256": "7a679df7a07dd080bc943dbfb7a2330d4e7ef63d9b9a91dfa8f50e9847abffd4"
+    },
+    "MeasuredFirstClause": {
+      "source_sha256": "25078d74acc1dc44beb9bffdc8964a9e4b95ae62e6f1244a2ba5bb021c732d5d",
+      "statement_sha256": "0691197d8f27a2a10ef62b6d66972ca9a654abe0d0fdf3e16ec1a1978212250f"
+    },
+    "MeasuredHornGuard": {
+      "source_sha256": "db00edf0a41b45fecf5934f6c57eed8a03f507d79cdcb28ed086d8f408e827d7",
+      "statement_sha256": "e9aa39c549415c407454d14c4cdb6e01de058c013da5be77a09c19debd4986bd"
+    },
+    "MeasuredHornSAT": {
+      "source_sha256": "a6e5fd073e20de519efdba46d03cf6dca585f3b82103ecd8145749764dc5486a",
+      "statement_sha256": "70654bf14f737e89aec64c0b43c0c7094d1c3a2b023ae7acc486c553f993b5f2"
+    },
+    "MeasuredHornSweep": {
+      "source_sha256": "d57cd19cef643f69a715ffa48ab6ad0c2989f33cfdd250e4e2fd42b5a4c80d08",
+      "statement_sha256": "601e416656557781a948e935c4b52b0a040a4157ebb1aabba26ea4a32904e57a"
+    },
+    "MeasuredPositiveLiteral": {
+      "source_sha256": "059b51e6d5e719679eb5aaebb0c4cc33670997898ae9d15733281a5c6d17cb6e",
+      "statement_sha256": "06113d8f91e19ad98da5bb367fb0d86b5c89c7ba0df851802202a2d3d128b595"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    }
+  },
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8"
+}
