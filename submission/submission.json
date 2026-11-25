@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Exact measured resolution search over a supplied finite clause universe",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "MeasuredUniverseResolution saturates an arbitrary supplied canonical clause universe and emits an exact resolution derivation.",
+    "ExactSuppliedUniverseRefutation decides whether a fully represented resolution refutation exists, and SuppliedUniverseRefutationSearch returns a checked canonical witness exactly in that case.",
+    "MeasuredResolutionUniverseSAT proves guarded SAT is in P when a measured universe generator covers a refutation for every unsatisfiable guarded input.",
+    "TwoSATWidthTwoRefutation establishes bounded-width coverage for unsatisfiable width-two formulas and MeasuredTwoSATResolutionSearch returns their exact refutations."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind all archived Lean overlay sources and the recorded exact statements to the local reference replay. The isolated experiment reports its live Lean invocation count, which may be zero.",
       "input_schema": {
         "type": "object",
         "properties": {

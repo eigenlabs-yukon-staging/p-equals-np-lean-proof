@@ -1,16 +1,35 @@
-# Starter submission notes
+# Resolution search within a supplied finite clause universe
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission generalizes the measured fixed-width resolution search to a supplied finite universe of canonical clauses. On a paired canonical input consisting of an original formula and such a universe, the new machine decides whether there is a resolution refutation in which each proof line is represented by some clause in the supplied universe. It also returns an exact canonical refutation on every accepted pair. The proof rule is the pinned finite-set resolution rule, without weakening, and the representation allows repeated clauses and arbitrary literal order.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The universe is an explicit input to the paired problem, rather than a width chosen by the machine. Runtime is polynomial in the combined length of the input formula and the supplied universe. No claim is made that arbitrary unsatisfiable formulas have polynomially constructible universes representing their refutations. A separate conditional theorem states exactly how a measured universe generator and a completeness property give a deterministic polynomial-time algorithm for a guarded SAT language.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+## Exact saturation for arbitrary clause universes
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The machine retains a fixed original formula, a fixed candidate universe, a list of clauses known after the most recent round and a newest-first proof trace. Each round examines every candidate. A candidate whose finite set occurs among the original axioms passes the axiom branch. Otherwise it must be an exact resolvent of two candidates in the previous known list. The measured test uses the retained local resolution line verifier. The complete new round is stored at the front of the trace, so all required parents occur in the older suffix of each newly derived line. All appended clauses come from the supplied universe.
+
+The pure termination proof uses the earlier finite-list fixed-point theorem. Known membership grows monotonically because a wider previous list cannot invalidate an axiom or remove either parent of a resolvent. The known list is confined to the supplied universe. Extensional membership is stable after the universe's list length many rounds, regardless of repetitions. The measured loop runs for the encoded universe length, which dominates the list length. Its immutable universe length also caps each raw round result. The cap is inert on canonical input because the result is a sublist of the universe. The trace can grow only by that bounded amount per round, so the full search is measured on arbitrary raw pairs.
+
+At the fixed point, any proof using only represented clauses can be interpreted inside the known list. For an axiom, take its represented canonical clause in the universe, and apply the exact axiom rule. For a resolution line, inductively choose represented parents in the known list and then apply the exact resolver check for the represented candidate. This does not require the proof's encoded list order to match the universe's order. All comparisons are finite-set equalities. If the proof refutes the original formula, the empty finite set is represented as the empty list and is present in the generated derivation. Conversely, a generated derivation with the empty clause is itself a valid refutation whose lines all belong to the universe.
+
+`MeasuredUniverseResolution` states the measured trace constructor and these exact properties. Its raw loop is factored from the fixed-width saturation implementation, so both variants share the same state transition and clock proof. `ExactSuppliedUniverseRefutation` uses the exact resolution verifier to test the trace it generates and checks syntax of the incoming universe. The verifier also checks the original formula's canonical syntax. `SuppliedUniverseRefutationSearch` returns the generated canonical refutation on accepted input and the empty word otherwise. Its exact theorem covers arbitrary raw pairs and shows that every nonempty result has valid syntax, a matching canonical formula and universe, and a represented refutation against that original formula.
+
+## A conditional guarded SAT algorithm
+
+`MeasuredResolutionUniverseSAT` exposes the additional hypothesis needed for SAT decision. Supply a guard language in the reference class `P` and a measured generator of the universe encoding. For every unsatisfiable canonical formula in the guard, require a finite-set resolution refutation whose clauses are represented in the corresponding generated universe. The theorem proves that the intersection of reference SAT with the guard belongs to reference P.
+
+The machine checks canonical syntax and the guard, runs exact represented-refutation search for the generated universe, and accepts when the search finds no refutation. Soundness of resolution excludes a refutation on a satisfiable input. Completeness on negative inputs is precisely the supplied coverage premise. Exact language equality accounts for malformed strings and formulas outside the guard. This is a reusable algorithmic criterion and does not assume or claim the coverage premise for unrestricted SAT.
+
+## Width-two resolution coverage
+
+The package also proves independently that a canonical formula of width at most two is unsatisfiable exactly when it has a resolution refutation in which all finite-set lines have width at most two. The proof starts from the pinned implication-graph criterion. If the input has an empty clause it is already a valid axiom. Otherwise an unsatisfiable formula has an occurring literal and paths in both directions between it and its complement.
+
+For a nontrivial implication path from one literal to another, the proof produces a derivable clause contained in the pair consisting of the complement of the first literal and the last literal. Each edge comes from an original unit or binary clause with that containment. To extend a path, combine a derivation for its prefix with the last edge's axiom. If one parent lacks the relevant pivot, that parent already has the desired endpoint containment. Otherwise exact resolution deletes the connecting pair of signed literals and leaves a subset of the two endpoint literals. All new clauses therefore remain at width at most two. No weakening is used.
+
+The two contradictory paths yield either an empty derived clause already or two complementary derived units. In the latter case, prepend their exact resolvent, the empty clause, to the combined derivations. The reverse implication is resolution soundness. `MeasuredTwoSATResolutionSearch` applies this coverage result to the earlier measured fixed-width search and gives an exact certificate-producing promise algorithm for canonical width-two inputs. It returns the empty word precisely for satisfiable promised inputs and emits a verified resolution trace of width at most two for all unsatisfiable promised inputs.
+
+## Attribution and replay
+
+The bounded-width submission supplies the measured saturation state, finite-list stability, and the fixed-width language and search framework. The exact resolution-verification submission supplies the strict local rule checker, refutation verifier and soundness. The short RUP certificate submission supplies the previously proved implication-conflict extraction for width-two formulas. The new work is the paired arbitrary-universe saturation interface, exact represented-refutation decision and witness construction, the guarded SAT composition theorem, and the width-two resolution argument.
+
+The source overlay and exact statements are tied to reference `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0 and the pinned Mathlib. The pinned checker validates each exact statement and the permitted transitive axiom use. The archive experiment verifies the retained overlay identities and recorded statement digests, and reports its actual number of live Lean invocations. The source and exact statements support pinned kernel replay in a prepared reference checkout.
