@@ -1,16 +1,31 @@
-# Starter submission notes
+# Exact measured first-occurrence locality and its SAT language
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission makes the structural premise of the earlier automatic elimination and sparse witness theorem decidable in the reference polynomial-time model. For each fixed nonnegative radius, the resulting exact language consists of canonical CNF words that satisfy the first-occurrence locality condition and are satisfiable. The theorem proves that this language is in reference P. It checks the locality restriction directly on the original clauses. The earlier occurrence-order P theorem used a different guard, namely whether every actual elimination stage stayed within a fixed clause-width limit. The new guard is a syntactic property of the input and is verified independently of the elimination run.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## First-occurrence ranks and the input convention
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+Read a canonical formula in clause order and then in literal order within each clause. Flattening that traversal gives the full literal sequence. Replacing each literal by its variable gives a finite list of natural identifiers. The reference Lean statement uses the zero-based index of the first occurrence of each identifier. Every variable queried by the formula guard occurs in that list. The locality property quantifies over every ordered pair of literals within each original clause, requiring the first variable's index to be at most the second's index plus the chosen radius. Including both directional comparisons expresses a bounded absolute distance without introducing integer indices.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+Variable names are binary natural identifiers in the reference encoding. The machine obtains a key by removing the polarity prefix and comparing the remaining canonical variable code. Thus opposite signs of one variable have the same index. Repeated literals and repeated clauses are allowed, and the first occurrence is the first in the actual submitted encoding. This is a class of canonical formula words and can depend on their order. Reordering an equivalent formula can change the locality condition.
+
+## Measured first-occurrence and directional comparison
+
+The index machine takes a query literal and a canonical clause representing the sequence to scan. It stores the query's variable key, the remaining literal suffix, and a unary counter. An enabled transition tests the first literal's variable code. If the code matches, the state freezes. A clause delimiter also freezes the state. Otherwise the machine skips the whole current literal and prepends a true bit to its counter. The scan clock is the encoded sequence length and therefore dominates the number of literals. On an absent identifier the result is the entire sequence's literal count. This includes the empty sequence and makes the index operation total on its canonical input domain.
+
+The proof of polynomial time applies to arbitrary raw words. The transition uses the reference projections, delimiter tests, literal extraction and skip, exact bitstring comparison and concatenation. When a transition takes the counting branch, the suffix length cannot increase, the key remains unchanged, and the counter grows by one. The reference inequalities for unpairing yield a constant per-round state growth bound. The machine is therefore admitted by the pinned growing-iteration theorem. Correctness on canonical inputs reduces the first-literal comparison to variable equality and matches the recursive equation for the reference list's index operation.
+
+A second measured operation computes the two unary first-occurrence indices and appends a fixed unary word of the chosen radius to the second. It uses the pinned linear-time length comparison to check the directional inequality. The output is empty when the inequality holds and is a singleton true marker for a violation. The theorem specifies this result exactly on the paired canonical order word and the queried literal pair.
+
+## Exact locality check and SAT decision
+
+The full guard first uses the earlier measured order normalizer to construct a positive clause recording the input's complete literal sequence. It preserves the sequence of variable identifiers, so their first positions are unchanged. A measured clause scan then visits every original clause. Nested measured literal scans enumerate every ordered pair of literals in that clause and concatenate their violation markers. The resulting word is empty exactly when all inequalities hold. The proof relates concatenation emptiness to the absence of every possible violation, including the vacuous conditions for empty formulas and empty clauses. This isolation matters because the rank comparator only proves correctness on canonical inputs while its polynomial-time implementation is total on raw strings.
+
+To decide the exact guarded SAT language, the machine first checks canonical CNF syntax and then checks locality. On guarded input it invokes the earlier measured occurrence-order elimination procedure with width twice the radius plus two. That procedure returns a singleton true marker exactly when all stages meet the width bound and the formula is satisfiable. The pure locality theorem supplies that width guarantee for guarded input. The final P theorem accepts exactly the syntactically valid inputs with both the structural condition and a satisfiable formula. Formulas outside the radius and noncanonical words are rejected by the corresponding gates.
+
+The computation uses no external order annotation or supplied universe. The elimination procedure obtains its order from the same canonical input and builds its fixed-width universe automatically. The proof uses the earlier result that the first-occurrence radius bounds every intermediate signed clause cardinality by twice the radius plus two. The theorem is polynomial time for each fixed radius. Its scope is the explicit syntactic guard, and it gives no unconditional claim about SAT in P.
+
+## Attribution and replay
+
+The earlier automatic occurrence-order submission supplies the pure locality-to-width implication and the measured occurrence-order solver. The earlier bounded-walk submission supplies the measured normalizer used in both the guard and the witness path. The new work is the measured first-occurrence index, directional comparison, exhaustive clause-pair guard and exact guarded language theorem. The reference supplies the canonical syntax scanner, length comparison and measured machine closure results.
+
+The exact recorded statements and source overlay target reference a9ad395e8fab5537a9017734c14360773f375cd8, Lean 4.36.0 and its pinned Mathlib. The pinned checker was used locally on the exact new statements. The archived digest record ties the results to every transitively included overlay source. The hosted experiment reports its actual count of live Lean checks. A prepared pinned checkout can independently replay the provided statements and source overlay.
