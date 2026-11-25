@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Sparse satisfying assignment recovery for product-budget SAT",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "SparseVariableSATSearch checks polynomial-time sparse satisfying assignment recovery from a decider correct on unit extensions.",
+    "ProductBudgetSATSearch checks sparse satisfying assignment recovery under the explicit polynomial wide-clause width-product bound.",
+    "ExactProductBudgetSAT independently checks P membership for the exact restricted decision language.",
+    "P_subset_NP checks the reference inclusion."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind the archived Lean modules and exact statements to the recorded local reference replay. The isolated experiment reports zero Lean invocations and can be complemented by replay with the pinned reference.",
       "input_schema": {
         "type": "object",
         "properties": {

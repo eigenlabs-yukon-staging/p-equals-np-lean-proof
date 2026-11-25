@@ -1,16 +1,33 @@
-# Starter submission notes
+# Sparse satisfying assignments for product-budget SAT
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This package extends the exact product-budget SAT decider with a measured search procedure that returns a satisfying assignment. It reads only variable codes actually occurring in the formula. The output lists the variables assigned true in the pinned bit encoding, and every other variable defaults to false. The exact statement bounds output length by input length and places no numerical bound on variable indices. The decision and search results remain restricted to formulae whose wide-clause branching product fits the given polynomial budget.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Search using only unit extensions
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`SparseVariableSATSearch` is a generic search construction from a polynomial-time language decider. The language needs to agree with satisfiability for the particular formula with any list of unit clauses appended. It can have unrelated behavior on other inputs. Under that premise and initial satisfiability, the machine produces a satisfying assignment for the original formula. This contract permits using a decider for a restricted family that is preserved by appending units.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The reference CNF is traversed by its aligned raw items. Each item is either an encoded literal or a clause delimiter. The machine retains the original formula, the remaining encoded items, an accumulated list of unit constraints, and an accumulated list of true-variable codes. Clause delimiters advance the remaining input while leaving the other fields unchanged. For a literal occurrence, the machine strips the original polarity and extracts the original variable's binary code. It queries the supplied decider on the original formula with the selected units and a positive unit for that variable. If the test is positive, it appends that unit and records the variable in the output. Otherwise it appends the corresponding negative unit and advances without recording the variable.
+
+The choice preserves existence of a satisfying assignment for the extended formula. A positive branch follows from the input language's correctness on the particular query. A negative answer rules out any satisfying assignment extending the already chosen units with the variable true. Since a satisfying assignment existed before the decision, that assignment can take the variable false. Both branches add a recorded unit to the same original formula. Duplicate occurrences do not require a separate identification step. The invariant retains every earlier unit and ensures all accumulated units are simultaneously satisfiable, so any repeated occurrence receives a consistent value. Repeated true codes have the same membership semantics as a single true code.
+
+## Exact machine bounds and witness semantics
+
+The reference item split, append, Boolean selection, and raw pair projections give a polynomial-time step. When it prepares a unit query, the step clips the extracted variable code at the original formula length. The canonical proof shows clipping is inactive for every literal in the input. The purpose of the cap is a growth bound that holds on arbitrary malformed raw machine states, where a purported remaining input might be longer than the original field. The original field is stable and its length supplies a nonincreasing measure for the reference measured iteration. The remaining item stream and both accumulated fields have explicit raw length bounds under the step.
+
+The loop uses the original formula encoding length as its clock. Each encoded item contributes at least one raw bit, so this many rounds cover every item. Exhaustion is a fixed state. The canonical correctness proof relates the raw run to encoded unit lists and witnesses, tracks satisfaction of the extended formula, and shows that each processed literal's variable occurs among the recorded unit choices. The bound on the final witness holds by charging each emitted original variable code to the corresponding processed literal. A variable code omits its two polarity bits and is therefore no longer than that literal. Clause delimiters do not output variable codes.
+
+The resulting assignment uses membership of the emitted variable list. Take a satisfying assignment of the final extended formula from the invariant. For any original variable, a recorded unit determines its value. If that value is true, at least one emitted list entry records the variable. If it is false, no true unit for it can have been recorded, because all the units are satisfied by the same assignment. The recovered assignment therefore agrees with the invariant assignment on every variable used in the initial formula. The exact output encoding is a list of the original binary variable codewords followed by their reference item terminators, without a dense bit vector up to the maximum variable number.
+
+## Application to the exact product-budget language
+
+`ProductBudgetSATSearch` instantiates the generic search with `ExactProductBudgetSAT`. Appending unit clauses adds nothing to the list of clauses wider than two. Thus the product of their widths is unchanged. The ordinary reference encoding length can only grow under the append. Monotonicity of a polynomial with natural coefficients preserves the budget. The exact decision language therefore agrees with satisfiability on every required unit extension. The earlier proof of injectivity of the canonical encoding identifies the queried formula uniquely even when the exact language definition quantifies existentially over formulae.
+
+This construction applies to canonical inputs with arbitrarily large binary identifiers and a polynomially bounded branch product. It makes no assertion about solving unrestricted reference SAT, nor about the existence of a polynomially computable reduction from unrestricted SAT to this family. The practical improvement over the previous package is a checked explicit witness producer in addition to exact language membership.
+
+## Reproduction and provenance
+
+Use the unchanged reference checkout at brilliant-hq/pequalnp-proofs commit `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, and Mathlib `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`. Install Node.js and prepare the reference Lean dependencies with `lake exe cache get`. From the submission directory run `python3 check.py --reference /path/to/reference`. The script overlays only the named outside modules and passes each separate recorded statement to the upstream exact checker.
+
+The exact product-budget decider, mixed-radix arithmetic, clause processing, and checked projection are carried forward from `202dd845-0798-4c0a-b30f-1448c78508b9`. The pinned reference SAT search-to-decision example provides a comparison. The new construction scans the actual literal occurrences and has a smaller oracle contract than requiring correct answers on all of SAT. The reference item and pairing operations are used directly. The workstation's standard Yukon run lacks the experiment and review artifacts needed for finalization, and the current account lacks Docker socket access. The hosted identity experiment reports zero Lean kernel runs in its isolated Python environment, while the local exact replay supplies the machine-checked mathematical evidence. No claimed score accompanies the candidate.
+
+The pinned checker accepted all thirteen exact statements. It kernel-rechecked 3,068 constants for the generic sparse variable search and 4,356 for its product-budget instance. Both checks reported only `propext`, `Quot.sound`, and `Classical.choice`.
