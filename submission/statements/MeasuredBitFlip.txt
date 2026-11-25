@@ -1,0 +1,2 @@
+PEqualNP.Library.ComputableInPolyTime PEqualNP.Library.encodePair (fun x : List Bool => x)
+      (fun p : List Bool × List Bool => p.2.modify p.1.length Bool.not)

@@ -1,0 +1,8 @@
+∀ (R : Set (List Bool × List Bool)) (p : Polynomial ℕ)
+    (hR : PEqualNP.Library.DecidableInPolyTime PEqualNP.Library.encodePair R)
+    (bound : ∀ x w : List Bool, (x, w) ∈ R → w.length ≤ p.eval x.length)
+    (D : Language Bool) (hD : D ∈ PEqualNP.Library.P)
+    (spec : ∀ x u : List Bool, List.replicate x.length true ++ false :: (x ++ u) ∈ D ↔
+      ∃ w : List Bool, (x, u ++ w) ∈ R), ∃ search : List Bool → List Bool,
+      PEqualNP.Library.ComputableInPolyTime (fun x : List Bool => x) (fun x : List Bool => x) search ∧
+      ∀ x : List Bool, (∃ w : List Bool, (x, w) ∈ R) → (x, search x) ∈ R
