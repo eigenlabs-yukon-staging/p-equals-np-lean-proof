@@ -1,0 +1,97 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "MeasuredUnitRound": {
+      "source_sha256": "a5de6df7ed4a5121928ecbae2355b9ef3a09173469a932809826fc6c58978862",
+      "statement_sha256": "ae75b2715412ad0372a10d89d17951e5da93515acdc197d0b973ca4f5f826f7b"
+    },
+    "MeasuredRUP": {
+      "source_sha256": "54d57f85e44b53b8c7090b130b23e7a588901d5ce13529a15375b4ac8aeb0c12",
+      "statement_sha256": "028f0ada5ecfdd6f40a7251a8e24421cee5b7b3f555431a3dc9cae04f92494e8"
+    },
+    "MeasuredRUPRun": {
+      "source_sha256": "97410ad74f5ff9b223f3ed72ace1ebd2035d9033d3da24481673ef6ac7594430",
+      "statement_sha256": "37a8c7730a82aeaf7662861038fb5d8f1174bffffce4a74896b6e74cc7fffe5d"
+    },
+    "ExactRUPRefutationVerifier": {
+      "source_sha256": "d7bee07848c3ef69ec63457a8cc91379e5d63350deb6f441f1f83330a1ba2fa7",
+      "statement_sha256": "021d050e202b77110e8401eca496d0c258e8b01635b85a7a639858ca24014c4c"
+    },
+    "BoundedRUPRefutationsInNP": {
+      "source_sha256": "fccf870a63c1814264ea0e6f7426758f48f08841acf2082102217d04a56b0cb0",
+      "statement_sha256": "d07fcdc0d4f0a7443c0ffc6b56a7eb69054d08cb03077af0fa8b7b8f7aed93f4"
+    },
+    "RUPCoverageCoNP": {
+      "source_sha256": "1e3d9a7c8c09301355e2b0335d60793d4bd72d0bac3a1b9d32c098d071c43009",
+      "statement_sha256": "6ce76a891dbc620c849c4de06d6da982542b68149270e52ff73899e0f4e80c39"
+    },
+    "ExactUnitRefutableCNF": {
+      "source_sha256": "b8dcde6385cbd2aed00656cc15cd070dc881a658e73302592f62da52b3a7e9af",
+      "statement_sha256": "d1e26f70bd36bcb6dde84ddf77fe9e6e1a7a49fa7e10216434b156b2967e6fc7"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    },
+    "HornUnitRefutation": {
+      "source_sha256": "836dff7906c2dec62ff5472a9272b01016e4bc9e3f206a8eaa01b3af7fe8757d",
+      "statement_sha256": "220a161f33aba42a15f79640f6199001669cfb658274c9afadba82b736b24180"
+    }
+  },
+  "checks": {
+    "MeasuredUnitRound": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredUnitRound; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4169 constants",
+      "checker_manifest_sha256": "4d99a30f2d3cfa3dad6990c785e54de7aba9585db1fba9d10f23b5b41b0047a2"
+    },
+    "MeasuredRUP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredRUP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4200 constants",
+      "checker_manifest_sha256": "328edf0541d9bb1f0e27e4589833fe741aa11914bf7c4a34b8ba51a263eb71d6"
+    },
+    "MeasuredRUPRun": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredRUPRun; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4226 constants",
+      "checker_manifest_sha256": "9e0421d818c14d46ce0edb439bee8910e4f8f3673bcc61acd6eda05191129d3c"
+    },
+    "ExactRUPRefutationVerifier": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactRUPRefutationVerifier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4234 constants",
+      "checker_manifest_sha256": "7e566cde7ea19093bd2802326fb64388b07d5ac4c5f56f42a0f050e41037c81a"
+    },
+    "BoundedRUPRefutationsInNP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.BoundedRUPRefutationsInNP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4235 constants",
+      "checker_manifest_sha256": "4f6527208d240cd98e5d516bf024b1f82636146d49024e38a36c81ce5ae422ad"
+    },
+    "RUPCoverageCoNP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.RUPCoverageCoNP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4235 constants",
+      "checker_manifest_sha256": "55d266bcc85422a865766d35fb31d6cf0c224f8eebbaf3004314867f9b72a0ad"
+    },
+    "ExactUnitRefutableCNF": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactUnitRefutableCNF; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4201 constants",
+      "checker_manifest_sha256": "e0f0ba480244155c214c3bc617aa8d2dbf1b6fc80a0dfbcd971d476c11bafaa3"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    },
+    "HornUnitRefutation": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.HornUnitRefutation; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 779 constants",
+      "checker_manifest_sha256": "7419f00d3d2795410dfbdbad1aafba5c210305db885a33fd4f63fc80afc02c80"
+    }
+  }
+}
