@@ -1,16 +1,33 @@
-# Starter submission notes
+# A measured 2-SAT branching decider for 3-CNF with few ternary clauses
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This package proves deterministic polynomial-time decision on a specific promise family of reference 3-CNF inputs. The formula may have arbitrarily many clauses of width at most two. The number of three-literal clauses must be small enough that the space of two-bit selections per ternary clause is bounded by a fixed polynomial in the length of the ordinary reference encoding. The machine partitions the ordinary encoding, enumerates a bounded range of selections, and uses the unchanged reference 2-SAT decider to test each selected branch. The proof is checked against the pinned definition of P and the exact reference SAT encoding.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Splitting a canonical formula
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`CNFThreeClausePacking` implements a polynomial-time transformation on raw Boolean words. Its exact semantic theorem covers every canonical 3-CNF. It produces a self-delimiting pair. The first field contains the encoding of clauses with width at most two. The second field contains a list of packed triples. In each triple, an alternative is the exact encoding of the unit clause asserting one of the original ternary clause's literals. The two lists are both in reverse order, since the state prepends newly processed entries. Later satisfiability reasoning uses clause membership and is invariant under reversal.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The partition machine uses the pinned literal item operations. These split an encoded literal or a delimiter from a raw input. On canonical formulae, at most four item drops consume a complete clause including its delimiter. The machine distinguishes an empty clause, one literal, two literals, and three literals. An empty clause is conserved in the base, where the pinned 2-SAT recognizer correctly rejects unsatisfiable bases. The measured iteration is total on arbitrary raw words. Its nonincreasing measure is affine in the size of the remaining input. A bound for constructing a packed triple uses the lengths of the first three raw items, reference pair projection bounds, and the fixed delimiters. Each item is bounded by the remaining input. The proof relates each valid step to the exact partition invariant and bounds the clause count by the length of the raw reference encoding.
+
+## Generating a 2-CNF branch
+
+`MeasuredTripleSelections` is a separate polynomial-time transducer for a packed list of triples of arbitrary Boolean words. For each group, it reads two bits from a seed and chooses the first alternative when the first bit is true, the second when the first bit is false and the second true, and the third otherwise. Missing bits are false, so the machine is defined on seeds of every length. Each output is a concatenation in the original group order. The proof supplies the exact indexed specification on canonical packed records.
+
+The machine stores remaining records, the remaining seed, and accumulated output. The raw length of a chosen alternative cannot exceed the raw length of its triple. Consuming that record pays for the variable-length append. Even when given a malformed state, the machine grows by at most two symbols for the delimiters of the outer state. The reference measured iteration uses the packed group's raw bit length as the clock. The group stream is empty by the end for every canonical input, because every encoded group takes at least one bit.
+
+`ThreeClauseBranching2SAT` specializes the generic selector to packed unit alternatives. A branch combines the binary-clause base with one unit for each ternary clause. Every branch has width at most two. For soundness, a satisfying assignment of a branch satisfies the selected literal in each ternary clause and the untouched base. Uniqueness of the reference CNF encoding connects membership in the pinned 2-SAT language to satisfiability of the specific branch. For completeness, a satisfying assignment of the mixed formula selects a true literal in each ternary clause. The proof encodes those choices as a seed of length twice the number of ternary clauses. The reference word enumeration and index bound place the exact seed before the end of the polynomial clock. The indexed projection turns the existence of a successful branch into a P decider on packed raw input.
+
+## Ordinary reference encodings
+
+`LogarithmicThreeClauseSAT` composes the partition machine with the packed-input branch decider using downward closure of P under polynomial-time reductions. Packing does not shrink the canonical original encoding, which permits transferring the polynomial clock premise by monotonicity. The proof compares the encoding length of a ternary clause with the packed group of its three unit alternatives. It also identifies the exact count of groups with the count of length-three input clauses. The proof of semantic correctness shows that the original formula and the combined partition have exactly the same clause membership, which suffices for equality of satisfaction on each assignment.
+
+The final theorem states existence of a P language together with its exact agreement on the canonical inputs satisfying the width and branching-budget premises. It leaves behavior outside the promise unspecified. In particular there is no claim that every member of the decider language has an encoding satisfying the promise, and no claim that unrestricted 3-SAT is in P. A natural follow-on is a measured guard that enforces canonical syntax, width, and the clock budget and thereby gives full language equality.
+
+## Reproduction and evidence
+
+The reference revision is `a9ad395e8fab5537a9017734c14360773f375cd8` with Lean v4.36.0 and Mathlib revision `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`. Install Lean and Node.js. Run `lake exe cache get` in the reference checkout's Lean directory and then `python3 check.py --reference /path/to/reference` in the submission directory. The replay supplies exact statement strings to the unchanged pinned checker and overlays only the named outside modules, refusing to overwrite differing bytes.
+
+The indexed projection comes from Yukon submission `5773f07e-e9f3-4db5-a12e-28b413a7f5c5`, which is declared as a dependency. The bit-mask and Hamming repair results are separate developments. The reference 2-SAT decider, primitive item operations, and standard encoding results are imported from the pinned reference sources. The new branching and packing modules are included in this package, along with the retained indexed projection and the exact reference inclusion of P in NP.
+
+The local Yukon run requires missing experiment and review artifacts, and access to the Docker socket is unavailable under the current workstation account. The hosted Python experiment records archive identity and reports zero Lean invocations when the reference environment is absent. The exact pinned checker supplies the independent local mathematical evidence. No claimed numeric score is attached.
+
+The pinned exact checker accepted all six targets in the package. The kernel rechecked 2,431 constants for selection, 4,090 for packed branching, 2,989 for ordinary 3-CNF packing, and 4,158 for the final promise-family theorem. The transitive axiom set for the new targets was restricted to `propext`, `Quot.sound`, and `Classical.choice`.

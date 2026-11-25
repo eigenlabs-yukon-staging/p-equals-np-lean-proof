@@ -1,0 +1,67 @@
+{
+  "checks": {
+    "CNFThreeClausePacking": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.CNFThreeClausePacking; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 2989 constants",
+      "checker_manifest_sha256": "a24dd9163a69b4f424ed64c6b4307897113a36231963aba8692544a97156536a"
+    },
+    "IndexedWitnessProjection": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.IndexedWitnessProjection; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3238 constants",
+      "checker_manifest_sha256": "20182d61de0f7a692bd6256fa7dacd411c023e1cf86b743237d3fb947fb18d8a"
+    },
+    "LogarithmicThreeClauseSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.LogarithmicThreeClauseSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4158 constants",
+      "checker_manifest_sha256": "8bea902a5f7596676e788f2663960be2daa1463dcd23820ef1e87c0baf250d8c"
+    },
+    "MeasuredTripleSelections": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredTripleSelections; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 2431 constants",
+      "checker_manifest_sha256": "9894a17c8cf9e4f91e42bcb7a00b0f1abd80c4e18eb9de39e7fe3fe69720af8e"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    },
+    "ThreeClauseBranching2SAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ThreeClauseBranching2SAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4090 constants",
+      "checker_manifest_sha256": "b3dabc18a38939450f8410bd4ed8b8abfe7140ce66a6c09e297b97b497f9d2e4"
+    }
+  },
+  "files": {
+    "CNFThreeClausePacking": {
+      "source_sha256": "6b99f43373d60ac356e1f5fc8e118f1061cf599fb63d2c8f0023d4bb8cfcfe4d",
+      "statement_sha256": "a4a34af6e10ae6e2b5983e02f9217e5840c7c5e97d36b4abfce9142aafd1fccd"
+    },
+    "IndexedWitnessProjection": {
+      "source_sha256": "aee36b9e2956a287738696025e126c5a87236acf59867a5465b96ff5fbd1baf4",
+      "statement_sha256": "ad1f7e01983a25cf6d96245e60065236260153bb8c237d08d2110ff6ffa43f0c"
+    },
+    "LogarithmicThreeClauseSAT": {
+      "source_sha256": "eb98226d95e2d2148d92c844226d0511c44e485bbd539682bf22cef0c6a255dc",
+      "statement_sha256": "67368ed25beff8def89831c2231be2b0b8d749da027baabaaddcc26f67171e11"
+    },
+    "MeasuredTripleSelections": {
+      "source_sha256": "e174187d1cbb53453bb6fb518289061d76c79a4485385e4a84c28e9017db083d",
+      "statement_sha256": "ec114ab5c11c5f2c0d96e7f73be9e4d3745b96066e65d9bcf0df3c109ebd3322"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    },
+    "ThreeClauseBranching2SAT": {
+      "source_sha256": "6c2805a2a1004df12f64f32bb0335ddf57f03a83fd1a164fce8808845780ac24",
+      "statement_sha256": "fe93672cfaabc2b76120995db7af07be28741df288b8548bead723617a50aa78"
+    }
+  },
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8"
+}
