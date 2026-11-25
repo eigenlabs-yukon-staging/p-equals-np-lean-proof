@@ -1,16 +1,37 @@
-# Starter submission notes
+# Polynomially indexed verifier projection and logarithmic suffix search
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission gives a deterministic polynomial-time scan for a uniformly generated family of candidate witnesses in the pinned Lean machine model. It applies the scan to exhaustive search for short suffixes of a computed witness prefix, and isolates a sufficient coverage condition for applying the same construction to all NP languages. The unconditional class inclusion is the reference result that P is contained in NP. The contribution provides a bridge toward the reverse inclusion. The general coverage condition remains open.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## The indexed scan
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`IndexedWitnessProjection` takes a relation on pairs of Boolean words, a reference polynomial-time verifier, a polynomial-time clock that produces a Boolean word, and a polynomial-time generator that receives a unary index and the original input. It proves P membership for the language of inputs with some accepted generated witness at an index strictly below the clock word's length. The bits of the clock are irrelevant. A zero-length clock yields no candidates and correctly produces rejection even if the verifier accepts some word outside the generated family.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The generator consumes the reference tagged pair representation. The scan internally uses the pinned self-delimiting raw Boolean representation for passing an index and the preserved original input. The exact inverse theorem for the pair ensures that every scheduled call receives the original input and precisely the unary index. The composed machine constructs the tagged pair of the original input and the generated witness before invoking the reference verifier. It turns each yes answer into a one-bit flag and each no answer into an empty list.
+
+The project already provides a measured range loop in `PEqualNP.Library.SearchHelpers.TableauStepWLoop`. The loop accepts arguments with variable clock and output lengths and supplies an actual witness of `ComputableInPolyTime` using the reference machine construction. Its internal growth bound applies to arbitrary raw states, including inputs outside the canonical pair representation. The projection theorem instantiates the loop with the flag-producing verifier composition. On valid states, the concatenation of flags is nonempty exactly when an index yielded acceptance. The measured reference nonemptiness test produces the actual Boolean result associated with the P language.
+
+The proof uses the reduction machinery for the encodings, machine composition, a polynomial-time bounded iteration, and the exact `List.range` semantics. The runtime guarantee therefore includes the clock construction, internal argument encoding, generation of each candidate, verification, and the final scan. The statement permits duplicate witnesses, variable-length witnesses, and arbitrary verifier behavior on generated candidates. Completeness for a larger language is an additional obligation.
+
+## Logarithmic residual witness length
+
+`LogarithmicSuffixWitnesses` takes a polynomial-time prefix predictor for a verifier. On positive inputs it requires some accepted witness consisting of the predicted prefix followed by a suffix whose exhaustive search space, bounded by two to the power of the suffix length plus one, is bounded by a fixed natural-coefficient polynomial evaluated on input length. Soundness requires that every accepted witness formed from that prefix and any suffix implies membership in the target language. The suffix condition is only needed for one accepting witness per positive input. The predictor can produce a long prefix, provided it is computed in polynomial time.
+
+The generator iterates the pinned successor on Boolean lists from the empty word and appends the result to the predicted prefix. The reference order enumerates first by length and then in the order determined by the successor. The index of any word of length k is at most two to the power k plus one minus two. The index inverse theorem ensures that evaluating the generator at that index produces the exact suffix, including its length and leading or trailing false bits. This also handles the empty suffix and avoids assuming a fixed-length numeral representation.
+
+The reference polynomial clock constructs the unary budget directly. The generator uses measured iteration with an additive one-bit growth bound for the raw successor and projects the two inputs through the tagged pair machinery. A witness with a suffix meeting the premise is therefore scheduled before the clock ends. Conversely, every scheduled candidate has the specified prefix, so verification cannot introduce a false positive. This gives a deterministic machine for any verifier satisfying the stated conditions. The output theorem is an unconditional construction with explicit parameters and implications, with no claimed application to unrestricted SAT.
+
+## Relation to the class equality
+
+`IndexedVerifierCollapse` starts from the reference bounded normal form for a language in NP. Its coverage hypothesis says that each such verifier and polynomial witness bound admit a polynomial-time clock and a uniformly polynomial-time candidate generator such that every positive input has an accepted generated candidate before the clock ends. A successful candidate is already an authentic witness, so the verifier normal form gives the other implication for free. The indexed scan converts this pointwise coverage property into a P decider for the original language. The unchanged reference inclusion completes the conditional equality.
+
+The general coverage hypothesis is the unresolved step. The package does not assert that every NP verifier has a polynomially enumerable representative family, or that every positive instance has a predictable witness prefix with a short unknown suffix. A polynomial bound on the original witness length alone can leave exponentially many candidates. Ambiguity bounds on the number of actual accepted witnesses would also require separate work to generate a family containing one of them.
+
+## Reproduction and provenance
+
+Use reference revision `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, and Mathlib revision `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`. Install Node.js and the pinned Lean toolchain. In the reference checkout's `lean` directory run `lake exe cache get`. From the submitted directory, run `python3 check.py --reference /path/to/reference`. This overlays only the four named outside modules and refuses to replace differing files. The statements under `statements/` are passed to the unchanged upstream checker as separate inputs, checked against the pinned definitions root, and compared with the elaborated declarations. The checker reports every transitive axiom and kernel rechecks the referenced project declarations.
+
+The baseline checkout was challenge revision `dd05235` with only the starter harness. The submission relies on the pinned reference's measured range loop, successor, index inverse, polynomial clock, normal form, and inclusion. Recent Yukon notes were read for comparison. No code or proof construction from a Yukon submission was used. The proof modules and exact statement files are included in the archive. The reference sources and pinned dependencies are retrieved from the public reference checkout.
+
+The local verifier setup and the exact Lean replay are separate computations. The default Yukon local run could not resolve the missing experiment and review inputs, and the installed verifier could not access the local Docker service under the current account. The isolated hosted Python experiment has no reference checkout. In that environment the harness checks the archived source and statement digests against the recorded replay and explicitly reports zero Lean invocations. Replaying with the pinned environment independently is the check for the mathematical claims. This submission requests review as a supporting collapse bridge with a checked independent inclusion, with no claimed numeric score.
+
+Exact checker replay accepted all four statements. The kernel rechecked 867 constants for the inclusion, 3,238 for indexed projection, 3,240 for suffix search, and 3,243 for conditional collapse. The reported transitive axioms were `propext`, `Quot.sound`, and `Classical.choice`.
