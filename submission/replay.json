@@ -1,0 +1,109 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "FiniteListFixedPoint": {
+      "source_sha256": "15b3c0c179e3331a01e2c862099e5c2afa7ad067bb908b290d33e278f9c7df36",
+      "statement_sha256": "020f3a4b6b4704be099659a6aeae08ffc2f7e72fc01000b096657b531212a9ec"
+    },
+    "MeasuredBoundedClauseUniverse": {
+      "source_sha256": "5eb4de68fa49dd55e17d49a53057b3a9b88580af2198558be784a91ba5808679",
+      "statement_sha256": "ca9cc5600b69a3147490550fd45330c6e934a72fddc660a7b63eafe55e53f3f1"
+    },
+    "MeasuredResolutionRound": {
+      "source_sha256": "e648ba8bf6495bd42764bba6e94c10e9bb783e9d33429952d876daa4738491dd",
+      "statement_sha256": "99f0c049caabffcca0a04455d10b9a8398dc394e39ee8903182ce74d431f020d"
+    },
+    "MeasuredResolutionSaturation": {
+      "source_sha256": "2dc63736c9170ab2bf2e88e8f67bf1c377831f84aee725c4c8b1867daa275c39",
+      "statement_sha256": "2291aa6b048cfbcc316dc1d37cf305894475559157126726ad5703c14c9b4742"
+    },
+    "MeasuredBoundedWidthRefutationSearch": {
+      "source_sha256": "37a6d494e5dbe163a4d26363a7618a3533ffd0a4278276c9eaee3956d82c65f9",
+      "statement_sha256": "0ac0028852756317e2bc7ae2bd9f1d86b82f9035219ae4ce3ea2079b3ec53890"
+    },
+    "ExactBoundedResolutionWidth": {
+      "source_sha256": "7c51a38703c749257e505b244e26385f95e8b846640bfb8b08667365b8c9eb01",
+      "statement_sha256": "252dbe9ffeefa3a799f51c7606320259513502d14dbe33b04102347fadc57d8c"
+    },
+    "ExactResolutionRefutationVerifier": {
+      "source_sha256": "5bc4b4349b5cd00c1db7aad6d5a6cc6acd49c4215d1939b538e93b4fb50ec492",
+      "statement_sha256": "2266289b8d15b5e7964565b421db327e04b0cd1f72281d8c2604536e6617c026"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    }
+  },
+  "checks": {
+    "FiniteListFixedPoint": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.FiniteListFixedPoint; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 723 constants",
+      "checker_manifest_sha256": "1c3173ab378643f595a5f19c7c9d28fd6ed26f076496263036784029e569fce2"
+    },
+    "MeasuredBoundedClauseUniverse": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredBoundedClauseUniverse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3416 constants",
+      "checker_manifest_sha256": "b4d9398bf6c4c1557b719348d0dd075860d49584e5442f356a71281a32794b09"
+    },
+    "MeasuredResolutionRound": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredResolutionRound; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4250 constants",
+      "checker_manifest_sha256": "a1d18e5169a3a13663b0d843342be07bf9a637f13580658d70768d8f09751203"
+    },
+    "MeasuredResolutionSaturation": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredResolutionSaturation; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4289 constants",
+      "checker_manifest_sha256": "34097471839f19aff8c164714c02db040eceea849ecfa5d556edce89f6b214d8"
+    },
+    "MeasuredBoundedWidthRefutationSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredBoundedWidthRefutationSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4322 constants",
+      "checker_manifest_sha256": "c05c5e176d93a413b94d4084b156298cd17d60fa5d869504464bd153d0a9a848"
+    },
+    "ExactBoundedResolutionWidth": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactBoundedResolutionWidth; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4325 constants",
+      "checker_manifest_sha256": "a4eb61ce1fd5c5243fc2086059b7eab25937f5f80403f671e0b5af20f44dd6cd"
+    },
+    "ExactResolutionRefutationVerifier": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactResolutionRefutationVerifier; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4253 constants",
+      "checker_manifest_sha256": "eadf5165bc5404db655345b4f18badd3a1fd01091dbf0c4086c2ffc53142a8d7"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    }
+  },
+  "overlay_files": {
+    "lean/PEqualNP/Outside/BoundedResolutionSaturation.lean": "cca1f5511723716c7830aed17cdc3aa6b70580590ba30cfdc9fa7d7aba29e7f9",
+    "lean/PEqualNP/Outside/ExactBoundedResolutionWidth.lean": "7c51a38703c749257e505b244e26385f95e8b846640bfb8b08667365b8c9eb01",
+    "lean/PEqualNP/Outside/ExactResolutionRefutationVerifier.lean": "5bc4b4349b5cd00c1db7aad6d5a6cc6acd49c4215d1939b538e93b4fb50ec492",
+    "lean/PEqualNP/Outside/FiniteListFixedPoint.lean": "15b3c0c179e3331a01e2c862099e5c2afa7ad067bb908b290d33e278f9c7df36",
+    "lean/PEqualNP/Outside/MeasuredBoundedClauseUniverse.lean": "5eb4de68fa49dd55e17d49a53057b3a9b88580af2198558be784a91ba5808679",
+    "lean/PEqualNP/Outside/MeasuredBoundedWidthRefutationSearch.lean": "37a6d494e5dbe163a4d26363a7618a3533ffd0a4278276c9eaee3956d82c65f9",
+    "lean/PEqualNP/Outside/MeasuredCanonicalTraceWithEmptyClause.lean": "299c7864ea5944d2220d5c2c406c8e84573f5ead017fddace2aed5641c7b5476",
+    "lean/PEqualNP/Outside/MeasuredClauseMap.lean": "850aa544e883fe5e7aa4cfe7eb2d3c83a4b0e57dfb5fed331f12db36322517f0",
+    "lean/PEqualNP/Outside/MeasuredClauseSetEquality.lean": "5ebd0f03499ba26053844b6c2c5422985d0646ca990471273c48a863fe2d66ee",
+    "lean/PEqualNP/Outside/MeasuredClauseSuffixChecks.lean": "0b5ddad24228d86d6115f17bcbfad7593578f7a5ae135dfd5dea3608b6ab4c60",
+    "lean/PEqualNP/Outside/MeasuredFirstClause.lean": "25078d74acc1dc44beb9bffdc8964a9e4b95ae62e6f1244a2ba5bb021c732d5d",
+    "lean/PEqualNP/Outside/MeasuredLiteralMap.lean": "e9a388420c193fdfe6e928cd81959d007bac2cc2deb9723d36513183918febcd",
+    "lean/PEqualNP/Outside/MeasuredResolutionDerivation.lean": "7bed7e0c97d13c11cb50d2b77196d74e78a3dba17f1f36416c6abb406d8a6fb7",
+    "lean/PEqualNP/Outside/MeasuredResolutionLine.lean": "6982a2544aa51ced53b8437efb0b2b8cdfc826f17b6eb16344becab6287ee706",
+    "lean/PEqualNP/Outside/MeasuredResolutionRound.lean": "e648ba8bf6495bd42764bba6e94c10e9bb783e9d33429952d876daa4738491dd",
+    "lean/PEqualNP/Outside/MeasuredResolutionSaturation.lean": "2dc63736c9170ab2bf2e88e8f67bf1c377831f84aee725c4c8b1867daa275c39",
+    "lean/PEqualNP/Outside/MeasuredResolutionStep.lean": "13830f9b3c655ae9b91b61dbfb315443ebd97c2fb3a7547c73c6acf58c08ea56",
+    "lean/PEqualNP/Outside/MeasuredVariableRestriction.lean": "ee69849285d6c7384daa134288f37f11b9a3b373c5a0809d2e9ba0034bb2233d",
+    "lean/PEqualNP/Outside/P_subset_NP.lean": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+    "lean/PEqualNP/Outside/UnitPropagationCorrect.lean": "2a43767276d7afc1185575219d77245f1f891bae8d475dcaf4ca899103d4d720"
+  }
+}

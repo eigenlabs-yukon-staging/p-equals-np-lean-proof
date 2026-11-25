@@ -1,16 +1,35 @@
-# Starter submission notes
+# Deterministic search for fixed-width resolution refutations
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission formalizes measured deterministic proof search for the pinned resolution rule at every fixed width. The exact language consists of canonical CNF encodings for which there is a resolution refutation all of whose finite-set clauses have cardinality at most the chosen width. It lies in the reference class `P`. A separate measured search theorem constructs a valid refutation of that width when one exists. This is a decision and search result about bounded-width refutability. Failure to find a refutation at the fixed width does not establish satisfiability or rule out a wider refutation.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+The width `k` is fixed before constructing the polynomial-time machine. The result does not give a polynomial bound uniform in the width as an additional input. Proof width is defined on the finite sets of literals of the pinned proof system, whereas the input representation stores ordered lists of literal occurrences. The development proves the connection in both directions at the level of exact canonical encodings.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+## A measured finite clause universe
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+A resolution derivation cannot introduce a signed literal absent from every original axiom. The pure support proof follows the pinned derivation constructors. An axiom already belongs to the original clause set, and a resolvent is a union of subsets of its two parent clauses. Thus it suffices to enumerate lists of at most `k` literal occurrences from the signed support of the original formula. The construction need not enumerate any range up to the largest natural-number identifier.
+
+`MeasuredBoundedClauseUniverse` constructs this list of candidates. The zero-width universe contains the empty clause. At each fixed successor width it includes the empty clause and prepends each occurring literal to each candidate of the preceding width. A nested measured clause and literal scan performs that operation on the pinned encodings, retaining the original variable codes. Some resulting clauses may be repeated or encode the same finite set in different orders. The correctness theorem identifies all list candidates exactly by length and support. Each abstract finite-set clause of cardinality at most the width has a list representative of that length, so those repetitions do not leave out any desired proof line.
+
+## Saturation and proof construction
+
+The pure update rule takes the last round's known candidate clauses and scans the fixed universe. A candidate survives the update if its finite set is an original axiom or if it is an exact resolvent of two clauses in the previous known list. This is the strict reference rule, without weakening. `MeasuredResolutionRound` implements the filter using the earlier measured local line verifier. The resulting list respects the candidate universe.
+
+`FiniteListFixedPoint` proves an abstract termination bound for a monotone list operation with outputs contained in a fixed finite ambient list. Iteration starts at the empty list. Known membership can only increase, and an increase in extensional membership strictly increases the cardinality of the associated finite set. Once two consecutive sets agree, the next sets agree by monotonicity in both directions. The ambient list length bounds the total number of strict increases, even when the list contains duplicate elements. This gives enough rounds for a full fixed point without a separate measured equality or deduplication operation.
+
+At the fixed point all bounded-width proof lines are represented. The completeness proof inducts on the pinned axiom and resolution constructors. For an original axiom in a proof of the specified width, its finite-set list representative is in the universe and passes the axiom check. For a resolvent, its two older parents have representatives in the saturated known list. The exact resolution test then puts a representative of the resolvent in the saturated list. In particular, a bounded-width refutation puts the uniquely empty list representation of the empty finite set into the saturation.
+
+The other direction uses the actual trace produced by the loop. Each new round is prepended to the existing trace in newest-first order. Every new axiom or resolution line is valid against older lines already in that trace, because the previous round's known lines are contained there. Therefore the concatenated trace is a valid derivation, and every line's finite-set cardinality is at most the fixed width. If it contains an empty line, it is itself a bounded-width refutation. The proof does not assume semantic derivability alone is sufficient for a resolution line.
+
+## Machine and exact outputs
+
+`MeasuredResolutionSaturation` bounds its clock by the encoded length of the generated universe, which dominates the length of the ambient list. The raw state keeps the fixed universe and input, the latest known list, and the accumulated trace. The new known field is clipped at the fixed encoded-universe length. Canonical outputs of a single round are a sublist of the universe, so clipping has no effect there. On malformed raw inputs the same cap bounds growth independently of the internal Boolean semantics. Each round adds a bounded number of bits to the trace. Composing those bounds with the measured universe constructor and verifier yields the pinned polynomial-time computation.
+
+`MeasuredBoundedWidthRefutationSearch` submits the produced derivation to the exact resolution refutation verifier on the same original formula. If it passes, it returns that trace. Otherwise it returns the empty word. The correctness theorem proves the nonempty output condition is equivalent to the existence of a refutation at the chosen width, and identifies the returned word with a valid canonical trace satisfying the width bound. `ExactBoundedResolutionWidth` adds the pinned canonical syntax check and expresses the resulting exact language in `PEqualNP.Library.P`.
+
+This development concerns fixed-width negative certificates. It establishes no width bound for unrestricted unsatisfiable formulas, no complete deterministic polynomial-time SAT solver, and no proof of P versus NP.
+
+## Attribution and replay
+
+The exact resolution-verification submission supplies the measured axiom and resolver checks, the exact refutation relation and its soundness. The earlier literal and clause map constructions are reused to generate and traverse the candidate universe. The finite-set interpretation of canonical clause lists is retained from the RUP development. The new work is the measured bounded universe, the finite-list fixed point, the exact round semantics, and the proof-generating saturation and language construction. The standalone reference inclusion `P ⊆ NP` is retained unchanged.
+
+This overlay is for reference commit `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, and the pinned Mathlib revision. The pinned checker reads each recorded statement against the definitions root and checks its transitive axioms. The archive identity experiment now binds the entire set of retained Lean overlay files as well as the selected source and statement digests. It reports how many live Lean runs it performed. The source overlay and exact statements permit kernel replay with `tools/check-lean.mjs` in a prepared reference checkout.
