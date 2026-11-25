@@ -1,0 +1,107 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "MeasuredRankedBackdoorWalk": {
+      "source_sha256": "01b81762a9a5cb7e5bc5947bbeabe16a5d6b068ff935230bed5adbcfe3686afa",
+      "statement_sha256": "4a7a3ca6f0e4f912e91199a323cdab14806615ff253b18f7fdfd358f9151adc6"
+    },
+    "ExactPolynomialBudgetTwoSATBackdoor": {
+      "source_sha256": "3700dd9f48ed5d40b80eb7931e915140e8d631e17a3d02721b02c2cd8a72d5ed",
+      "statement_sha256": "3ef4014f3ee52fcba49b3cc96a002f0bdd08f9d09b3b0c9f3fc27ebd6787a2d4"
+    },
+    "PolynomialBudgetTwoSATBackdoorSearch": {
+      "source_sha256": "fb5301a5fb03a591a16abdf32a1461f50e0d23ece6b73feb9c33220828505456",
+      "statement_sha256": "2bc2a7c7ea354553e3ad766cf38e0134ee569455321b311d725ea46f44e11bf0"
+    },
+    "CNFWideClausePacking": {
+      "source_sha256": "c054936c6516ecbc8a3b215ed47cee86964b8ec93c5700d4ce82ba001238293b",
+      "statement_sha256": "616dccd36eb264d72915af8ff5b8bddb8530074ee6bccb62f0498f12d89c4926"
+    },
+    "MeasuredFirstClause": {
+      "source_sha256": "25078d74acc1dc44beb9bffdc8964a9e4b95ae62e6f1244a2ba5bb021c732d5d",
+      "statement_sha256": "0691197d8f27a2a10ef62b6d66972ca9a654abe0d0fdf3e16ec1a1978212250f"
+    },
+    "MeasuredVariableRestriction": {
+      "source_sha256": "ee69849285d6c7384daa134288f37f11b9a3b373c5a0809d2e9ba0034bb2233d",
+      "statement_sha256": "31b82e042d67a4f6eb465daa527513647de9f29deca133c7451b9ce316e8c6bc"
+    },
+    "SparseVariableSATSearch": {
+      "source_sha256": "158dde4be76d5ef09459ca6915604faaaa7ab9842c9d16bb6fa876bcedd73b17",
+      "statement_sha256": "934653372a264c3372f21ba6381b898385bc32841d5b0eca36f8eaa1a042fe06"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    },
+    "IndexedWitnessProjection": {
+      "source_sha256": "aee36b9e2956a287738696025e126c5a87236acf59867a5465b96ff5fbd1baf4",
+      "statement_sha256": "ad1f7e01983a25cf6d96245e60065236260153bb8c237d08d2110ff6ffa43f0c"
+    },
+    "MeasuredUnaryDivMod": {
+      "source_sha256": "37e5d628676cdea565418a634efb53fe41c0dec28afdefda07cbd8a1b98753ef",
+      "statement_sha256": "c4418c97e0ead8ba8a109be2c35d7846a58e548992526041c7c5fa4d6d517062"
+    }
+  },
+  "checks": {
+    "MeasuredRankedBackdoorWalk": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredRankedBackdoorWalk; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4320 constants",
+      "checker_manifest_sha256": "38164f13224955aae0eb705dd04e9069980bc7630d3abc5f3ce7a77497821d7b"
+    },
+    "ExactPolynomialBudgetTwoSATBackdoor": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactPolynomialBudgetTwoSATBackdoor; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4327 constants",
+      "checker_manifest_sha256": "07692a4d9ca4c6034a4026c31cd78c307bfdfdd428de9506d0c1fd32d2670093"
+    },
+    "PolynomialBudgetTwoSATBackdoorSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.PolynomialBudgetTwoSATBackdoorSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4447 constants",
+      "checker_manifest_sha256": "f1c6f8ddf3b542c0b1684ac7d2c67997725fa69698474cbb9c559cf72153aacf"
+    },
+    "CNFWideClausePacking": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.CNFWideClausePacking; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3040 constants",
+      "checker_manifest_sha256": "2bceaec8f92f774a47188ef7f4b49cdd7f8d6ebfa0143b2e92cfb0729557713f"
+    },
+    "MeasuredFirstClause": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredFirstClause; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3021 constants",
+      "checker_manifest_sha256": "c6ead3cc6ac18822d9cf914209acb81b81682e353a0c10f385d36320dfbec58a"
+    },
+    "MeasuredVariableRestriction": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredVariableRestriction; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3419 constants",
+      "checker_manifest_sha256": "7729351b30895219add48a2d446e44a713c0c83b6dd7677855efdfd92fdc31d7"
+    },
+    "SparseVariableSATSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.SparseVariableSATSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3068 constants",
+      "checker_manifest_sha256": "e12b069878bc61089ac576101ad470084ce71598d62adf03df3bf2bf5f2053b3"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    },
+    "IndexedWitnessProjection": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.IndexedWitnessProjection; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3238 constants",
+      "checker_manifest_sha256": "20182d61de0f7a692bd6256fa7dacd411c023e1cf86b743237d3fb947fb18d8a"
+    },
+    "MeasuredUnaryDivMod": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredUnaryDivMod; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 2509 constants",
+      "checker_manifest_sha256": "c07b64665391cd80fbd3b90c2550e737c9f9cb1e0deb95747462096bbfae5ff6"
+    }
+  }
+}
