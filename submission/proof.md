@@ -1,16 +1,31 @@
-# Starter submission notes
+# Exact SAT for a fixed number of arbitrary-width clauses
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission proves a polynomial-time language theorem for canonical CNFs with at most a fixed number of clauses wider than two. It allows each exceptional clause to have arbitrary input-dependent width, and there is no bound on the number of small clauses. The decision procedure partitions the original reference CNF encoding, branches on one literal per exceptional clause, and uses the reference 2-SAT machine at the leaves. This bound on the number of wide clauses is a different tractable restriction from a logarithmic number of ternary clauses.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Canonical parsing and measured literal selection
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`MeasuredFirstClause` separates the first codeword for a clause from a raw suffix. Its finite-state transducer tracks whether it is at a pair boundary, after a true digit marker, after a false marker, or past the clause delimiter. Before the delimiter it emits first-component tags. After the delimiter it emits second-component tags. Reading the first clause is therefore compatible with the standard pinned tagged pair encoding. The exact theorem covers a canonical clause followed by any raw suffix. A supporting totality lemma states that concatenating the decoded components reconstructs the input, which provides a length accounting invariant on malformed inputs too.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+`MeasuredLiteralChoice` consumes a unary index and the canonical encoding of a clause. The measured reference item-drop operation is applied once per index symbol. If the resulting word begins with a literal, the machine takes that encoded literal and appends the clause delimiter. If the index is outside the clause, it instead emits the exact encoding of the empty clause. The public statement gives the output as the reference encoding of the optional indexed literal converted to a singleton or empty list. The empty-clause choice cannot generate a successful branch. The index machine therefore needs no separate literal-count guard when the search clock overestimates the number of available literals.
+
+## Branching from a binary base
+
+`FixedWideClauseSAT` constructs a polynomial-time decider for the packed pair of a 2-CNF base and an extra formula containing at most a specified fixed number of clauses. At depth zero the extra formula must be empty and the pinned 2-SAT machine decides the base. In a successor stage, a projection scans polynomially many indices using one more than the encoded length of the extra formula as its clock. For a nonempty extra formula, it selects a literal or the empty clause from its first clause. This selected unit or empty clause is appended to the base, and the previous-stage decider is called on that extended base and the remaining encoded clauses. If no extra clause remains, the previous-stage decider is tested on the original pair.
+
+The proof checks that the extended base stays within width two. For soundness, any satisfying assignment for a generated branch satisfies the prior base and extra suffix, and satisfies the chosen literal of the removed original clause. A branch with an out-of-range selection contains an empty clause and cannot satisfy this implication's premise. For completeness an assignment satisfying the original formula satisfies at least one literal of the first extra clause, so that literal's position supplies a scheduled branch. These implications use the same assignment on both the original and branch formulae. The fixed-depth construction invokes the prior polynomial decision procedure as a measured subroutine, which is sufficient to compose polynomial time for each fixed depth. It does not give a polynomial with a degree independent of an input-dependent depth.
+
+## Exact ordinary-input language
+
+`CNFWideClausePacking` reads a canonical reference formula and partitions its clauses into two encoded lists according to whether their lengths exceed two. Both lists are returned in reverse order, a consequence of prepending into the accumulators. The length of the current input suffix plus the length of its newly separated clause is bounded by the previous remaining input length. This exact length accounting pays for the append into an accumulator, leaving a fixed bound on step growth even on arbitrary raw state words. The chronological bound uses the ordinary input length as clock, which covers the number of encoded clauses because each contributes a delimiter.
+
+`MeasuredCNFClauseCount` emits one true bit per aligned clause delimiter. It counts clauses of arbitrary width and includes an empty clause in the count. The language theorem uses the packed wide component's count and the measured reference length comparison to enforce the fixed limit. It also intersects the resulting P language with the pinned canonical well-formedness language. The earlier branch decider then supplies the satisfiability answer when both guards hold. The proof shows that the union of the two partitioned lists has exactly the original clause membership. Consequently satisfiability does not depend on the partition order, and the theorem gives equality with the intended set of canonical raw inputs.
+
+The construction covers only the stated fixed-count language. It makes no assertion about the existence of a reduction from all of reference SAT to this language, or about a general polynomial-time algorithm for SAT.
+
+## Reproduction and provenance
+
+The unchanged upstream reference is brilliant-hq/pequalnp-proofs commit `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0 and Mathlib revision `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`. Prepare the reference checkout with `lake exe cache get` in its Lean directory. Run `python3 check.py --reference /path/to/reference` with Node.js installed. The script overlays only the named Lean modules and passes the separate exact statement bytes to the original checker. The identity-only hosted experiment reports zero kernel invocations when the reference environment is absent.
+
+The indexed projection from Yukon submission `5773f07e-e9f3-4db5-a12e-28b413a7f5c5` supplies the existential search step. The proof imports the pinned reference 2-SAT theorem, pair machine combinators, syntax test and literal item operations. The fixed-width and logarithmic-ternary packages were compared as other restricted families. No proof module from those packages is needed for this archive. The local Yukon finalization command still needs experiment and review artifacts, and the workstation user lacks access to the Docker socket to run the local isolated experiment. No claimed numeric score is included.
+
+The checker accepted all eight exact statements. The packed branch theorem rechecked 4,128 constants, the ordinary partition 3,040, and the exact language theorem 4,186. The transitive axioms reported for these proofs were `propext`, `Quot.sound`, and `Classical.choice`.
