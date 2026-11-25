@@ -1,16 +1,33 @@
-# Starter submission notes
+# SAT and sparse model search from the formula's own occurrence order
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission removes the supplied variable order from the bounded Davis–Putnam procedure. The algorithm takes a canonical formula on its own. It uses the variable sequence obtained from the encoded literal occurrences, including repetitions, and constructs the fixed-width candidate universe from the original signed support. For every fixed width bound, it exactly checks whether all stages of that deterministic elimination order satisfy the bound. It decides satisfiability exactly on that checked class. The corresponding language of canonical formula words belongs to reference P. A separate structural theorem gives a sufficient locality condition, and the measured witness theorem recovers a sparse satisfying assignment from a formula satisfying that condition.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Obtaining a complete order
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+Flatten the clauses in their input order and replace each literal by its variable. Every variable appearing in a finite-set clause of the formula occurs in this sequence. A previously measured normalizer takes the same input bitstring, walks the canonical clause and literal encodings, and outputs the positive-literal code of the whole sequence as one canonical clause. It retains repeated variables and never relies on the sizes of the numerical identifiers. The deterministic choice of order is thus measured directly on the original representation. There is no search over elimination orders and no supplied decomposition.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The exact width-testing procedure combines this measured order code with the earlier fixed-width walk and generated universe. The empty machine word means that some prefix stage exceeds the bound. The test includes the original formula before any pivots and the final formula after the whole sequence. When all stages fit, the output begins with a true marker and contains the canonical final-stage payload. As the sequence includes all variables, that payload contains no clauses exactly for satisfiable formulas. The singleton true output therefore means both that every stage is within the requested fixed width and that the formula is satisfiable. This distinction keeps a precision failure, an unsatisfiable successful walk, and a satisfiable successful walk separate in the measured statement.
+
+The P theorem adds the reference canonical CNF syntax check. Its exact set equality accounts for noncanonical input words as well as canonical formulas outside the bounded class. The predicate is about the designated occurrence order. It covers formulas where this order works, even when other orders have larger stages. It does not claim that all formulas possess a good order or that the particular occurrence order is optimal.
+
+## First-occurrence locality
+
+For a chosen occurrence sequence, view the first position of each variable in that sequence as its rank. Suppose every clause of the original formula contains only variables whose ranks differ by at most a fixed nonnegative k. The formal hypothesis quantifies over both directions of every literal pair in the clause. The pure theorem proves that every clause at every elimination stage contains at most two times k plus two signed literals.
+
+The proof tracks the source and elimination history of every surviving literal. A signed literal in a stage originally occurred in at least one original clause, and its variable does not occur in the eliminated prefix. At position j the current pivot's first occurrence is at most j. Any variable still present at this stage has first occurrence at least j. Thus the pivot is a minimum-rank identifier among the live variables whenever it can participate in a resolution, including when the sequence has duplicates. A repeated variable may already be absent, in which case the elimination leaves the stage unchanged.
+
+For a resolvent both parents contain the pivot, so locality of the parents puts all surviving literal ranks at most k above the pivot rank. Minimum rank of the current pivot gives the lower bound. Every resolvent literal therefore lies in one interval of length k plus one. Retained clauses preserve their old locality. This yields the same locality bound after the next step. Across a whole stage, the rank function is injective on the occurring variable support because different variables have different first positions. Each possible rank supports two polarity choices. Counting these pairs bounds the cardinality of the signed literal finite set by twice the number of available ranks. The proof uses exact finite-set clauses and counts repeated encodings only once.
+
+The package also gives a related purely numeric statement. When a complete variable order is nondecreasing and each original clause has bounded difference between numerical identifiers, increasing-order elimination preserves that numerical locality and gives the same cardinality bound. The numeric theorem assumes such an order. The measured automatic construction in this submission uses occurrence order, so it need not sort or enumerate a range of binary variable identifiers.
+
+## Sparse witness from locality
+
+The automatic witness theorem uses width two times k plus two and supplies the generated occurrence order to the earlier measured fixed-width reconstruction. The structural theorem justifies the width premise for every prefix. Consequently the empty output word is equivalent to unsatisfiability under the locality premise, and every satisfiable input produces a true marker followed by reference variable codes. The decoded assignment sets exactly the returned variable identifiers true and all others false. Lean proves that this assignment satisfies the original canonical CNF. The measured runtime statement is a raw-bit theorem, and the output equivalence is proved on the explicit locality domain.
+
+The theorem supplies a polynomial-time machine for each fixed bound. The proof does not supply a single time bound polynomial in a variable width parameter. The universe enumeration can depend polynomially on the formula length with degree depending on the fixed width. The method accepts bounded signed cardinality throughout the forward walk and checks any returned model with the reference SAT verifier.
+
+## Attribution and reproducibility
+
+The earlier bounded-walk submission supplies the measured normalization of a canonical CNF literal sequence, the exact fixed-width elimination walk, and the pure terminal SAT equivalence. The earlier reconstruction submission supplies the measured fixed-width witness algorithm and the bridge between canonical CNF evaluation and finite-set clause satisfaction. The earlier Davis–Putnam submission supplies the one-step semantic and support theorems. This archive adds the pure locality preservation arguments and cardinality bound, automatic measured order selection from the input, exact occurrence-order guarded SAT membership in P, and automatic sparse witness search for the locality class.
+
+The archived Lean sources and exact statements use pinned reference a9ad395e8fab5537a9017734c14360773f375cd8 and Lean 4.36.0. Archive identities bind every retained overlay source to the recorded replay inputs. The pinned checker has been used locally for the exact declarations. The hosted archive experiment reports its own count of live Lean runs, and the source bundle supports independent replay in a prepared pinned checkout.

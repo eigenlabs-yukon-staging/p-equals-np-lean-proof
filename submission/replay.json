@@ -1,0 +1,225 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "LocalityEliminationWidth": {
+      "source_sha256": "386b81ddb7a1017eaf125eee42612946e82a484d1b5ec82bafd915edbea6c98e",
+      "statement_sha256": "4f8a7ff6ba6075fd8ac9712515068865d9589c813477e9ceae256983d8c414b4"
+    },
+    "FirstOccurrenceEliminationWidth": {
+      "source_sha256": "9d97b9b89bd7e2f36d4cfa139fe696edeb14d089f79accb4c4599d554a644a31",
+      "statement_sha256": "fc430a82a94f78b7983142879810fd18021bfd5f39bd6729ab5f926e695c9fb3"
+    },
+    "MeasuredOccurrenceElimination": {
+      "source_sha256": "232010d1d23ef6b23b279bad4d947bc9527b785049d4c28f593374d703510455",
+      "statement_sha256": "172bdeef72e76a69c27dc9e0788692d6ba42cf632e6b0dc559dc669e1a0a5506"
+    },
+    "ExactOccurrenceEliminationSAT": {
+      "source_sha256": "1b3046e7fd48589c41048c2d45e87655988b95e54baea03f73688371c9d55d27",
+      "statement_sha256": "e5d11d85b888c80bb7b3fafd3f185bac650d50632a51e3212645c83a312d3973"
+    },
+    "FirstOccurrenceLocalityWitness": {
+      "source_sha256": "3712cd0e55a237b50e660156837b4af572ef5d76701e3c5d75809f649e8c9052",
+      "statement_sha256": "1d683d80eeac822c08c5c16750c3d574e1bacc94683031ecfd02650b675111db"
+    },
+    "MeasuredReverseClause": {
+      "source_sha256": "93ea0cb15cd40bec71d902f8c324bfb4aad7a3c64fb721e99e013307eab12173",
+      "statement_sha256": "c7f4a849b7eeb15ffe2dd315d87d86b6934ffbae19380cbca411b47ff157ba5b"
+    },
+    "MeasuredEliminationWitness": {
+      "source_sha256": "e600a51a12dd5e32ae8f1aa4c6ba5e2edc97c1615f08fea632e93ff303f4f6d8",
+      "statement_sha256": "203d9fc663c283bcdb61e722b9dbd6a1cc8317ddd0dbf98a736a6952d4cc9956"
+    },
+    "MeasuredWidthEliminationWitness": {
+      "source_sha256": "473b20e7e3426f8a51e64586492d6339db7769363aff02d4b1cbd574557bca1e",
+      "statement_sha256": "cebc9dd63849bfb26025133008653a18644bfa78e0df93400f82001801d7ccdf"
+    },
+    "MeasuredCNFSubset": {
+      "source_sha256": "3c6f5eb02a48d91f047992ad6bd3e8fd82159cfb236c7b9ca8697b97e145b7b9",
+      "statement_sha256": "4e57aea136d9bcd943693628a002292e3956be9e78b6d2f2ff04680557064d50"
+    },
+    "MeasuredEliminationWalk": {
+      "source_sha256": "1305943600176ff05ecccf1afbdcf4805ed02a90063f1e741bc9a4a2c586d259",
+      "statement_sha256": "d3c49d87c9242c13af03f2a5af94e6441dfc2246c1c8b9212924743b46cb1dd2"
+    },
+    "MeasuredVariableOrderCode": {
+      "source_sha256": "8fddb5e3c2c868b407892bf01eb32d5892b5931dbfadd732676f9453ec2e0a78",
+      "statement_sha256": "9e05c2b2ac6d9f2026ffc0f626b6ed7eff21e96590055947a4aa7db69c5ecb2c"
+    },
+    "FullEliminationSAT": {
+      "source_sha256": "ea4262a1d324c35379a76692be5705afeaedfe04eed84ea17f8ce993e76bb59c",
+      "statement_sha256": "8d762d59d9d4cd06c2369e09ba43f5ab76357ab779868f9cf352ccfd984a774e"
+    },
+    "EliminationStageWidth": {
+      "source_sha256": "68c82dc1007d181bdbd85332b5293b0c7e078fb81ca3a855f0c2bb9ba9875826",
+      "statement_sha256": "414214dc8390547a50f31d52978968dcef1299491089f8dfa96ad3da1d01c38c"
+    },
+    "MeasuredWidthElimination": {
+      "source_sha256": "3a7290d8744f1bfa5c89b9b55de6d6e7a5cb537e15504007e0c355cce2f9cb4d",
+      "statement_sha256": "b9bc902eba61791a53810b3ba988ce4c0190b7a0b38b21c09269c381f981d5d8"
+    },
+    "DavisPutnamElimination": {
+      "source_sha256": "b73c0c359eb25675feb1037ea336fa9a1ef21b6f51243f4cd08ca36b34c59067",
+      "statement_sha256": "b4bbf73a5ec2a3e30aa6714bf3e37a63258a82dce441eb6b17177fa66e1e3c63"
+    },
+    "MeasuredPivotClauseFilter": {
+      "source_sha256": "ea0c902dd4e8fe0d7d9cf23151952fb7bd164371fd6490b682efde834ac3d072",
+      "statement_sha256": "3b49cc2d8dfd52124d1f36c05ca95adda7e99cf7651624a659a2f1534dd2f82b"
+    },
+    "MeasuredDavisPutnamStep": {
+      "source_sha256": "edd1d4a0343832bc5574f554d4697753396e1b0d507032bca88dea3d9efb9dc2",
+      "statement_sha256": "b89355c7b7f9bfea75012cb05a554b742e18e6b1a158600e750b7a4fbe3a3f6f"
+    },
+    "MeasuredCNFIntersection": {
+      "source_sha256": "f50db9324a65e2fea5fb53c90c7942088d06747df6d1322f6ea8ccb8e957b9c2",
+      "statement_sha256": "7902d2c640f5bb865c9a2f61b327eee8220e9863be951800dbf44d6d93415906"
+    },
+    "MeasuredBoundedClauseUniverse": {
+      "source_sha256": "5eb4de68fa49dd55e17d49a53057b3a9b88580af2198558be784a91ba5808679",
+      "statement_sha256": "ca9cc5600b69a3147490550fd45330c6e934a72fddc660a7b63eafe55e53f3f1"
+    }
+  },
+  "checks": {
+    "LocalityEliminationWidth": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.LocalityEliminationWidth; axioms [propext, Classical.choice, Quot.sound]; kernel re-checked 737 constants",
+      "checker_manifest_sha256": "8732560f121adce0b7847835c8cc07e1dbd5e79b7bcd4f67bc58f1b4bb08d23a"
+    },
+    "FirstOccurrenceEliminationWidth": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.FirstOccurrenceEliminationWidth; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 742 constants",
+      "checker_manifest_sha256": "2fb35dd0a272ab31a30f415de1e4d7856a60111dae2b8e394e381cf4acfd2987"
+    },
+    "MeasuredOccurrenceElimination": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredOccurrenceElimination; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4338 constants",
+      "checker_manifest_sha256": "15dc6aad898c9a12e58c76bb375db5833545d1835fec60d92b9798658920378e"
+    },
+    "ExactOccurrenceEliminationSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactOccurrenceEliminationSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4339 constants",
+      "checker_manifest_sha256": "48ef6e33418bd9c600bc6c188df3812ff5ff7850c02f9d4df57eb476cb8e80a7"
+    },
+    "FirstOccurrenceLocalityWitness": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.FirstOccurrenceLocalityWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4519 constants",
+      "checker_manifest_sha256": "eba9fb5c0a6ac6bd8d474f3169bea6dc927791a25745af9378d1de31438f427b"
+    },
+    "MeasuredReverseClause": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredReverseClause; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 2966 constants",
+      "checker_manifest_sha256": "d3c7e3b99bdb0aa29a9e0c2f09d5a5e37216a4ef9e701f410eb3e314f742fd5b"
+    },
+    "MeasuredEliminationWitness": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredEliminationWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4479 constants",
+      "checker_manifest_sha256": "6cd8eaedb613f0e7073513883d56b8139700194805ecb031233a21ccd3213785"
+    },
+    "MeasuredWidthEliminationWitness": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredWidthEliminationWitness; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4495 constants",
+      "checker_manifest_sha256": "82130a635e6aa04bb61c897d9ab401119f0061ad8b7cdc20ab1827567fc68d5d"
+    },
+    "MeasuredCNFSubset": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredCNFSubset; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4194 constants",
+      "checker_manifest_sha256": "bb3c38450378166c11b981af7f4ddc946adcdc967d1de56a982d24e50e27e0f5"
+    },
+    "MeasuredEliminationWalk": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredEliminationWalk; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 4298 constants",
+      "checker_manifest_sha256": "11b2713dfd46afbff10c95823cb3f4ceb75fe2a3726f6b5e9e08209f755f7b69"
+    },
+    "MeasuredVariableOrderCode": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredVariableOrderCode; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3410 constants",
+      "checker_manifest_sha256": "91ea03db81738161eba7a2893cb180b3d9ec502148cd6115af14023414fef431"
+    },
+    "FullEliminationSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.FullEliminationSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 735 constants",
+      "checker_manifest_sha256": "2217a1591197337adc6fd1856f57e57617aeb06400e24b48a75a5a443105b92d"
+    },
+    "EliminationStageWidth": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.EliminationStageWidth; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 778 constants",
+      "checker_manifest_sha256": "90c819a66969874d8cd2848983dd2133082cf8c133bc3e7fb3108c1d896982bd"
+    },
+    "MeasuredWidthElimination": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredWidthElimination; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4317 constants",
+      "checker_manifest_sha256": "b0a540755788cc5762b20122c7aa4e45ed83b1ec51ac4c36ac90acdfb2929be5"
+    },
+    "DavisPutnamElimination": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.DavisPutnamElimination; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 732 constants",
+      "checker_manifest_sha256": "f35c5153b784ad344216e0a679e563161485d72229df4768ac568ce7757709f9"
+    },
+    "MeasuredPivotClauseFilter": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredPivotClauseFilter; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3434 constants",
+      "checker_manifest_sha256": "f14c68ad71586e520ce3375ce2e7f124ce2a9b64784b6f70e5e97a7723cdf007"
+    },
+    "MeasuredDavisPutnamStep": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredDavisPutnamStep; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4238 constants",
+      "checker_manifest_sha256": "2cd2ba465f486178dbcb1925b1ef6900f2f820c65c69c02cad9eb17c0b291b50"
+    },
+    "MeasuredCNFIntersection": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredCNFIntersection; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4148 constants",
+      "checker_manifest_sha256": "7c3076dbd6b34abca046431c1378f9732f36bcd76a26bff9f5fd1f929d74e398"
+    },
+    "MeasuredBoundedClauseUniverse": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredBoundedClauseUniverse; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3416 constants",
+      "checker_manifest_sha256": "b4d9398bf6c4c1557b719348d0dd075860d49584e5442f356a71281a32794b09"
+    }
+  },
+  "overlay_files": {
+    "lean/PEqualNP/Outside/DavisPutnamElimination.lean": "b73c0c359eb25675feb1037ea336fa9a1ef21b6f51243f4cd08ca36b34c59067",
+    "lean/PEqualNP/Outside/EliminationAssignmentLift.lean": "43b1867641734f7829627d1aa9bb772a50140691b8004f285dfea8c825e53c1d",
+    "lean/PEqualNP/Outside/EliminationStageWidth.lean": "68c82dc1007d181bdbd85332b5293b0c7e078fb81ca3a855f0c2bb9ba9875826",
+    "lean/PEqualNP/Outside/ExactOccurrenceEliminationSAT.lean": "1b3046e7fd48589c41048c2d45e87655988b95e54baea03f73688371c9d55d27",
+    "lean/PEqualNP/Outside/FirstOccurrenceEliminationWidth.lean": "9d97b9b89bd7e2f36d4cfa139fe696edeb14d089f79accb4c4599d554a644a31",
+    "lean/PEqualNP/Outside/FirstOccurrenceLocalityWitness.lean": "3712cd0e55a237b50e660156837b4af572ef5d76701e3c5d75809f649e8c9052",
+    "lean/PEqualNP/Outside/FullEliminationSAT.lean": "ea4262a1d324c35379a76692be5705afeaedfe04eed84ea17f8ce993e76bb59c",
+    "lean/PEqualNP/Outside/LocalityEliminationWidth.lean": "386b81ddb7a1017eaf125eee42612946e82a484d1b5ec82bafd915edbea6c98e",
+    "lean/PEqualNP/Outside/MeasuredBoundedClauseUniverse.lean": "5eb4de68fa49dd55e17d49a53057b3a9b88580af2198558be784a91ba5808679",
+    "lean/PEqualNP/Outside/MeasuredCNFIntersection.lean": "f50db9324a65e2fea5fb53c90c7942088d06747df6d1322f6ea8ccb8e957b9c2",
+    "lean/PEqualNP/Outside/MeasuredCNFSubset.lean": "3c6f5eb02a48d91f047992ad6bd3e8fd82159cfb236c7b9ca8697b97e145b7b9",
+    "lean/PEqualNP/Outside/MeasuredClauseMap.lean": "850aa544e883fe5e7aa4cfe7eb2d3c83a4b0e57dfb5fed331f12db36322517f0",
+    "lean/PEqualNP/Outside/MeasuredClauseSetEquality.lean": "5ebd0f03499ba26053844b6c2c5422985d0646ca990471273c48a863fe2d66ee",
+    "lean/PEqualNP/Outside/MeasuredDavisPutnamStep.lean": "edd1d4a0343832bc5574f554d4697753396e1b0d507032bca88dea3d9efb9dc2",
+    "lean/PEqualNP/Outside/MeasuredEliminationWalk.lean": "1305943600176ff05ecccf1afbdcf4805ed02a90063f1e741bc9a4a2c586d259",
+    "lean/PEqualNP/Outside/MeasuredEliminationWitness.lean": "e600a51a12dd5e32ae8f1aa4c6ba5e2edc97c1615f08fea632e93ff303f4f6d8",
+    "lean/PEqualNP/Outside/MeasuredFirstClause.lean": "25078d74acc1dc44beb9bffdc8964a9e4b95ae62e6f1244a2ba5bb021c732d5d",
+    "lean/PEqualNP/Outside/MeasuredLiteralMap.lean": "e9a388420c193fdfe6e928cd81959d007bac2cc2deb9723d36513183918febcd",
+    "lean/PEqualNP/Outside/MeasuredOccurrenceElimination.lean": "232010d1d23ef6b23b279bad4d947bc9527b785049d4c28f593374d703510455",
+    "lean/PEqualNP/Outside/MeasuredPivotClauseFilter.lean": "ea0c902dd4e8fe0d7d9cf23151952fb7bd164371fd6490b682efde834ac3d072",
+    "lean/PEqualNP/Outside/MeasuredReverseClause.lean": "93ea0cb15cd40bec71d902f8c324bfb4aad7a3c64fb721e99e013307eab12173",
+    "lean/PEqualNP/Outside/MeasuredVariableOrderCode.lean": "8fddb5e3c2c868b407892bf01eb32d5892b5931dbfadd732676f9453ec2e0a78",
+    "lean/PEqualNP/Outside/MeasuredVariableRestriction.lean": "ee69849285d6c7384daa134288f37f11b9a3b373c5a0809d2e9ba0034bb2233d",
+    "lean/PEqualNP/Outside/MeasuredWidthElimination.lean": "3a7290d8744f1bfa5c89b9b55de6d6e7a5cb537e15504007e0c355cce2f9cb4d",
+    "lean/PEqualNP/Outside/MeasuredWidthEliminationWitness.lean": "473b20e7e3426f8a51e64586492d6339db7769363aff02d4b1cbd574557bca1e",
+    "lean/PEqualNP/Outside/UnitPropagationCorrect.lean": "2a43767276d7afc1185575219d77245f1f891bae8d475dcaf4ca899103d4d720"
+  }
+}

@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Automatic occurrence-order elimination and sparse SAT witnesses",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "LocalityEliminationWidth and FirstOccurrenceEliminationWidth give checked sufficient conditions for bounded intermediate signed clause cardinality.",
+    "MeasuredOccurrenceElimination obtains a complete variable order from the canonical formula word and checks all intermediate widths.",
+    "ExactOccurrenceEliminationSAT proves exact P membership for the canonical SAT language guarded by bounded occurrence-order elimination width.",
+    "FirstOccurrenceLocalityWitness recovers a verified sparse model from the formula alone under a fixed first-occurrence locality bound."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind all archived Lean overlay sources and the recorded exact statements to the local reference replay. The isolated experiment reports its live Lean invocation count, which may be zero.",
       "input_schema": {
         "type": "object",
         "properties": {
