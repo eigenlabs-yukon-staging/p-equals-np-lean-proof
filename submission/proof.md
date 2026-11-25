@@ -1,16 +1,33 @@
-# Starter submission notes
+# Measured renamable Horn SAT and sparse witness recovery
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This package formalizes a polynomial-time decision procedure for the exact canonical renamable Horn SAT language. It also produces a sparse satisfying assignment of the original formula for satisfiable inputs in that class. The construction computes a 2-CNF describing the sign-renaming choices, solves it using the pinned 2-SAT machine, recovers a compatible renaming, and runs the measured Horn solver on the renamed instance. Variable identifiers remain in their original binary representations.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Why pair constraints capture renamability
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+For each clause, construct a two-literal clause for each pair of distinct literal occurrences in their original order. The literals in the new clause are those original literals, interpreted in an assignment of which variables to flip. When one of those literals is true under the flip assignment, the corresponding original literal becomes negative after sign renaming. Thus satisfaction of the pair clause says that at least one of those two occurrences becomes negative. All pairs pass exactly when the renamed original clause has at most one positive occurrence. Pairs involving occurrences of the same variable are included. They enforce the same logic and ensure that repeated positive occurrences are counted exactly by the stated Horn predicate.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+`RenamableHornPairConstraints` proves this pointwise characterization for every flip assignment and shows that the combined constraint formula has width at most two. The proof handles empty and singleton input clauses, which produce no pair constraints. A separate lemma proves preservation of satisfiability under a sign renaming. Applying the same bitwise exclusive-or to variable truth values exactly compensates for the change of sign. This transformation is involutive, giving both implications.
+
+## Measured constraint encoding and renaming
+
+`MeasuredHornPairEncoding` constructs the exact constraint CNF in the original binary format. Its outer measured range loop considers each canonical clause of the input. It obtains the raw suffix using the prior first-clause splitter and stops emitting once there is no clause left. For each clause, a measured loop obtains each literal position by repeated raw item drops. It pairs the literal there with each subsequent literal and emits the two original literal codes followed by the reference clause delimiter. Overestimating a loop bound by the raw encoded length is harmless because nonliteral items emit nothing. The canonical proofs use exact item decomposition and show that each ordered pair of positions occurs once in the resulting formula. The pinned measured range-loop theorem supplies polynomial time for the nested scans and conversion, including the sizes of the generated outputs.
+
+`MeasuredCNFRenaming` applies a sparse list of flip variables to an original canonical formula. It iterates the reference item reader over the original encoding. For a literal it tests whether its binary variable code belongs to the sparse word and then uses the measured polarity-negation operation when necessary. Clause delimiters are kept. Its state preserves the supplied flip word and stores the remaining encoded items and the output. Each rewritten item is clipped to its original raw length in the total machine. On canonical items, negation preserves length, so the clip is inactive. The raw item split accounts for the output append in the step-length proof. The exact statement relates the generated bits to ordinary reference formula mapping and membership of the flip variables.
+
+## Exact canonical decision and search
+
+`ExactRenamableHornGuard` intersects the canonical well-formedness language with the inverse image of the pinned 2-SAT language under the pair encoding. This recognizes existence of a valid sign flip independently of satisfiability of the original formula. The mathematical characterization uses the exact canonical encoding and its injectivity, so queries about a particular generated constraint formula cannot accidentally refer to another formula.
+
+`ExactRenamableHornSAT` adds a deterministic recovery step. The previously checked sparse assignment search needs a solver that is correct when a list of units is appended to the input formula. The pinned 2-SAT decider has that property for the width-two renaming constraints. It therefore produces a sparse flip assignment whenever the meta-level constraints are satisfiable. The measured renamer transforms the original formula with that assignment. The resulting formula is Horn, and its satisfiability is equivalent to the original formula's satisfiability. The exact measured Horn solver decides it. Intersecting the canonical guard, the renamability guard, and the inverse image of the Horn decision language gives exact set membership for raw inputs.
+
+`RenamableHornSATSearch` applies the same sparse search interface to the newly checked exact renamable Horn decider. Any witnessing sign renaming for the original formula still works when arbitrary unit clauses are appended. Thus the requirements of sparse assignment recovery hold for the original formula. The output lists true-variable binary codewords, and its length is at most the length of the original canonical formula. There is no promise that the variable numbers themselves are small.
+
+This package proves exact decision and witness production for the stated renamable Horn restriction. It makes no claim that unrestricted canonical SAT admits such a renaming or a reduction to this family.
+
+## Verification and dependencies
+
+Use the unchanged brilliant-hq/pequalnp-proofs revision `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, Mathlib `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`, and Node.js. Prepare the reference Lean checkout with `lake exe cache get`. From the submission directory run `python3 check.py --reference /path/to/reference`. This overlays the named outside source files without overwriting different existing bytes and supplies each exact statement separately to the original checker. The replay record identifies the exact candidate sources, statement bytes, and dependency manifests.
+
+The canonical Horn package `70bf51af-ccb9-4a99-9616-faaec5dc05c1` supplies the measured Horn solver and its guard, as well as the retained measured splitter used by pair generation. The sparse assignment package `0900bde1-7b39-408a-9225-7e1ceace8fd3` supplies the search interface used twice in this package. The reference 2-SAT theorem and raw item and polarity primitives are unchanged. The new pair construction, exact renamer, recognition, and combined decision and search theorems are included in the archive. The default local Yukon run still lacks the required experiment and review artifacts, and the workstation account does not have Docker socket access. The isolated hosted identity experiment reports zero Lean invocations absent the pinned checkout. The machine-checked results are supplied by the separately reproducible exact replay. No claimed numeric score is attached.
+
+The pinned checker accepted the six new exact statements and the archive retains the exact checks for the unchanged dependencies. The kernel rechecked 3,067 constants for constraint encoding, 3,374 for applying a renaming, 4,156 for recognition, 4,552 for exact decision, and 4,555 for the original formula witness search. Its transitive axioms were limited to `propext`, `Quot.sound`, and `Classical.choice`.
