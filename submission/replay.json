@@ -1,0 +1,87 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "TwoSATShortRUP": {
+      "source_sha256": "78af13ccecbde10a096576b22a30affa9ef1734bbe471675ec1fb38bd23b80d6",
+      "statement_sha256": "aa412ddde10e212c5d564e3c263455ebbcd37517a47e2b1cec6821121f8edb65"
+    },
+    "MeasuredTwoSATRUPSearch": {
+      "source_sha256": "c9eaa9d5e5cb460070442b160f092c07006b75bd8a9628757285e3602685c5d1",
+      "statement_sha256": "91d05cd037aee363bf421cccfb7eaa8b4b93c5796cedcf0d8972b44b7acd064e"
+    },
+    "RUPPolarityInvariance": {
+      "source_sha256": "87c0cd1b24bb581db60e79be783a6f1875e50bd7ddc730b5ccfe4f7e0510ea4e",
+      "statement_sha256": "2f0e6adeb4bb7c265c065eab767163a04e3f540c0293b4e03f09820cf761f24b"
+    },
+    "RenamableHornUnitRefutation": {
+      "source_sha256": "d17e5901d14b2827feba701979738f0f60e8ad32db80fdf57de7bb97ea13c08f",
+      "statement_sha256": "53fbba6ada9a88ff3db2aa9643f332e94b32a50e35373a922fd9638f78309b3a"
+    },
+    "MeasuredRenamableHornRUPSearch": {
+      "source_sha256": "417b6406ebbff590060b8b97bd53fdf81094203575a6727b2012b83aec9c767f",
+      "statement_sha256": "25381fc732b1304531e37835f4bf2f19fae807bc83175d55f6f59271bc5982fc"
+    },
+    "RUPRunMonotone": {
+      "source_sha256": "7d338547b4d537c9dc6e3d6783001426828f5386ae2add28f485e5fc723d8793",
+      "statement_sha256": "107e9cc17f5e9620519450d0b97bc33f3c5c1884246a974e18c84efdd3d28509"
+    },
+    "MeasuredBoundedRUPCheck": {
+      "source_sha256": "6132512be4035c4e1810e2633ad22373c59361efc9685cb85a3e3873661f2027",
+      "statement_sha256": "e67cc5b52096956ca5cb51e24c6d867534ae517f8a6a65679fde9a87a7593c00"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    }
+  },
+  "checks": {
+    "TwoSATShortRUP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.TwoSATShortRUP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 1913 constants",
+      "checker_manifest_sha256": "5964763407ae62d052ede67f954d1a62488d91a1cc44a1ae241e561616352b04"
+    },
+    "MeasuredTwoSATRUPSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredTwoSATRUPSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3504 constants",
+      "checker_manifest_sha256": "9f50d91c0efa9430c1c71e7e5530a27bdef5bf5a589b794994cf33f64ef198a0"
+    },
+    "RUPPolarityInvariance": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.RUPPolarityInvariance; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 792 constants",
+      "checker_manifest_sha256": "cd191579e9dcedbff02fbe2ae533b288b50a9af9af71149a6737f457f2d983c4"
+    },
+    "RenamableHornUnitRefutation": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.RenamableHornUnitRefutation; axioms [Quot.sound, propext, Classical.choice]; kernel re-checked 797 constants",
+      "checker_manifest_sha256": "3a293fcb2b91fee253a0968fb07b2ca8b8322f31ee18d8b6077f71944f8a5c67"
+    },
+    "MeasuredRenamableHornRUPSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredRenamableHornRUPSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4233 constants",
+      "checker_manifest_sha256": "afe85d1fe5150def917418511675c1f63fbe9e7fae955063c59a8d3da8631193"
+    },
+    "RUPRunMonotone": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.RUPRunMonotone; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 722 constants",
+      "checker_manifest_sha256": "ec303c4d1580f72dfe5ac275147642b12be7338bfdf6e073540ab4fc5d853d1d"
+    },
+    "MeasuredBoundedRUPCheck": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredBoundedRUPCheck; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4235 constants",
+      "checker_manifest_sha256": "9144cd3772b4641d913ebb29452072ad7a0d38cb861be6db8efdd9d752faa8b7"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    }
+  }
+}

@@ -1,16 +1,31 @@
-# Starter submission notes
+# Constructive short RUP certificates for 2-CNF and renamable Horn
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This development gives measured deterministic refutation generators for two tractable classes of canonical CNF input, in the specific reverse-unit-propagation proof system defined by the reference. On a satisfiable input in either class the corresponding generator emits the empty word. On an unsatisfiable input it emits a valid newest-first sequence ending in a learned empty clause in chronological order. The certificates can be replayed with the independently measured exact RUP verifier from the preceding submission. The construction does not claim an efficient proof search on arbitrary CNFs.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+For width-two formulas the emitted trace contains at most three clauses and the encoded trace length is at most twice the encoded input length plus six bits. For renamable Horn formulas the emitted trace consists of the single empty clause. The renamable Horn generator uses ordinary unit propagation on the original encoding. It neither computes a renaming nor includes one in the certificate.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+## Width-two certificates
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+If the input contains an empty clause, the singleton learning trace consisting of that clause is a valid refutation. The premise itself is already falsified under an empty set of assumptions. For all other width-two formulas, every clause has one or two literals. The pinned satisfiability criterion says that an unsatisfiable such formula has some occurring literal that can reach its complement and be reached from that complement in the implication graph. Both directions of this graph condition are used in the new certificate theorem.
+
+Each implication edge corresponds to a finite-set unit propagation reason. From a proof of the edge's source literal, unit propagation reaches the edge's target: the source is the complement of the other literal for a binary clause, and there are no additional prerequisites for a unit clause. Induction lifts this argument to a reachability path. To prove a unit clause RUP, assume its complementary literal. A path from that assumption to its opposite has a last edge, because the two signs differ. The last edge supplies a premise clause. Its target is falsified by the starting assumption and every other distinct literal is falsified by the corresponding propagation evidence for that edge. The proof therefore produces a falsified original clause, which is the exact pinned RUP definition.
+
+Apply this argument once to each sign of the conflicting literal. Learn the two corresponding unit clauses. The second clause remains RUP after the first is added. In the augmented formula, the two learned units give a direct RUP derivation of the empty clause. The three-line trace in newest-first order is the empty clause, the second unit and the first unit. A separate soundness implication uses the exact RUP learning theorem to recover unsatisfiability from any such trace. The literal occurs in the original formula, so the length of its reference encoding is bounded by the original formula length. Its complement has the same encoding length. Each of the three clause terminators uses two bits. This proves the stated bound even for large binary variable identifiers.
+
+`MeasuredTwoSATRUPSearch` implements the construction. It scans for an explicit empty clause, and otherwise uses the reference measured implication test on the actual encoded literal positions of the input. The test checks mutual reachability. A polynomial nested scan collects the marked occurrences and extracts the first canonical literal record. The resulting trace keeps that record, flips its sign for the other unit, and adds the pinned terminators. On a satisfiable promised input the scan finds no conflict and returns the empty word. The bound and trace validity are proved for the actual word returned by the measured algorithm.
+
+## Polarity changes and one-clause certificates
+
+`RUPPolarityInvariance` proves the pinned RUP relation is invariant under a consistent change of signs for arbitrary variables, including the signs in the proposed clause. The transformation is involutive and commutes with complementing a literal. It therefore takes the assumptions for a proposed clause to the assumptions for its transformed clause. Induction on a pinned `UPForces` derivation maps the premise clause, target literal and all distinct other literals. The falsified reason clause maps in the same way. Applying the involution again gives the converse. This proof works with the pinned finite-set clauses and treats both signs of the same variable distinctly.
+
+For an unsatisfiable renamable Horn formula, choose any renaming witnessing the promised class in the pure proof. The renamed formula is an unsatisfiable Horn formula, since satisfying assignments can be translated back by the same sign changes. The earlier Horn closure theorem gives a RUP proof of the empty clause for the renamed formula. Polarity invariance transfers it to the original formula, because the empty clause is unchanged. Thus an ordinary empty-assumption propagation check on the original formula is already complete for detecting unsatisfiability on this class.
+
+`MeasuredRenamableHornRUPSearch` calls the exact measured RUP tester on the original formula and the empty candidate. It emits the encoded single empty learned clause if this check succeeds. The theorem proves that emptiness of the output characterizes satisfiability on the promised renamable Horn inputs. It also checks the exact singleton learning-run predicate for every emitted refutation. The result is a proof-producing promise algorithm and does not assert that unit propagation alone recognizes the renamable Horn domain or decides unrestricted SAT.
+
+## Reusable checks and replay
+
+`RUPRunMonotone` proves addition of arbitrary original premise clauses preserves an existing RUP run. Its unit propagation proof is monotone in the premise set, and learning retains the same sequence of previously learned clauses. This permits reusing a certificate found in a subformula of the original input. `MeasuredBoundedRUPCheck` combines the exact refutation verifier with a measured comparison of the trace's encoded length against a fixed natural-coefficient polynomial in the original input length. The two properties are checked for the same pair. It accepts neither a too-long trace nor a non-refutation with a small encoding.
+
+The preceding RUP submission supplies the measured single-clause verifier, the exact raw refutation checker, the trace soundness lemmas and the Horn refutation theorem. Earlier measured clause and literal scans are reused for the width-two generator. The unchanged reference inclusion is retained. The reference contributes the implication-graph criterion, its measured machine routines and the exact finite-set proof system. The new work consists of the width-two certificate construction and size bound, measured conflict extraction, polarity transfer, and the measured renamable Horn certificate generator.
+
+The source overlay and exact statements are for reference `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0 and the pinned Mathlib. The pinned `tools/check-lean.mjs` replay verifies both the theorem statement and its transitive axioms. The archive binds the recorded exact replays to their source and statement bytes. The isolated experiment reports its own live Lean invocation count and can be complemented with kernel replay in a prepared pinned-reference checkout.
