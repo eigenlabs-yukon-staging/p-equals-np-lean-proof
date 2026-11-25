@@ -1,16 +1,27 @@
-# Starter submission notes
+# Linear encoded-size locality catalogues and exact SAT decision
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission adds a bit-length bound to the measured signed-window catalogue and constructs an exact SAT decider that uses that catalogue. The preceding window package gave a linear bound on the number of canonical rows and a measured model generator under the locality premise. A count of rows alone does not control the encoded size when variable identifiers can have different binary lengths. The new theorem bounds the total length of the encoded catalogue by a constant times the encoded length of the original literal-sequence clause, plus a fixed delimiter term. The exact accepting language is the same first-occurrence locality SAT language as the earlier checked decider. Its implementation uses a different, bounded candidate universe.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Weighted windows
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+The pure weighted theorem is stated for any finite list of natural weights and any window length. Take the sum of each consecutive window, with windows truncated at the end, and add these sums over all valid start positions. The result is at most the window length times the sum of the original weights. In the proof a window of length n plus one contributes the weight of its first item and the remaining at most n items. Summing those head contributions yields the original total weight. The remaining contributions correspond to windows of length n over the tail. Induction and monotonicity of the sum under dropping the first nonnegative weight prove the bound. The proof applies to empty sequences and length zero without needing special boundary accounting in the statement.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+Instantiate a weight with the encoded length of one literal. Flipping its polarity leaves that weight unchanged because the reference encoding keeps the same variable digits and delimiter. Thus adding both signs to a window doubles its literal payload and adds the one clause delimiter. Every generated row is a subsequence of that signed window. Encoding a subsequence only removes literal payload and uses the same clause delimiter, so each row is no longer than the encoded signed window. The earlier exact subsequence count bounds the number of those rows by two to the power of twice the window length.
+
+The catalogue code concatenates these per-window rows and also includes a leading empty-clause row. Every original occurrence contributes its encoded literal weight to at most k plus one windows. The number of window starts is at most the literal payload length because every canonical literal word has positive length. The formal bound on the catalogue is two plus two to the power of twice k plus two, multiplied by twice k plus four times the encoded length of the input sequence clause. The initial two bits account for the explicit empty-clause row. The Lean statement also preserves the exact output membership condition and the earlier linear row bound. All lengths count repetitions of rows and literal positions, so the bound does not depend on a canonical deduplication pass.
+
+## Exact decision with the window universe
+
+The new P proof checks canonical CNF syntax using the reference well-formedness machine and checks every ordered pair from each clause against its first-occurrence locality radius. It uses the earlier measured normalization to obtain the positive occurrence sequence from the same raw input word. It then generates the signed-window catalogue from that sequence and supplies the original formula, the generated catalogue and the sequence to the bounded elimination walk. No caller-supplied order, graph decomposition or universe is needed.
+
+The pure coverage theorem ensures that any stage reached from a formula satisfying locality fits this generated catalogue. It chooses the minimum first-occurrence rank of a stage clause, then locates each of the clause's variables in the signed window for that rank. A subsequence of the window represents the finite-set clause exactly. This covers the empty clause through the explicit empty row and handles the original stage as well as every later stage. The canonical input's occurrence sequence contains every original variable. The terminal theorem therefore identifies satisfiability with the final stage having no clauses. The successful empty stage is the singleton true word because the walk prefixes every successful result by a true marker.
+
+The decider accepts exactly when the raw word has canonical syntax, the exact locality test accepts, and the walk produces the singleton marker. The proof rejects malformed words and formulas outside the guard by the first two tests, and uses coverage and terminal satisfiability for the last test. This is a measured algorithm on arbitrary raw input under the reference polynomial-time definition, with exact correctness for the stated guarded language. It does not infer satisfiability from failure to fit the chosen universe. A fixed radius is part of the theorem's parameters. The result does not establish a bounded radius, a suitable ordering, or polynomial verification under this approach for unrestricted SAT.
+
+The linear bound proved here is for the catalogue's encoded size. The complete algorithm still uses measured scans, stage intersections and coverage tests. The theorem does not claim linear total runtime. The catalogue bound includes binary variable identifier lengths and therefore strengthens the earlier row-count result in the representation used by the actual machine.
+
+## Attribution and reproduction
+
+The immediately preceding window submission supplies the measured suffix scan, the signed-window operation, the measured position-subsequence generator and semantic coverage by signed windows. This submission extends the same catalogue construction with a weighted overlapping-window analysis and preserves its earlier exact row statement as a consequence. The checked locality-guard submission supplies the exact measured first-occurrence guard. The bounded-walk submission supplies the measured forward elimination walk, the terminal satisfiability theorem and the measured variable sequence normalizer. The reference supplies syntax checking, canonical encoding and the polynomial-time composition and iteration primitives.
+
+The exact Lean statements, full transitive overlay source and local proof replay identities are archived for the pinned reference a9ad395e8fab5537a9017734c14360773f375cd8 and Lean 4.36.0. The changed catalogue module was replayed under the same exact row statement as before, alongside the new size bound and exact guarded SAT statement. The hosted experiment reports which Lean processes it actually runs. The archived source supports independent kernel replay in a prepared pinned checkout.
