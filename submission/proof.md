@@ -1,16 +1,37 @@
-# Starter submission notes
+# Measured masked witness recovery with additional fixed repairs
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+This submission adds a polynomial-time decoder that fills selected positions of a predicted word using a short seed. The positions can be anywhere in the word and the mask can be computed from the input. It proves that a bounded seed search together with a fixed number of additional bit repairs suffices for deterministic verifier-based decision under explicit coverage and soundness hypotheses. The previous indexed and Hamming constructions are retained.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+## Exact masked decoder
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+`MeasuredMaskedFill` constructs a function computable in the pinned polynomial-time machine model. Its input is a tagged pair. The first component contains a self-delimiting pair of a Boolean mask and a predicted word. The second component is the seed. The output has the length of the mask. At an unmarked position it reads the prediction at that position, using false when the prediction has no bit there. At a marked position it instead uses the seed bit at the number of earlier marked positions, again using false if that bit is absent. The exact statement gives this result as a list map over all output indices, so its meaning is independent of the implementation state and also specifies unequal input lengths.
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+The state consists of the remaining mask, the remaining predicted word, the remaining seed, and the output so far. The step reads the mask's front and chooses the source for the emitted bit. It consumes one prediction position in both branches and consumes one seed position only in the marked branch. The front test and conditional select are compositions of the reference measured word operations. The remaining fields and accumulated output are joined using the pinned raw pair encoder. A fixed one-bit append records the emitted value.
+
+The arbitrary-state bound is at most four symbols of growth in one step. Three symbols account for repacking delimiting fields of a raw word, and one accounts for the new output bit. Taking tails of fields cannot increase their lengths. The proof combines the three raw projection length bounds on nested pairs, so the measured iteration theorem applies even for malformed states. The iteration uses the initial mask length as the unary clock. On canonical states, induction gives the exact sequential filler semantics. A separate list induction identifies that recursion with the public indexed specification.
+
+The seed reconstruction lemma is independent of the verifier. Given any target of the mask length that agrees with the prediction on every unmarked position, it constructs a seed of length exactly equal to the number of marks and proves that the filler produces the target. At a marked position the proof prepends the target bit to the recursive seed. At an unmarked position it uses the agreement hypothesis and leaves the seed unchanged.
+
+## Polynomially bounded mask search
+
+`MaskedLogWitness` uses the filler in an indexed candidate generator. It combines a polynomial-time mask function, a polynomial-time prediction function, and the reference word enumerator applied at a unary index. The measured projection invokes the original verifier on each filled candidate. The clock length is the evaluation of a natural-coefficient polynomial on the original input length. Its premise is that two to the power of one plus the number of marks fits in the clock budget. This allows an input-dependent and logarithmically bounded number of uncertain positions.
+
+On a positive instance, the coverage hypothesis supplies an accepted target of the mask length that agrees at unmarked positions. The reconstruction lemma finds a seed of length equal to the mark count. The reference index bound and inverse theorem place that exact seed in the scheduled range. By soundness, any acceptance by the original verifier constitutes membership. The proof allows irrelevant extra candidates when the clock is larger than the number of seeds required for coverage.
+
+## Additional fixed repairs
+
+`BoundedRepairPairVerifier` reuses the earlier fixed-depth bit-repair machine to produce a new deterministic polynomial-time verifier on tagged pairs. A pair passes this verifier exactly when a schedule of the specified fixed length transforms the candidate word into a word accepted by the original verifier for the same input. The proof arranges the decoded relation as a raw word language and precomposes its decider with the canonical pair encoder. This keeps every actual input to the new verifier within the intended semantics while using the reference total decoder for the intermediate language.
+
+`MaskedAndRepairedWitness` composes this pair verifier with the masked-search construction. A positive instance needs a word that agrees with the fixed part of the prediction and that reaches an accepted word after the bounded repair schedule. The marked bits can be filled by exhaustive seed search. The bounded repair verifier then explores the remaining possible changes, including changes at positions outside the mask. Its identity index makes it possible to pad a schedule with no-op steps. The theorem uses a constant number of repairs fixed in the machine construction. It gives no polynomial runtime guarantee for an input-dependent number of unmarked errors.
+
+Both classes of coverage are explicit hypotheses. General NP verifiers need not come with a computed mask, a useful prediction, or a small repair bound. The checked restricted algorithms and the reusable combination of verifier transformations are the proposed collapse bridge.
+
+## Reproduction
+
+Use pinned reference revision `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0, and Mathlib `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`. Install Node.js and the reference Lean toolchain. Run `lake exe cache get` in the reference project's Lean directory, then run `python3 check.py --reference /path/to/reference` from the submission directory. Exact statement strings are stored in `statements.json` and replayed verbatim as separate files to the upstream checker. Consolidating them into one archive member leaves their UTF-8 bytes identical to the original per-target files. The overlay refuses to overwrite different sources. The reference checker checks the exact elaborated statements, transitive axioms, and dependency declarations using the pinned project.
+
+The previous indexed projection from `5773f07e-e9f3-4db5-a12e-28b413a7f5c5` is used directly to run masked seed search. The Hamming-repair package `5f45da20-d6bf-4d43-ac9d-db6797c88887` supplies the fixed-round bit repair theorem used as the new pair verifier. Both are declared as dependencies. The new masked-fill machine, indexed specification, reconstruction proof, and hybrid composition are developed in the new modules. The pinned reference supplies the polynomial-time primitives and word index lemmas.
+
+The local Yukon setup succeeds. The track run still cannot resolve the experiment and review artifacts needed to finalize. The workstation account lacks access to the Docker socket for the verifier's isolated experiments. The hosted Python experiment compares archive identities with the recorded replay and explicitly reports zero Lean executions in that process. The underlying mathematical evidence is the independent exact Lean check on the prepared reference checkout. No numeric score claim is attached.
+
+The pinned checker accepted all fifteen exact statements. It kernel-rechecked 2,424 constants for masked filling, 3,262 for masked seed search, 3,339 for the repair verifier, and 3,364 for their composition. The only reported transitive axioms were `propext`, `Quot.sound`, and `Classical.choice`. The two preceding submissions have hosted scores of 65 and remain in manual review.

@@ -1,97 +1,138 @@
+"""Replay exact checks on a separately prepared, pinned reference checkout."""
+
+import argparse
+import hashlib
 import json
-import os
-import re
-import shutil
+from pathlib import Path
 import subprocess
 import sys
-import tempfile
-from pathlib import Path
+from tempfile import TemporaryDirectory
 
-TARGETS = {
-    "P_subset_NP": {
-        "points": 50,
-        "name": "PEqualNP.Outside.P_subset_NP",
-        "statement": "PEqualNP.Library.P ⊆ PEqualNP.Library.NP",
-    },
-    "NP_subset_P": {
-        "points": 90,
-        "name": "PEqualNP.Outside.NP_subset_P",
-        "statement": "PEqualNP.Library.NP ⊆ PEqualNP.Library.P",
-    },
-    "P_eq_NP": {
-        "points": 100,
-        "name": "PEqualNP.Outside.P_eq_NP",
-        "statement": "PEqualNP.Library.P = PEqualNP.Library.NP",
-    },
-}
-BAD_TOKENS = re.compile(r"\b(sorry|admit|axiom|native_decide)\b")
-REFERENCE_IMPORTS = ("PEqualNP.Defs", "PEqualNP.Library")
+REFERENCE = "a9ad395e8fab5537a9017734c14360773f375cd8"
+TARGETS = (
+    "P_subset_NP",
+    "IndexedWitnessProjection",
+    "LogarithmicSuffixWitnesses",
+    "IndexedVerifierCollapse",
+    "IndexedWitnessSearch",
+    "PrefixExtensionNP",
+    "VerifierSearchFromPrefixDecider",
+    "VerifierSearchCollapse",
+    "MeasuredBitFlip",
+    "BoundedBitRepair",
+    "HammingCoveredVerifier",
+    "MeasuredMaskedFill",
+    "MaskedLogWitness",
+    "BoundedRepairPairVerifier",
+    "MaskedAndRepairedWitness",
+)
+OVERLAY = Path("lean/PEqualNP/Outside")
+SNAPSHOT = Path("/snapshot/files")
 
-def run(cmd, cwd, timeout):
-    try:
-        p = subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
-        return {"cmd": cmd, "returncode": p.returncode, "output_tail": p.stdout[-6000:]}
-    except FileNotFoundError as exc:
-        return {"cmd": cmd, "returncode": 127, "output_tail": str(exc)}
-    except subprocess.TimeoutExpired as exc:
-        out = (exc.stdout or "") + (exc.stderr or "")
-        return {"cmd": cmd, "returncode": 124, "output_tail": out[-6000:]}
 
-def likely_relevant(text):
-    needles = ["P_subset_NP", "NP_subset_P", "P_eq_NP", "PEqualNP.Library.P", "PEqualNP.Library.NP", "PolyTimeReducible", "NPComplete", "DecidableInPolyTime"]
-    return any(n in text for n in needles)
+def digest(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
-inp = json.load(sys.stdin)
-timeout = int(inp.get("timeout_seconds", 300))
-root = Path.cwd()
-lean_files = sorted(root.rglob("*.lean"))
 
-candidates = []
-for path in lean_files:
-    rel = path.relative_to(root).as_posix()
-    text = path.read_text(errors="replace")
-    if likely_relevant(text):
-        candidates.append(rel)
+def identity(root, statements):
+    return {
+        name: {
+            "source_sha256": digest(root / OVERLAY / f"{name}.lean"),
+            "statement_sha256": hashlib.sha256(statements[name].encode("utf-8")).hexdigest(),
+        }
+        for name in TARGETS
+    }
 
-bad_hits = []
-for rel in candidates:
-    text = (root / rel).read_text(errors="replace")
-    for m in BAD_TOKENS.finditer(text):
-        bad_hits.append({"file": rel, "token": m.group(1)})
 
-detected = []
-for rel in candidates:
-    text = (root / rel).read_text(errors="replace")
-    for key, target in TARGETS.items():
-        if key in text or target["name"] in text or target["statement"] in text:
-            detected.append({"target": target["name"], "points": target["points"], "file": rel, "statement_seen": target["statement"] in text})
-
-checker_results = []
-checker = root / "tools" / "check-lean.mjs"
-if checker.exists() and shutil.which("node") and not bad_hits:
-    for target in TARGETS.values():
-        target_file = root / "lean" / "PEqualNP" / "Outside" / (target["name"].split(".")[-1] + ".lean")
-        if not target_file.exists():
-            continue
-        with tempfile.NamedTemporaryFile("w", suffix=".lean-statement", delete=False) as f:
-            f.write(target["statement"] + "\n")
-            stmt_path = f.name
-        checker_result = run(["node", str(checker), str(target_file), stmt_path, "check"], root, timeout)
-        checker_results.append({"target": target["name"], "points": target["points"], "result": checker_result})
+def replay(reference, root, statements_dir, timeout):
+    head = subprocess.check_output(
+        ["git", "-C", str(reference), "rev-parse", "HEAD"], text=True
+    ).strip()
+    if head != REFERENCE:
+        raise ValueError(f"Reference HEAD is {head}, expected {REFERENCE}")
+    for name in TARGETS:
+        rel = OVERLAY / f"{name}.lean"
+        dest = reference / rel
+        source = (root / rel).read_bytes()
+        if dest.exists():
+            if dest.read_bytes() != source:
+                raise ValueError(f"Overlay conflicts with {rel}")
+        else:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            with dest.open("xb") as out:
+                out.write(source)
+    results = {}
+    for name in TARGETS:
+        command = [
+            "node", "tools/check-lean.mjs",
+            str(OVERLAY / f"{name}.lean"),
+            str(statements_dir / f"{name}.txt"), "check",
+        ]
         try:
-            os.unlink(stmt_path)
-        except OSError:
-            pass
+            run = subprocess.run(
+                command, cwd=reference, timeout=timeout, check=False,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+            )
+        except subprocess.TimeoutExpired:
+            results[name] = {"accepted": False, "error": "checker timeout"}
+            continue
+        target = f"PEqualNP.Outside.{name}"
+        prefix = f"ACCEPTED (check): {target};"
+        wanted = [line for line in run.stdout.splitlines() if line.startswith(prefix)]
+        accepted = run.returncode == 0 and bool(wanted)
+        result = {"accepted": accepted, "returncode": run.returncode}
+        if accepted:
+            result["verdict"] = wanted[-1].split(" constants of ", 1)[0] + " constants"
+            raw_manifest = next(line[9:] for line in run.stdout.splitlines() if line.startswith("MANIFEST "))
+            result["manifest"] = json.loads(raw_manifest)
+        else:
+            result["output_tail"] = run.stdout[-2000:]
+        results[name] = result
+    return results
 
-accepted_points = [r["points"] for r in checker_results if r["result"]["returncode"] == 0 and "ACCEPTED (check)" in r["result"]["output_tail"]]
-proof_ladder_points = max(accepted_points) if accepted_points else 0
 
-result = {
-    "proof_ladder_points": proof_ladder_points,
-    "detected_targets": detected[:50],
-    "candidate_lean_files": candidates[:80],
-    "forbidden_tokens": bad_hits[:20],
-    "reference_checker_results": checker_results,
-    "note": "This harness only provides executable evidence. The reviewer assigns the final ladder score by reading checked Lean source, run logs, and the challenge rubric.",
-}
-print(json.dumps(result, indent=2, sort_keys=True))
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--reference", type=Path)
+    parser.add_argument("--timeout", type=int, default=300)
+    args = parser.parse_args()
+    root = SNAPSHOT if SNAPSHOT.is_dir() else Path(__file__).resolve().parent
+    statements = json.loads((root / "statements.json").read_text(encoding="utf-8"))
+    files = identity(root, statements)
+    if args.reference is None:
+        request = json.load(sys.stdin)
+        if request["reference_commit"] != REFERENCE:
+            raise ValueError("Experiment requests a different reference revision")
+        report = json.loads((root / "replay.json").read_text())
+        compact = {
+            name: item["verdict"] for name, item in report["checks"].items()
+            if item["accepted"]
+        }
+        matched = report["files"] == files and report["reference_commit"] == REFERENCE
+        print(json.dumps({
+            "mode": "archive-identity",
+            "archive_matches_recorded_inputs": matched,
+            "kernel_checks_executed": 0,
+            "recorded_local_verdicts": compact,
+            "files": files,
+        }))
+        return 0 if matched else 1
+
+    reference = args.reference.resolve()
+    work = reference / "lean" / ".lake"
+    work.mkdir(exist_ok=True)
+    with TemporaryDirectory(prefix="exact-statements-", dir=work) as directory:
+        statements_dir = Path(directory)
+        for name in TARGETS:
+            (statements_dir / f"{name}.txt").write_bytes(statements[name].encode("utf-8"))
+        checks = replay(reference, root, statements_dir, args.timeout)
+    print(json.dumps({
+        "reference_commit": REFERENCE,
+        "files": files,
+        "checks": checks,
+    }, indent=2, sort_keys=True))
+    return 0 if all(result["accepted"] for result in checks.values()) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

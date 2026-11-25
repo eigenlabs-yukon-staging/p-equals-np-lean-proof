@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Measured masked witness recovery with additional fixed repairs",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "MeasuredMaskedFill computes the indexed bit-mask reconstruction by a measured polynomial-time machine.",
+    "MaskedLogWitness checks P membership under the explicit polynomial clock and mask-coverage assumptions.",
+    "BoundedRepairPairVerifier checks polynomial-time decidability of a fixed repair schedule applied to a supplied candidate.",
+    "MaskedAndRepairedWitness composes both coverage methods under explicit hypotheses.",
+    "P_subset_NP checks the reference inclusion."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind the archived Lean modules and exact statements to the recorded local reference replay. The isolated experiment reports zero Lean invocations and can be complemented by replay with the pinned reference.",
       "input_schema": {
         "type": "object",
         "properties": {
