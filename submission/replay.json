@@ -1,0 +1,67 @@
+{
+  "reference_commit": "a9ad395e8fab5537a9017734c14360773f375cd8",
+  "files": {
+    "MeasuredHornObstruction": {
+      "source_sha256": "e061fd3b7c1631b0467bf2fd693d2396a2dd482cb48aa2818c2ef070ccce6e46",
+      "statement_sha256": "60c71bfb4a48795938000d0cd25eda10025e6b1cc07810cabb84dfc33e9e7453"
+    },
+    "MeasuredObstructionWalk": {
+      "source_sha256": "54e583e111ecb0f65dee0bf14740caae472dc99cb6c67a7ed9de0bc790b66155",
+      "statement_sha256": "f40723fa5b2c9d688cc378c8b0ebfd56da5f3f9c9e8677d7b5f7967c41d3657f"
+    },
+    "ExactObstructionBudgetSAT": {
+      "source_sha256": "3c979330b430173ebba2212615f1b730aae305b12954853b214c04b29471950e",
+      "statement_sha256": "c054426f3149219074825f94013e23c327647e60c9cf6d83e30065a6df1684ef"
+    },
+    "ExactHornObstructionBudgetSAT": {
+      "source_sha256": "f20c2eab3afc82eda020ba4408c955575336bb69400e9126e6b61f7d078dbd60",
+      "statement_sha256": "89a677f11b27f0e9dbe7b5cceb02047fcc9cb1ff2b66eaa7b15a881d3dfea879"
+    },
+    "ObstructionBudgetSATSearch": {
+      "source_sha256": "86a2f286875802f502d1ea0fb9b3bde60f7402d87123c801ba86bfc0caad70cc",
+      "statement_sha256": "94a62fadcf451c44c4a01384f62f44fdcbc89047700c7a5a3d46c38c9916d356"
+    },
+    "P_subset_NP": {
+      "source_sha256": "16eeea6058df0f1d23d7ffc080f8de1840ac177755be61aed6dd7241299ed22a",
+      "statement_sha256": "9bbfa8a18003de93fae62fd2eae1eee9e2e0bfa5f674c57bd446503036cf9154"
+    }
+  },
+  "checks": {
+    "MeasuredHornObstruction": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredHornObstruction; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 3431 constants",
+      "checker_manifest_sha256": "464d9d998407526dc735aeed465a050b1fffd9cbbbad7ad3f4f8d4befe51211b"
+    },
+    "MeasuredObstructionWalk": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.MeasuredObstructionWalk; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4299 constants",
+      "checker_manifest_sha256": "6d483bd1aa6966d864754cfe7f93ed451d61fbaac1552c5ecfae98716d391598"
+    },
+    "ExactObstructionBudgetSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactObstructionBudgetSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4306 constants",
+      "checker_manifest_sha256": "2f2826e5f38ea910f810fa06a851e2bfa459fb681606be2433f4bd0d2011c320"
+    },
+    "ExactHornObstructionBudgetSAT": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ExactHornObstructionBudgetSAT; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4599 constants",
+      "checker_manifest_sha256": "7d4322d02b328984d4b1b5fb5793fc51e5038eacabb9502c31a6a5d69379ee53"
+    },
+    "ObstructionBudgetSATSearch": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.ObstructionBudgetSATSearch; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 4423 constants",
+      "checker_manifest_sha256": "48d79797b622d6b2718688a05d74c4b8b671d31649001872909f8bb2ddb2a797"
+    },
+    "P_subset_NP": {
+      "accepted": true,
+      "returncode": 0,
+      "verdict": "ACCEPTED (check): PEqualNP.Outside.P_subset_NP; axioms [propext, Quot.sound, Classical.choice]; kernel re-checked 867 constants",
+      "checker_manifest_sha256": "ffae61ce9c072d01b74389a86210a1113dd44af6c73efb87191ce55359c2ca70"
+    }
+  }
+}

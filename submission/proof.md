@@ -1,16 +1,33 @@
-# Starter submission notes
+# Uniform SAT search from bounded obstruction lists
 
-This starter submission intentionally earns score `0`; it contains no claimed Lean progress toward P = NP.
+The main theorem gives a measured variable-deletion solver for a guarded SAT base with a bounded obstruction selector. A selector examines a canonical structural CNF and returns the empty list exactly when the guard holds. Otherwise it returns at most a fixed positive number `a` of variable identifiers, and every successful deletion set must contain at least one of them. Given a measured selector, a measured SAT procedure correct on the guard, and sublist closure of the guard, the development gives exact canonical language recognition and decision for a logarithmically growing deletion budget.
 
-Replace the starter with a Lean development compatible with `brilliant-hq/pequalnp-proofs` at commit `a9ad395e8fab5537a9017734c14360773f375cd8`. The ladder awards the highest verified rung:
+For a fixed natural-coefficient polynomial `q`, the language admits a deletion set of size at most some `k` with `(2*a)^k ≤ q(n)+1`, where `n` is the original encoded length. The solver uses a single measured machine for that polynomial and selector. It neither receives a deletion set nor enumerates every variable at every level. The concrete instance uses a Horn guard, obtains two identifiers from a violating clause, and uses the bound `4^k ≤ q(n)+1`. This is a restricted SAT construction. It provides no assertion that an unrestricted input has a bounded obstruction walk ending in a tractable residual condition.
 
-- `10`: reproducible reference setup and target elaboration.
-- `20`: exact formal target alignment with the reference definitions.
-- `35`: at least one nontrivial checked supporting lemma.
-- `50`: checked theorem `PEqualNP.Outside.P_subset_NP : PEqualNP.Library.P ⊆ PEqualNP.Library.NP` or equivalent.
-- `65`: checked collapse-relevant bridge lemma toward `NP ⊆ P`.
-- `80`: checked concrete NP-to-P route for a canonical NP-complete/universal verifier/search target.
-- `90`: checked theorem `PEqualNP.Outside.NP_subset_P : PEqualNP.Library.NP ⊆ PEqualNP.Library.P` or equivalent.
-- `100`: checked theorem `PEqualNP.Outside.P_eq_NP : PEqualNP.Library.P = PEqualNP.Library.NP`.
+## Rank semantics
 
-Every scored theorem must use the pinned `PEqualNP.Defs` meanings and must avoid `sorry`, `admit`, extra axioms, `native_decide`, or trusted-code shortcuts.
+A canonical machine state logically contains a structural formula, a residual formula, an available branch budget, and a branch rank. The residual formula must be a sublist of the structural formula. At an unguarded state the next digit of the rank selects a variable from the obstruction list and a Boolean value. The radix is `2*a`. Reduce the digit modulo `a` to choose an index and use its comparison with `a` to choose the value. If the list is nonempty but shorter than the selected index, the machine falls back to its first identifier. This keeps every accepted branch structurally valid and leaves each real index available to the completeness proof.
+
+For the structural child, remove the selected variable from every clause without deleting clause positions. For the residual child, apply the chosen Boolean assignment, dropping clauses it satisfies and removing occurrences of the variable from the others. The residual remains a sublist because it starts as a sublist, drops some of its clauses, and applies the same literal filter as the structural side. On a guarded structural state, sublist closure makes the residual an allowed input to the given SAT decider.
+
+Soundness uses the fact that every step moves one chosen identifier into a witness deletion list. A successful child with a deletion list of size at most `k` determines one of size at most `k+1` at its parent. The residual satisfiability statement lifts through the chosen restriction by updating that variable. Each such step divides the branch budget by the radix, so the full height of a successful path satisfies the exponential inequality in the theorem.
+
+For completeness, take any feasible deletion witness and an assignment satisfying the residual formula. The obstruction property yields a listed identifier also in the witness. Remove one occurrence of it from the witness and choose its sign using the satisfying assignment. The witnessed child budget still suffices. To place a successful child rank `j` and a desired digit `d` inside the parent budget, use rank `(2*a)*j+d`. The proof checks the quotient and remainder and uses the exact floor division bound, including when the parent budget is not divisible by the radix.
+
+## Measured path and exact languages
+
+`MeasuredObstructionWalk` constructs a polynomial-time verifier for an individual rank in a packed raw input. Its external specification expresses the budget, rank and two canonical formulas using unary length delimiters as defined by the corresponding reference pairing code. It proves an accepting rank below the budget exists exactly when a qualifying deletion set exists and the residual formula is satisfiable. The implementation divides unary budget and rank by the fixed radix. It takes no step when the structural guard succeeds or the divided budget is zero. The total loop starts with the unary budget's length as its clock, which is enough for all feasible paths.
+
+The raw proof bounds the sizes of the credit, rank, structural formula and residual formula by a fixed cap determined by the initial input. Every updated field is clipped at the cap. The proof of canonical semantics checks that clipping is inert there, using the monotone encoding lengths of occurrence erasure and assignment restriction and the quotient length bound. Totality and the loop's growth bound are proved even for bit strings outside the canonical encoding. The algorithm never materializes a long unary string of exponential length from the deletion depth. The exponential expression appears in the mathematical language characterization.
+
+`ExactObstructionBudgetSAT` lifts the verifier to two exact ordinary CNF languages. It scans `q(n)+1` ranks using the measured indexed projection. One language has just the deletion property, using an empty residual. The other has both the property and satisfiability of the original input, using the original CNF as the residual. Both intersect their test with the pinned syntax guard. The framework uses the measured selector's empty-list condition to test the structural guard, so there is no separate structural guard machine to provide.
+
+`ObstructionBudgetSATSearch` gives a measured sparse assignment procedure if the base guard is also preserved by appending clauses of width at most one. It invokes the exact decision result for the appended-unit queries made by the sparse search. After variable deletion, the appended units remain units or become empty. The same deletion set remains valid under the short-clause condition, and the polynomial cannot decrease as the encoded length grows. The resulting assignment is a concatenation of the canonical codes of true variables, has encoded length at most the original input length, and satisfies the original CNF.
+
+## Horn instance and replay
+
+`MeasuredHornObstruction` uses the earlier measured literal and clause scans to select the first two positive literal occurrences from the first clause containing at least two. If the guard fails, leaving both occurrences in place would violate the Horn bound after deletion. The proof also covers repeated copies of a positive literal. The result therefore supplies a hitting list of length at most two and can be used even when clauses have arbitrary width. `ExactHornObstructionBudgetSAT` uses this selector with the earlier Horn decider. Its exact guard counts positive occurrences that remain after deleting the witness set. The theorem proves both domain membership and SAT decision with the specified power-of-four budget.
+
+This development builds on the fixed-size generic deletion recurrence and the earlier measured base-six 2-CNF deletion walk. It retains the measured occurrence restriction and clause/literal scans, unary division and remainder, indexed projection, Horn solver, sparse search, and the unchanged reference inclusion. The dependency declaration identifies the submissions that supplied those pieces. The bounded selector framework, general rank arithmetic and width-two Horn obstruction implementation are the new contributions.
+
+The Lean source overlay and statement map use reference `a9ad395e8fab5537a9017734c14360773f375cd8`, Lean v4.36.0 and the pinned Mathlib. The exact theorem checker is invoked in `check` mode and verifies transitive axiom use. The archive is self-contained as an overlay with all of the outside proof sources needed to replay the selected declarations. The isolated experiment checks the archive bindings, reports any live Lean invocations it performs, and can be complemented by replay in the prepared pinned reference checkout.

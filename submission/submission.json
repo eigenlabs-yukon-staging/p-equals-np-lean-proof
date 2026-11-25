@@ -1,16 +1,19 @@
 {
   "version": 1,
-  "title": "Incremental Lean progress toward P = NP",
+  "title": "Uniform measured variable-deletion SAT from bounded obstruction lists",
   "claims": [
-    "The submitted Lean development is evaluated against the pinned brilliant-hq/pequalnp-proofs definitions and checker discipline.",
-    "The score is the highest proof_ladder_points rung whose Lean evidence checks without sorry, admit, native_decide, or axioms outside propext, Classical.choice, and Quot.sound.",
-    "The final 100-point target is theorem PEqualNP.Outside.P_eq_NP with statement PEqualNP.Library.P = PEqualNP.Library.NP."
+    "ExactObstructionBudgetSAT gives exact canonical domain and SAT languages in P from a measured obstruction selector of fixed arity a and a polynomial bound on (2*a)^k.",
+    "MeasuredObstructionWalk verifies a single rank path in polynomial time and proves exact existential rank semantics on canonical pairs.",
+    "MeasuredHornObstruction extracts two positive variable occurrences that any successful Horn deletion must hit.",
+    "ExactHornObstructionBudgetSAT checks the exact Horn deletion guard and SAT language for polynomially bounded powers 4^k.",
+    "ObstructionBudgetSATSearch gives sparse witness recovery under the stated short-clause closure premise.",
+    "P_subset_NP checks the reference inclusion."
   ],
   "experiments": [
     {
       "id": "lean-proof-ladder-check",
       "source": "check.py",
-      "purpose": "Inspect the submitted Lean project for named P/NP ladder targets and run the pequalnp final-target checker when possible.",
+      "purpose": "Bind the archived Lean modules and exact statements to the recorded local reference replay. The isolated experiment reports zero Lean invocations and can be complemented by replay with the pinned reference.",
       "input_schema": {
         "type": "object",
         "properties": {
